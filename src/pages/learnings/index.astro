@@ -1,0 +1,157 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const modules = import.meta.glob("./*.astro", { eager: true });
+
+const posts = Object.entries(modules)
+  .filter(([path]) => !path.endsWith("/index.astro"))
+  .map(([path, mod]) => {
+    const slug = path.replace("./", "").replace(".astro", "");
+    const url = `/learnings/${slug}`;
+
+    return {
+      url,
+      slug,
+      title: mod.title ?? slug.replaceAll("-", " "),
+      date: mod.date ?? "",
+      excerpt: mod.excerpt ?? "",
+      tags: Array.isArray(mod.tags) ? mod.tags : [],
+    };
+  })
+  .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+
+function formatDate(iso) {
+  if (!iso) return "";
+  const d = new Date(iso + "T00:00:00");
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+---
+
+<SiteLayout title="Learnings — Saachi K Gupta">
+  <style>
+    .grid {
+      margin-top: 28px;
+      display: grid;
+      gap: 18px;
+      max-width: 900px;
+    }
+
+    .card {
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 14px;
+      padding: 18px 18px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      border-color: rgba(0,0,0,0.16);
+    }
+
+    .titleRow {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .card a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    .meta {
+      margin-top: 6px;
+      font-size: 14px;
+      opacity: 0.7;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 4px 10px;
+      border: 1px solid rgba(0,0,0,0.14);
+      border-radius: 999px;
+      opacity: 0.85;
+    }
+
+    .excerpt {
+      margin: 12px 0 0 0;
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 75ch;
+    }
+
+    .read {
+      margin-top: 12px;
+      font-size: 14px;
+      opacity: 0.85;
+    }
+
+    @media (max-width: 640px) {
+      .card h2 {
+        font-size: 18px;
+      }
+      .excerpt {
+        font-size: 14px;
+      }
+    }
+  </style>
+
+  <h1>Learnings</h1>
+ <p style="max-width: 70ch;">
+  In 2026, I'm learning by trying new tools to build and being guided by curiosity. Some of this is about AI, some of it is about the internet,
+  and a lot of it is about rediscovering things I didn’t know I still knew — like writing HTML thanks to a 2012 Tumblr obsession.
+</p>
+<p style="max-width: 70ch; margin-top: 12px;">
+  These are notes from trying things and reminding myself that action is the best antidote to anxiety.
+</p>
+
+  <div class="grid">
+    {posts.map((p) => (
+      <article class="card">
+        <div class="titleRow">
+          <h2><a href={p.url}>{p.title}</a></h2>
+        </div>
+
+        <div class="meta">
+          {p.date && <span>{formatDate(p.date)}</span>}
+          {p.tags?.length > 0 && (
+            <div class="tags">
+              {p.tags.map((t) => (
+                <span class="tag">{t}</span>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {p.excerpt && <p class="excerpt">{p.excerpt}</p>}
+
+        <div class="read">
+          <a href={p.url}>Read →</a>
+        </div>
+      </article>
+    ))}
+  </div>
+</SiteLayout>

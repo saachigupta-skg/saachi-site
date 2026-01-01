@@ -1,0 +1,56 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "Building with Bolt: A Vibe Coding Workshop";
+export const date = "2026-01-01";
+export const excerpt =
+  "Getting hands-on with AI tools at an HBS Club of Seattle workshop. What happens when business-minded people build together — and why constraints make better builders.";
+export const tags = ["web", "ai", "learning-by-doing"];
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`}>
+  <h1>Building with Bolt: A Vibe Coding Workshop</h1>
+  <p>
+    I spent an evening at an HBS Club of Seattle workshop learning Bolt — action is the best antidote to AI anxiety.
+  </p>
+
+  <h2 style="margin-top: 24px;">What I built</h2>
+  <ul>
+    <li>
+      <a href="https://halloween-costume-id-acvv.bolt.host/" target="_blank" rel="noopener noreferrer"><strong>Halloween Costume Generator</strong></a> 
+      (<a href="/builds/halloween-costume-generator">technical deep dive</a>) — 
+      Started wanting to use generative AI for vibe-based suggestions, ended up building a tagged database with a fun search interface instead. Sometimes the simpler solution is the right one.
+    </li>
+    <li>
+      <a href="https://multi-sport-adventur-ku7k.bolt.host/" target="_blank" rel="noopener noreferrer"><strong>Trail Finder</strong></a> 
+      (<a href="/builds/adventure-planner">technical deep dive</a>) — 
+      Multi-sport adventure planner with real-time wildfire tracking, water quality monitoring, and location-based trail search. I challenged myself to work with APIs I'd never touched: National Park Service API for trail data and OpenRouteService for geocoding and driving times. The app filters by difficulty, activity type, and driving distance, displays everything on an interactive map, and even flags swim-accessible trails.
+    </li>
+  </ul>
+
+  <h2 style="margin-top: 24px;">What I learned</h2>
+  <p>
+    Building with business-minded people was refreshing. We didn't just brainstorm "what should we build?" — we immediately grounded ideas in practicalities: What APIs are available? What's lightweight enough to finish? Where does AI actually add value vs. where is a simple database better?
+  </p>
+  
+  <p>
+    The constraints — time pressure and no unlimited budget — actually simulated real building. You get discerning fast about where AI is worth the cost and complexity. For my costume generator, I thought I needed generative AI to match vibes to costumes. Turns out a curated database with good tagging and a playful search interface was more useful, faster to build, and more reliable.
+  </p>
+
+  <p>
+    For the Trail Finder, the constraint forced me to work with free public APIs rather than reaching for paid services. The National Park Service and OpenRouteService APIs were new to me, which meant real learning — not just prompting AI to generate boilerplate. Wrestling with rate limits, error handling, and data transformation taught me more about API integration than copying premium examples would have.
+  </p>
+
+  <p>
+    These parameters force you to ask: Does this actually need AI? Or am I reaching for the shiny tool when something simpler works better?
+  </p>
+
+  <h2 style="margin-top: 24px;">Why this mattered</h2>
+  <p>
+    Going through this with others who identify as business-first (not engineer-first) created a different energy. The questions weren't "what's technically impressive?" but "what's useful and buildable right now?" That's the kind of thinking that leads to things people actually use.
+  </p>
+  
+  <p>
+    Plus, there's something empowering about shipping two working prototypes in an evening. It demystifies building. You don't need to be a "real developer" — you just need an idea and willingness to learn by doing.
+  </p>
+</SiteLayout>

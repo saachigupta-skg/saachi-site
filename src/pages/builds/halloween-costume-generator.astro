@@ -1,0 +1,224 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "Halloween Costume Generator — Vibe-Based Search";
+export const date = "2025-11-01";
+export const excerpt =
+  "A fun, quiz-driven costume discovery tool that proves sometimes a curated database beats generative AI—and why the next step is making it shoppable.";
+export const tags = ["web", "ai", "search", "ui"];
+export const link = "https://halloween-costume-id-acvv.bolt.host/";
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`}>
+  <h1>{title}</h1>
+  <p style="opacity:0.7;">{date}</p>
+
+  <p style="max-width: 75ch;">
+    A Halloween costume discovery tool that started as a generative AI project and ended up as a curated database with a quiz-style interface. Sometimes the simpler solution is the better one—and sometimes the real opportunity is in what comes after discovery.
+  </p>
+
+  <p style="margin-top: 14px;">
+    <a href={link} target="_blank" rel="noopener noreferrer">Live demo →</a>
+  </p>
+
+  <h2 style="margin-top: 28px;">Highlights</h2>
+  <ul>
+    <li>Two-round adjective selection quiz (20 options per round, select 1-10)</li>
+    <li>468 curated costume ideas with 313 unique aesthetic tags</li>
+    <li>Top 10 matching costumes with 0-5 flame rating system</li>
+    <li>Community-driven "trending" and "needs love" tickers</li>
+    <li>Spirit Halloween-inspired package design aesthetic</li>
+    <li>Persistent ratings stored locally to surface popular costumes</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">Technical Deep Dive</h2>
+
+  <h3 style="margin-top: 20px;">The Pivot: From AI Generation to Curated Discovery</h3>
+  <p style="max-width: 75ch;">
+    My original plan was to use Claude's API to generate costume suggestions based on user-inputted vibes. Someone types "spooky but elegant" and the AI suggests "Victorian ghost" or "witch in couture." It sounded perfect for a workshop focused on AI tools.
+  </p>
+  <p style="max-width: 75ch;">
+    But when I started building, the problems became obvious: API calls take time, cost money (even small amounts add up at scale), and return unpredictable results. Would "spooky elegant" give the same suggestions twice? More importantly—did the problem actually <em>need</em> generative AI, or was I reaching for it because it was trendy?
+  </p>
+  <p style="max-width: 75ch;">
+    The answer was no. What people actually need isn't a conversation with an AI—it's a fast, fun way to browse costume ideas that match their vibe. So I pivoted completely: build a database of costume ideas, tag them richly with aesthetic keywords, and create a quiz interface that <em>feels</em> intelligent without any API overhead.
+  </p>
+
+  <h3 style="margin-top: 20px;">Why I Deliberately Didn't Use AI: The Creative Control Problem</h3>
+  <p style="max-width: 75ch;">
+    Beyond the technical reasons (cost, speed, reliability), there was a deeper concern that made me hesitant to use generative AI for costume suggestions: <strong>I couldn't guarantee what it would generate.</strong>
+  </p>
+  <p style="max-width: 75ch;">
+    Halloween costumes are a minefield of potential offense. Cultural appropriation, insensitive stereotypes, inappropriate suggestions for kids who might use the app—these aren't edge cases, they're real risks. If I used an AI API to generate costume ideas on the fly, I'd be ceding creative control over what gets suggested. Sure, I could add guardrails and content filters, but:
+  </p>
+  <ul style="max-width: 75ch;">
+    <li>Would they catch everything? LLMs can be unpredictable.</li>
+    <li>Would I need to review every AI-generated suggestion before showing it? That defeats the point of automation.</li>
+    <li>How do I handle the gray areas—costumes that are clever but potentially problematic?</li>
+  </ul>
+  <p style="max-width: 75ch;">
+    With a curated database, I have complete control. Every costume that shows up is one I've personally reviewed and decided belongs in the collection. I can ensure it's broadly age-appropriate (or at least not explicitly inappropriate). I can avoid costumes that punch down or rely on harmful stereotypes. I can make judgment calls about what's clever satire versus what's just offensive.
+  </p>
+  <p style="max-width: 75ch;">
+    This isn't about being overly cautious—it's about taking responsibility for what my app puts into the world. When you curate, you're accountable. When you generate, you're rolling the dice. For something as culturally loaded as Halloween costumes, I wanted that accountability.
+  </p>
+  <p style="max-width: 75ch;">
+    <strong>The tradeoff:</strong> My database caps at 468 costumes instead of infinite AI-generated possibilities. But those 468 are costumes I actually stand behind. That felt more important than scale.
+  </p>
+
+  <h3 style="margin-top: 20px;">Key Architectural Decisions</h3>
+  
+  <h4 style="margin-top: 16px; font-weight: 600;">Multi-Tag Matching Over Semantic Search</h4>
+  <p style="max-width: 75ch;">
+    I could have used vector embeddings and semantic search to find "similar" costumes. But that would have required a vector database, additional complexity, and honestly—overkill for a workshop project with a few hundred costumes.
+  </p>
+  <p style="max-width: 75ch;">
+    Instead: simple tag matching with a scoring algorithm. Each costume has 3-10 tags from a taxonomy of 313 aesthetic keywords (PopCulture, SwiftieCore, GothicWestern, CapitalistCamp, ExistentialHumor, etc.). Users select their vibes across two rounds, and costumes are ranked by how many matching tags they have. It's deterministic, fast, and explainable—you can see exactly why a costume matched.
+  </p>
+
+  <h4 style="margin-top: 16px; font-weight: 600;">The Tag Taxonomy: Curation as Product</h4>
+  <p style="max-width: 75ch;">
+    The real work wasn't the code—it was building the tag taxonomy. I started with basic categories (Funny, Scary, Group, DIY) but quickly realized these were too generic. The magic happened when I leaned into internet culture and hyper-specific aesthetics:
+  </p>
+  <ul style="max-width: 75ch;">
+    <li><strong>Pop & Culture Core:</strong> SwiftieCore, Barbiecore, ViralTrend, Y2KRevival, MemeRoyalty</li>
+    <li><strong>Western/Gothic Cinematic:</strong> Yeehawcore, VampireCowboy, DesertNoir, GothicWestern</li>
+    <li><strong>Punny/Satirical:</strong> CapitalistCamp, ExistentialSnack, DoomScrollEnergy, MainCharacterEnergy</li>
+    <li><strong>Aesthetic Vibes:</strong> CinematicGrit, VelvetGlow, HyperFeminine, PostIronic, RetroFuturism</li>
+  </ul>
+  <p style="max-width: 75ch;">
+    These tags do two things: they help the matching algorithm, but more importantly, they're <em>fun to read</em>. "DoomScrollEnergy" tells you more about the vibe than "Internet Culture" ever could. The specificity is the point.
+  </p>
+
+  <h4 style="margin-top: 16px; font-weight: 600;">Client-Side Everything (For Now)</h4>
+  <p style="max-width: 75ch;">
+    The entire app runs client-side with localStorage for ratings persistence. No backend, no database calls, instant load times. The 468 costumes live in a TypeScript file as a JSON array—simple, fast, and zero hosting costs beyond static files.
+  </p>
+  <p style="max-width: 75ch;">
+    The tradeoff: I can't gather analytics on which tags are actually popular, can't A/B test the quiz flow, and can't do any server-side personalization. But for a workshop prototype? This was the right call. Ship fast, validate the concept, add complexity later if needed.
+  </p>
+
+  <h4 style="margin-top: 16px; font-weight: 600;">Spirit Halloween Aesthetic as Constraint</h4>
+  <p style="max-width: 75ch;">
+    I spent significant time making the UI feel like a Spirit Halloween costume package—the orange and white split, the curved red divider, the circular badges. This wasn't just decoration; it was a design constraint that forced cohesion. Instead of endless tweaking, I had a clear reference: "Does this feel like opening a costume package?" If yes, keep it. If no, cut it.
+  </p>
+
+  <h3 style="margin-top: 20px;">What I Learned About Feature Scope</h3>
+  <p style="max-width: 75ch;">
+    The workshop time limit forced brutal prioritization. I wanted to add: user accounts, social sharing, costume boards, AI-generated costume variations, weather-appropriate filtering, budget ranges, and more. All reasonable. None essential.
+  </p>
+  <p style="max-width: 75ch;">
+    What shipped: a two-round quiz that surfaces 10 matching costumes with a rating system. That's it. And it works. The lesson: <strong>the MVP is smaller than you think.</strong> Everything else is nice-to-have until you validate that people actually want the core thing.
+  </p>
+
+  <h3 style="margin-top: 20px;">The Community Rating System</h3>
+  <p style="max-width: 75ch;">
+    I added a 0-5 flame rating system that persists to localStorage. As people rate costumes, two tickers appear on the main screen: "Trending" (most flames) and "Needs Love" (fewest flames). This creates a feedback loop—popular costumes get more visibility, which generates more ratings, which surfaces community favorites.
+  </p>
+  <p style="max-width: 75ch;">
+    It's fake community (all ratings are stored locally per user, not aggregated), but it <em>feels</em> social. And if this scaled, those ratings would be incredibly valuable data for understanding what actually resonates.
+  </p>
+
+  <h3 style="margin-top: 20px;">What I Deliberately Didn't Do (And Why)</h3>
+  <ul style="max-width: 75ch;">
+    <li><strong>Didn't use generative AI:</strong> Would have been slower, more expensive, less reliable, and I'd lose creative control over potentially offensive content. The quiz format with curated tags is actually <em>better</em> for discovery than asking an AI "what should I be for Halloween?"</li>
+    <li><strong>Didn't build a backend:</strong> Would have added deployment complexity, cost, and maintenance overhead for zero user-facing benefit at this stage.</li>
+    <li><strong>Didn't implement user accounts:</strong> Would require authentication, privacy considerations, and infrastructure—all premature for validating the concept.</li>
+    <li><strong>Didn't make it shoppable (yet):</strong> This is the most interesting limitation. More on this below.</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">The Big Opportunity: Discovery → Purchase</h2>
+  <p style="max-width: 75ch;">
+    Here's the thing: <strong>this app solves the delight of discovery, but leaves money on the table.</strong> People find costumes they love, get excited, then... have to Google where to buy the pieces themselves. That's where the conversion drops.
+  </p>
+
+  <h3 style="margin-top: 20px;">Why Shopping Integration Would Change Everything</h3>
+  <p style="max-width: 75ch;">
+    Imagine if after rating a costume 5 flames, you saw: "Shop the look" with affiliate links to Amazon, Spirit Halloween, or costume retailers showing the actual items you need. Suddenly this isn't just a fun quiz—it's a conversion machine.
+  </p>
+  <p style="max-width: 75ch;">
+    The technical path: For each costume, maintain a structured list of required items (e.g., "Cowboy Ken" needs: cowboy hat, denim vest, bandana, boots). Use affiliate APIs (Amazon Associates, ShareASale, etc.) to pull real products matching those items. Display them with prices, ratings, and direct purchase links.
+  </p>
+  <p style="max-width: 75ch;">
+    The business model: 3-8% commission on every purchase. If 10,000 people use this app in October and 5% buy something (average order $50), that's $750-2,000 in affiliate revenue from a weekend project. And October traffic for "Halloween costume ideas" is massive and predictable.
+  </p>
+
+  <h3 style="margin-top: 20px;">Why I Didn't Build It (Yet)</h3>
+  <p style="max-width: 75ch;">
+    Time constraint was the obvious reason—the workshop was one evening. But the real reason: I wanted to validate the discovery experience first. Does the quiz format work? Do people engage with the ratings? Do the aesthetic tags resonate? Adding shopping too early would have meant splitting focus between two hard problems: discovery UX and e-commerce integration.
+  </p>
+  <p style="max-width: 75ch;">
+    Now that the core works, shopping is the obvious next feature. And unlike most features, this one directly generates revenue—it pays for itself.
+  </p>
+
+  <h2 style="margin-top: 28px;">Next Steps & Future Ideas</h2>
+
+  <h3 style="margin-top: 20px;">Make It Shoppable (Priority #1)</h3>
+  <ul style="max-width: 75ch;">
+    <li>Add "Shop This Look" buttons to costume results</li>
+    <li>Integrate Amazon Associates, ShareASale, or RewardStyle APIs</li>
+    <li>For each costume, define 3-5 key items with search terms</li>
+    <li>Display products with images, prices, ratings, and direct buy links</li>
+    <li>Track conversion: which costumes drive purchases? Optimize the database around high-converters</li>
+  </ul>
+
+  <h3 style="margin-top: 20px;">Community Features</h3>
+  <ul style="max-width: 75ch;">
+    <li>Let users submit their own costume ideas with photos</li>
+    <li>Voting system for community submissions (best ideas get added to main database)</li>
+    <li>Share costume results to social media with a unique shareable link</li>
+    <li>Aggregate ratings across all users to surface actually trending costumes</li>
+  </ul>
+
+  <h3 style="margin-top: 20px;">Enhanced Discovery</h3>
+  <ul style="max-width: 75ch;">
+    <li>Add filters: budget range, DIY difficulty, group size requirements</li>
+    <li>"Build a group costume" mode—find 4-6 costumes that work together thematically</li>
+    <li>Save favorites to a board for comparing later</li>
+    <li>"Random" button for commitment-phobes who just want to be surprised</li>
+  </ul>
+
+  <h3 style="margin-top: 20px;">Maybe AI Has a Role After All</h3>
+  <p style="max-width: 75ch;">
+    Now that the core works <em>without</em> AI, there are specific places where it could add value:
+  </p>
+  <ul style="max-width: 75ch;">
+    <li><strong>Custom costume generation:</strong> "I'm 5'2", love purple, want something historical and under $50" → AI designs a unique costume you won't find in the database</li>
+    <li><strong>Product matching:</strong> Use vision models to find better product matches for costume components</li>
+    <li><strong>Style variation:</strong> Take an existing costume and generate 3 variations (more glam, more goth, more DIY)</li>
+    <li><strong>Semantic tag expansion:</strong> Use embeddings to understand that "Yeehawcore" and "Western" are similar, improving search recall</li>
+  </ul>
+  <p style="max-width: 75ch; margin-top: 16px;">
+    But these are enhancements, not foundations. The app proves its value first, then AI makes it 10-20% better in targeted ways.
+  </p>
+
+  <h2 style="margin-top: 28px;">Tech Stack</h2>
+  <ul>
+    <li><strong>Frontend:</strong> React + TypeScript + Vite (built via Bolt)</li>
+    <li><strong>Styling:</strong> Tailwind CSS with Spirit Halloween-inspired design system</li>
+    <li><strong>Data Storage:</strong> Static JSON array (468 costumes, 313 tags)</li>
+    <li><strong>Ratings:</strong> localStorage for persistence</li>
+    <li><strong>State Management:</strong> React hooks (useState for quiz state, useMemo for filtered results)</li>
+    <li><strong>Matching Algorithm:</strong> Tag intersection scoring with randomization for ties</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">Key Learnings</h2>
+  <p style="max-width: 75ch;">
+    <strong>Lesson 1: Question the AI assumption.</strong> I went into this workshop expecting to use generative AI because that was the theme. But the problem didn't need it. A well-organized database with smart tagging was faster, cheaper, more reliable, and actually better for users. Don't use AI because it's trendy—use it when it solves a problem better than alternatives.
+  </p>
+  <p style="max-width: 75ch;">
+    <strong>Lesson 2: Creative control matters for culturally sensitive content.</strong> Halloween costumes require judgment calls about taste, appropriateness, and potential offense. Ceding that control to an AI felt irresponsible. With curation, I'm accountable for every suggestion. The tradeoff is scale, but 468 thoughtful costumes beats infinite unpredictable ones.
+  </p>
+  <p style="max-width: 75ch;">
+    <strong>Lesson 3: Curation is underrated in the age of infinite content.</strong> Anyone can generate 10,000 costume ideas with AI. But thoughtfully curating 468 costumes with hyper-specific aesthetic tags that actually capture internet culture? That's the product. The personality in tags like "DoomScrollEnergy" and "CapitalistCamp" is what makes this feel human and fun.
+  </p>
+  <p style="max-width: 75ch;">
+    <strong>Lesson 4: The money is in the next step.</strong> Discovery is delightful, but conversion is how you build a business. This app proves people want help finding costumes—now the opportunity is helping them actually buy them. The path from "I love this costume" to "I just bought it" is where value (and revenue) lives.
+  </p>
+  <p style="max-width: 75ch;">
+    <strong>Lesson 5: Constraints clarify.</strong> Having one evening forced me to ship the core loop: quiz → results → ratings. Everything else—accounts, social, AI variations—got cut. And the result is better for it. Start with the smallest thing that could work, not the biggest thing you can imagine.
+  </p>
+  <p style="max-width: 75ch;">
+    <strong>Lesson 6: Build what you'd actually use.</strong> I made this because I genuinely get decision paralysis around Halloween costumes. The hyper-specific tags ("ExistentialSnack," "RhinestoneDiplomacy") are things I'd actually search for. That authenticity shows. Build for yourself first, then find others who think like you.
+  </p>
+</SiteLayout>

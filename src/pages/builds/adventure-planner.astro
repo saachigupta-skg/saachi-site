@@ -1,0 +1,131 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "Adventure Planner — Multi-Sport Trail Exploration";
+export const date = "2025-11-01";
+export const excerpt =
+  "A Pacific Northwest–focused planner that combines trail discovery with wildfire/AQI + water safety to suggest time-smart adventures.";
+export const tags = ["maps", "outdoors", "data", "pnw"];
+export const link = "https://multi-sport-adventur-ku7k.bolt.host/";
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`}>
+  <h1>{title}</h1>
+  <p style="opacity:0.7;">{date}</p>
+
+  <p style="max-width: 75ch;">
+    A PNW-focused planner that fuses trail search, live wildfire + air quality, and lake/river swim safety to generate
+    time-smart, activity-aware adventures.
+  </p>
+
+  <p style="margin-top: 14px;">
+    <a href={link} target="_blank" rel="noopener noreferrer">Live demo →</a>
+  </p>
+
+  <h2 style="margin-top: 28px;">Highlights</h2>
+  <ul>
+    <li>Trail discovery with drive-time + difficulty filters</li>
+    <li>Map exploration with rich detail panels</li>
+    <li>Wildfire + AQI overlays and proximity signals</li>
+    <li>Water safety metrics + swimability at a glance</li>
+    <li>NPS data integration for official trail info</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">Technical Deep Dive</h2>
+
+  <h3 style="margin-top: 20px;">The API Learning Curve</h3>
+  <p style="max-width: 75ch;">
+    This was my first time working with both the National Park Service API and OpenRouteService. The NPS API had surprisingly generous rate limits but required careful data transformation—their schema is optimized for parks, not trails, so I had to infer trail attributes from park activities and descriptions. OpenRouteService was more straightforward for geocoding but had stricter rate limits, which forced me to implement smart caching and fallback estimations.
+  </p>
+
+  <h3 style="margin-top: 20px;">Key Architectural Decisions</h3>
+  
+  <h4 style="margin-top: 16px; font-weight: 600;">Edge Functions vs. Client-Side API Calls</h4>
+  <p style="max-width: 75ch;">
+    I built a Bolt Database edge function for the NPS data sync rather than calling directly from the client. This lets me use the service role key securely and batch-process trails without exposing credentials. The tradeoff: edge functions add deployment complexity and debugging is harder than client-side code. But it was worth it for security and the ability to transform data server-side.
+  </p>
+
+  <h4 style="margin-top: 16px; font-weight: 600;">Database Schema: Unique Constraints Matter</h4>
+  <p style="max-width: 75ch;">
+    Initially, my trails table didn't have a unique constraint on the <code>name</code> column, which caused my upsert logic to fail silently. Adding <code>UNIQUE(name)</code> made the sync idempotent—I can re-run it without creating duplicates. This was a lesson in thinking through data integrity upfront rather than patching later.
+  </p>
+
+  <h4 style="margin-top: 16px; font-weight: 600;">Map Library: Why Leaflet Over Alternatives</h4>
+  <p style="max-width: 75ch;">
+    I chose Leaflet because it's lightweight, has great documentation, and doesn't require API keys for basic OpenStreetMap tiles. Google Maps would have been overkill (and expensive), and Mapbox felt like premature optimization. Leaflet gave me the right balance of features and simplicity for a time-boxed workshop project.
+  </p>
+
+  <h3 style="margin-top: 20px;">Handling Rate Limits & Errors</h3>
+  <p style="max-width: 75ch;">
+    OpenRouteService's free tier allows 2,000 requests/day. For driving time calculations, I implemented a fallback that estimates times using straight-line distance × average speed when the API fails or hits rate limits. This graceful degradation means the app stays functional even when the routing service is unavailable. Users get "estimated" times instead of precise routes, but the experience doesn't break.
+  </p>
+
+  <h3 style="margin-top: 20px;">What I'd Do Differently</h3>
+  <ul style="max-width: 75ch;">
+    <li><strong>Pre-seed the database:</strong> Instead of requiring users to click "Sync NPS Trails," I'd pre-populate the database with curated trail data during deployment. The sync button is useful for updates but adds friction to first-time users.</li>
+    <li><strong>Better error messaging:</strong> When API calls fail, I show generic error toasts. I should surface more specific guidance: "Rate limit reached—try again in an hour" or "Check your internet connection."</li>
+    <li><strong>Performance optimization:</strong> Loading all trails and then filtering client-side works fine for ~100 trails, but won't scale to thousands. I'd implement server-side filtering and pagination if expanding beyond the Pacific Northwest.</li>
+    <li><strong>Test with real users:</strong> I assumed people would understand the filters and map interactions, but I should validate that with actual outdoor enthusiasts who aren't developers.</li>
+  </ul>
+
+  <h3 style="margin-top: 20px;">What Worked Really Well</h3>
+  <ul style="max-width: 75ch;">
+    <li><strong>The time constraint:</strong> Building under pressure forced me to ship something functional rather than perfect. I cut features aggressively (multi-day trip planning became a placeholder) and focused on the core value: finding nearby trails with safety info.</li>
+    <li><strong>Starting with free APIs:</strong> Not having a budget meant I had to be creative and learn tools I wouldn't have considered otherwise. Paid APIs would have been easier, but I learned more by working within constraints.</li>
+    <li><strong>Real data from the start:</strong> Integrating the NPS API early meant I was testing with realistic trail names, locations, and attributes rather than placeholder data. This surfaced edge cases (parks without trails, trails without coordinates) that I had to handle properly.</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">Next Steps & Future Ideas</h2>
+  <p style="max-width: 75ch;">
+    This was built in an evening, but there's a clear path forward if I wanted to turn it into something people actually use regularly:
+  </p>
+
+  <h3 style="margin-top: 20px;">Permit Discovery & Booking</h3>
+  <p style="max-width: 75ch;">
+    Many popular trails (Enchantments, Mt. Rainier zones, Whitney Portal) require permits that book up months in advance. I'd love to integrate Recreation.gov's API to show permit requirements, availability, and direct links to book. Even better: set up alerts when permits become available for specific trails or date ranges. This would solve a real pain point—finding out you need a permit only after you've planned your whole trip.
+  </p>
+
+  <h3 style="margin-top: 20px;">Turn-by-Turn Routing</h3>
+  <p style="max-width: 75ch;">
+    Right now, the app shows driving time to trailheads but doesn't provide actual routes. Adding turn-by-turn directions using OpenRouteService's routing API would make the planning experience complete—from "I want to hike" to "here's exactly how to get there." The challenge: balancing API call costs with user value, especially for users who just want to browse without committing to a specific trail.
+  </p>
+
+  <h3 style="margin-top: 20px;">Strava Integration</h3>
+  <p style="max-width: 75ch;">
+    Connect to Strava's API to pull in completed activities and suggest similar trails based on your history. If you've run 10Ks on moderate trails with elevation gain, the app could surface comparable routes in new areas. This would also enable social features—see which trails your Strava connections have completed, read their reviews, or plan group adventures. The data is already there; it just needs to be surfaced usefully.
+  </p>
+
+  <h3 style="margin-top: 20px;">Other Ideas Worth Exploring</h3>
+  <ul style="max-width: 75ch;">
+    <li><strong>Weather forecasting:</strong> Integrate weather APIs to show trail conditions, snow levels, and optimal visiting windows. "Don't attempt this trail before July" is information I wish I'd had on several trips.</li>
+    <li><strong>User-generated content:</strong> Let people upload trip reports, photos, and recent condition updates. Official APIs are great but often lag behind real-time conditions.</li>
+    <li><strong>Multi-day trip planning:</strong> The placeholder "Plan" mode could become a full itinerary builder—string together multiple trails, estimate daily mileage, suggest campsites, calculate total elevation gain.</li>
+    <li><strong>Gear recommendations:</strong> Based on trail difficulty, weather, and distance, suggest what to bring. Beginners especially would benefit from "you'll want trekking poles for this one."</li>
+    <li><strong>Offline mode:</strong> Download trail maps and details for offline access. Cell service is spotty on most trails; having critical info cached would be invaluable.</li>
+  </ul>
+
+  <p style="max-width: 75ch; margin-top: 16px;">
+    The core insight here: people don't just need to find trails—they need help with the entire pre-adventure workflow. Permits, routes, gear, conditions, and social coordination are all friction points that technology could smooth out. The question is which problems to solve first and how to keep the experience simple rather than overwhelming.
+  </p>
+
+  <h2 style="margin-top: 28px;">Tech Stack</h2>
+  <ul>
+    <li><strong>Frontend:</strong> React + TypeScript + Vite</li>
+    <li><strong>Styling:</strong> Tailwind CSS with custom earth-tone palette</li>
+    <li><strong>Maps:</strong> Leaflet + OpenStreetMap tiles</li>
+    <li><strong>APIs:</strong> National Park Service (trail data), OpenRouteService (geocoding + routing)</li>
+    <li><strong>Database:</strong> Bolt Database (Supabase) with edge functions</li>
+    <li><strong>State Management:</strong> React hooks (useState, useEffect) + custom hooks for data fetching</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">Key Learnings</h2>
+  <p style="max-width: 75ch;">
+    The biggest lesson: <strong>action beats anxiety.</strong> I went into this workshop intimidated by APIs I'd never used, worried about rate limits and error handling and authentication. But once I started making requests and seeing data come back, the mystery evaporated. APIs are just functions that happen to live on someone else's server.
+  </p>
+  <p style="max-width: 75ch;">
+    The second lesson: <strong>constraints breed creativity.</strong> Having limited time and no budget forced smart tradeoffs. I couldn't use premium data sources or build complex features, so I focused ruthlessly on what mattered: helping people find trails they can actually get to, with safety information they actually need.
+  </p>
+  <p style="max-width: 75ch;">
+    The third lesson: <strong>shipping is learning.</strong> I could have spent weeks researching the "right" way to build this. Instead, I built something imperfect in an evening and learned more from wrestling with real problems than I would have from any tutorial.
+  </p>
+</SiteLayout>
