@@ -1,0 +1,121 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "Breaking Up With My Recurring Subscription to Squarespace";
+export const date = "2026-01-01";
+export const excerpt =
+  "A practical walkthrough of migrating from hosting my (very lightweight) personal website on Squarespace (and paying $$ for it) to a DIY solution. What I learned + What helped.";
+export const tags = ["web", "infra", "learning-by-doing"];
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`}>
+  <h1>Breaking Up With My Recurring Subscription to Squarespace</h1>
+
+<p>
+  I wanted to rebuild my site so I could play with the wealth of tools to demistify how things work - and end a recurring subscription along the way. 
+</p>
+
+<p>
+  I originally built my personal site on Squarespace in January 2021, a few weeks
+  after getting accepted into Wharton. At the time, it felt like a grown-up step:
+  a clean, polished place on the internet that signaled I was serious and put
+  together.
+</p>
+
+<p>
+  This rebuild was also to leverage AI coding tools in a way that helped me understand how things work,
+  removing the cost of a recurring subscription for a very basic site, and
+  giving myself more flexibility to extend it over time.
+</p>
+
+<p>
+  I had also started running into limits with Squarespace when trying to host
+  projects I built elsewhere, including a project I made using Bolt. Rebuilding
+  the site myself gave me the freedom to integrate those projects directly,
+  without fighting the platform.
+</p>
+
+  <h2>Before &amp; After</h2>
+
+  <figure>
+    <img
+      src="/images/hero-squarespace.png"
+      alt="Hurricane Ridge in Olympic National Park, December 2020"
+    />
+    <figcaption>
+      <strong>January 2021.</strong> Hurricane Ridge, Olympic National Park. My
+      Squarespace-era homepage.
+    </figcaption>
+  </figure>
+
+  <figure>
+    <img
+      src="/images/hero-2026.png"
+      alt="Mt. Baker, Summer 2024"
+    />
+    <figcaption>
+      <strong>Summer 2024.</strong> Mt. Baker during an all-women climb
+      fundraising for SheJumps.
+    </figcaption>
+  </figure>
+
+  
+  <h2>How I approached the rebuild</h2>
+<p>
+  I scoped the rebuild with ChatGPT to understand what tools I would need and
+  what I could ignore.
+</p>
+
+<p>
+  I sanity checked the plan with an SDE friend to make sure I was not adding
+  unnecessary complexity.
+</p>
+
+<p>
+  I spent about two hours setting up the scaffolding. This included VS Code,
+  Astro, Netlify, and moving the site hosting off Squarespace.
+</p>
+
+<p>
+  Once the foundation was in place, I came back to focus on the content. That
+  part was fun and creative in a way the setup work was not.
+</p>
+
+<h2>Tools and setup</h2>
+
+<ul>
+  <li><strong>Astro</strong> for static site generation and layouts</li>
+  <li><strong>Markdown</strong> for writing and organizing content</li>
+  <li><strong>Vanilla CSS</strong> for layout and visual decisions</li>
+  <li><strong>GitHub</strong> for version control</li>
+  <li><strong>Netlify</strong> for hosting and deployment</li>
+</ul>
+
+<p>
+  I used AI as a support tool to help me understand unfamiliar concepts and debug
+  issues. I did not use it to make architectural decisions for me.
+</p>
+
+<p>
+  The hardest part was not syntax. It was building a clear mental model of how
+  the pieces fit together and deciding what level of structure was enough.
+</p>
+
+<p>
+  Working in VS Code felt less intimidating than I expected. It reminded me
+  that coding is mostly writing and organizing files. It is not that different
+  from building a Tumblr theme, just with better tools.
+</p>
+
+<h2>What this unlocked</h2>
+
+<p>
+  Once the scaffolding existed, continuing felt straightforward. I was no
+  longer blocked by the platform.
+</p>
+
+<p>
+  Rebuilding the site was not a big leap. It was a small set of decisions that
+  made the site easier to understand and easier to extend.
+  </p>
+</SiteLayout>

@@ -19,6 +19,7 @@ const { title = "Saachi K Gupta", showHero = false } = Astro.props;
         justify-content: space-between;
         align-items: center;
         padding: 24px 40px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
       }
 
       .name {
@@ -59,9 +60,71 @@ const { title = "Saachi K Gupta", showHero = false } = Astro.props;
         margin-right: 8px;
       }
 
+      /* --- Content typography + rhythm --- */
       main {
         padding: 40px;
         max-width: 900px;
+        width: 100%;
+        margin: 0 auto;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      main h1 {
+        margin: 0 0 14px;
+        line-height: 1.2;
+      }
+
+      main h2 {
+        margin: 28px 0 12px;
+        line-height: 1.25;
+      }
+
+      main p {
+        margin: 0 0 14px;
+      }
+
+      /* --- Images + figures: treat screenshots like designed cards --- */
+      main img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+      }
+
+      main figure {
+        margin: 16px 0 22px;
+        padding: 14px;
+        border: 1px solid rgba(0, 0, 0, 0.10);
+        border-radius: 14px;
+        background: rgba(0, 0, 0, 0.015);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      }
+
+      main figure + figure {
+        margin-top: 16px;
+      }
+
+      main figure img {
+        border-radius: 10px;
+        box-shadow: none; /* shadow belongs to the card */
+      }
+
+      /* Optional: crop super-wide screenshots so they feel less overwhelming.
+         If you don't want cropping, delete the next 4 lines. */
+      /*
+      main figure img {
+        max-height: 520px;
+        object-fit: cover;
+        object-position: top;
+      }
+      */
+
+      main figcaption {
+        margin-top: 10px;
+        font-size: 0.92rem;
+        line-height: 1.4;
+        color: rgba(0, 0, 0, 0.75);
       }
 
       @media (max-width: 640px) {
@@ -104,33 +167,65 @@ const { title = "Saachi K Gupta", showHero = false } = Astro.props;
         <a href="/adventures" class="home">Adventures</a>
 
         <!-- Social icons -->
-        <a href="https://www.linkedin.com/in/saachi-gupta/" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.linkedin.com/in/saachi-gupta/"
+          aria-label="LinkedIn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M4.98 3.5a2.5 2.5 0 1 0 .02 5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3zm7 0h3.8v1.7h.05c.5-.9 1.7-1.8 3.5-1.8 3.8 0 4.5 2.5 4.5 5.7V21h-4v-5.3c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H10z"/>
+            <path
+              fill="currentColor"
+              d="M4.98 3.5a2.5 2.5 0 1 0 .02 5a2.5 2.5 0 0 0-.02-5ZM3 9h4v12H3zm7 0h3.8v1.7h.05c.5-.9 1.7-1.8 3.5-1.8 3.8 0 4.5 2.5 4.5 5.7V21h-4v-5.3c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H10z"
+            />
           </svg>
         </a>
 
-        <a href="https://twitter.com/s44ch1" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://twitter.com/s44ch1"
+          aria-label="Twitter"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.38a8.6 8.6 0 0 1-2.72 1.04a4.28 4.28 0 0 0-7.29 3.9A12.14 12.14 0 0 1 3.15 4.9a4.28 4.28 0 0 0 1.32 5.7a4.2 4.2 0 0 1-1.94-.54v.05a4.28 4.28 0 0 0 3.44 4.2a4.3 4.3 0 0 1-1.93.07a4.28 4.28 0 0 0 4 3a8.58 8.58 0 0 1-5.32 1.84A8.8 8.8 0 0 1 2 19.54a12.1 12.1 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2c0-.19 0-.37-.01-.56A8.7 8.7 0 0 0 22.46 6Z"/>
+            <path
+              fill="currentColor"
+              d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 0 0 1.88-2.38a8.6 8.6 0 0 1-2.72 1.04a4.28 4.28 0 0 0-7.29 3.9A12.14 12.14 0 0 1 3.15 4.9a4.28 4.28 0 0 0 1.32 5.7a4.2 4.2 0 0 1-1.94-.54v.05a4.28 4.28 0 0 0 3.44 4.2a4.3 4.3 0 0 1-1.93.07a4.28 4.28 0 0 0 4 3a8.58 8.58 0 0 1-5.32 1.84A8.8 8.8 0 0 1 2 19.54a12.1 12.1 0 0 0 6.56 1.92c7.88 0 12.2-6.53 12.2-12.2c0-.19 0-.37-.01-.56A8.7 8.7 0 0 0 22.46 6Z"
+            />
           </svg>
         </a>
 
         <a href="mailto:saachikgupta@gmail.com" aria-label="Email">
           <svg viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5Z"/>
+            <path
+              fill="currentColor"
+              d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5-8-5V6l8 5 8-5Z"
+            />
           </svg>
         </a>
 
-        <a href="https://www.strava.com/athletes/63375829" aria-label="Strava" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.strava.com/athletes/63375829"
+          aria-label="Strava"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M15 10l-3-6-3 6h2l1-2 1 2zm-3 1l3 6h-2l-1-2-1 2H9z"/>
+            <path fill="currentColor" d="M15 10l-3-6-3 6h2l1-2 1 2zm-3 1l3 6h-2l-1-2-1 2H9z" />
           </svg>
         </a>
 
-        <a href="https://www.instagram.com/s44ch1" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://www.instagram.com/s44ch1"
+          aria-label="Instagram"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <svg viewBox="0 0 24 24" width="24" height="24">
-            <path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm5 5a5 5 0 1 0 .01 10A5 5 0 0 0 12 7Zm6-1a1 1 0 1 0 0 2a1 1 0 0 0 0-2Z"/>
+            <path
+              fill="currentColor"
+              d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm5 5a5 5 0 1 0 .01 10A5 5 0 0 0 12 7Zm6-1a1 1 0 1 0 0 2a1 1 0 0 0 0-2Z"
+            />
           </svg>
         </a>
       </nav>
