@@ -1,0 +1,137 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "Building an Opportunity Tracker";
+export const date = "2026-03-04";
+export const excerpt =
+  "A full-stack personal CRM for tracking professional opportunities: Kanban board, Gmail scanning, AI-powered lead extraction from screenshots and pasted text, morning digest, and reply-to-update commands. Deployed at jobs.saachigupta.net.";
+export const tags = ["ai", "full-stack", "python", "personal-crm", "learning-by-doing"];
+export const link = "https://jobs.saachigupta.net";
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`}>
+  <h1>Building an Opportunity Tracker</h1>
+  <p style="opacity:0.7; font-size: 14px;">March 2026</p>
+
+  <p style="max-width: 75ch;">
+    Staying on top of a high-volume professional pipeline is genuinely hard. Information lives across Gmail threads, LinkedIn messages, and mental notes. Follow-ups get missed. Conversations go stale. The overhead of tracking everything starts to compete with the actual work of moving things forward.
+  </p>
+
+  <p style="max-width: 75ch;">
+    So I built a tool to manage it. In one afternoon with Claude Code, I shipped a full-stack opportunity tracker — a password-protected Kanban board with Gmail integration, AI-powered contact extraction from screenshots and pasted text, a morning email digest, and reply-to-update command parsing. It lives at <a href="https://jobs.saachigupta.net" target="_blank" rel="noopener noreferrer">jobs.saachigupta.net</a>.
+  </p>
+
+  <h2 style="margin-top: 28px;">What it does</h2>
+
+  <p style="max-width: 75ch;">
+    The dashboard has four columns: <strong>Active</strong>, <strong>Waiting on Them</strong>, <strong>Follow Up on Me</strong>, and <strong>Closed</strong>. Each contact card shows name, organization, role, days since last contact, and a stale flag when a thread has gone quiet past a configurable threshold.
+  </p>
+
+  <p style="max-width: 75ch;">
+    The features I use most:
+  </p>
+
+  <ul style="max-width: 75ch; line-height: 2;">
+    <li><strong>Free-text paste:</strong> Copy any email, LinkedIn message, or raw notes into the Add Contact form, hit Parse, and Claude extracts name, organization, role, status, and next action. Review and save.</li>
+    <li><strong>Gmail scanning:</strong> Connects to Gmail via OAuth and scans for relevant emails. Matches by sender email or organization name in the subject — so automated emails from ATS platforms get matched to the right contact even when the sender address isn't the person you spoke with.</li>
+    <li><strong>Morning digest:</strong> Every day at 8am PT, a digest arrives listing all active contacts grouped by status, with stale flags and next actions. No dashboard login required.</li>
+    <li><strong>Reply-to-update:</strong> Reply to the digest email with commands like <code>close 3</code>, <code>waiting 2</code>, or <code>note 4 great call, following up Friday</code> — the app polls every 20 minutes and applies updates automatically.</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">Architecture</h2>
+
+  <p style="max-width: 75ch;">
+    The stack is FastAPI + PostgreSQL deployed on Railway, with a single-page vanilla JS frontend served as static files from the same process. DNS runs through Netlify via a CNAME pointing the subdomain at Railway.
+  </p>
+
+  <pre style="background: #f5f5f5; border-radius: 10px; padding: 24px; font-size: 12px; overflow-x: auto; line-height: 1.7; max-width: 100%;">
+┌─────────────────────────────────────────────┐
+│            jobs.saachigupta.net             │
+│       Netlify DNS → CNAME → Railway         │
+└─────────────────┬───────────────────────────┘
+                  │ HTTPS
+                  ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    FastAPI  (Railway)                        │
+│                                                             │
+│  ┌─────────────┐  ┌──────────────┐  ┌──────────────────┐  │
+│  │  Auth       │  │  Contacts    │  │  Gmail OAuth     │  │
+│  │  cookie     │  │  CRUD API    │  │  scan / digest   │  │
+│  └─────────────┘  └──────────────┘  └──────────────────┘  │
+│                                                             │
+│  ┌─────────────┐  ┌──────────────┐  ┌──────────────────┐  │
+│  │  Vision API │  │  APScheduler │  │  Static Files    │  │
+│  │  text+image │  │  3 jobs      │  │  HTML / JS / CSS │  │
+│  └─────────────┘  └──────────────┘  └──────────────────┘  │
+└──────────┬──────────────┬───────────────┬──────────────────┘
+           │              │               │
+           ▼              ▼               ▼
+  ┌──────────────┐ ┌─────────────┐ ┌──────────────────┐
+  │  PostgreSQL  │ │  Gmail API  │ │  Anthropic API   │
+  │  Railway     │ │  Google     │ │  claude-sonnet   │
+  └──────────────┘ └─────────────┘ └──────────────────┘
+
+APScheduler runs 3 background jobs inside the FastAPI process:
+  • 8:00am PT daily  → build + send email digest
+  • every 20 min     → poll digest thread for reply commands
+  • every 60 min     → scan Gmail for new inbound emails
+  </pre>
+
+  <h2 style="margin-top: 28px;">The interesting problems</h2>
+
+  <p style="max-width: 75ch;">
+    <strong>ATS email matching.</strong> Automated platform emails often come from a generic no-reply address — not the person you actually spoke with. My initial scan matched contacts by sender email only, so it missed these entirely. The fix: a secondary match that checks whether the organization name appears in the email subject. Same logic catches emails from Greenhouse, Lever, Ashby, Workday, and similar platforms.
+  </p>
+
+  <p style="max-width: 75ch;">
+    <strong>Too much automation is a bug.</strong> The first version auto-applied everything: new contacts, status updates, closures — all without asking. It immediately closed a contact based on a false positive ("unfortunately" appeared in a confirmation email) and flooded the Active column with newsletter signups. The fix was a review modal — the scanner now returns proposed changes, I approve or dismiss each one, and only selected changes get applied.
+  </p>
+
+  <p style="max-width: 75ch;">
+    <strong>Railway internal networking.</strong> Railway's PostgreSQL plugin provides a <code>.railway.internal</code> hostname that only resolves inside their network. Hardcoding it as a plain environment variable broke startup — Railway needs the variable set as a <em>reference</em> (<code>${{Postgres.DATABASE_URL}}</code>) to wire up the internal network dependency. Several healthcheck failures before this clicked.
+  </p>
+
+  <p style="max-width: 75ch;">
+    <strong>PostgreSQL sequence collision.</strong> The seed script inserted rows with explicit IDs but didn't update the Postgres autoincrement sequence. The first new insert tried ID 1, which already existed, and crashed. Fix: <code>SELECT setval('contacts_id_seq', (SELECT MAX(id) FROM contacts))</code> at the end of the seed script.
+  </p>
+
+  <h2 style="margin-top: 28px;">What I'd do differently</h2>
+
+  <p style="max-width: 75ch;">
+    Start with the review step. The temptation with AI-powered automation is to skip confirmation entirely — but for anything that writes to a real database, a human-in-the-loop step is almost always worth the extra click. Approving a proposed change takes two seconds. Debugging a wrongly closed contact takes much longer.
+  </p>
+
+  <p style="max-width: 75ch;">
+    I'd also define the email matching rules more precisely upfront. "Relevant email" is fuzzier than it sounds — it includes platform confirmations, rejection emails from no-reply addresses, notification digests, and direct human outreach. A keyword filter catches all of them indiscriminately. A tighter definition from the start would have saved several iterations.
+  </p>
+
+  <h2 style="margin-top: 28px;">Tools used</h2>
+
+  <ul style="max-width: 75ch; line-height: 2;">
+    <li><strong>FastAPI</strong> — Python web framework; serves both the API and static frontend files</li>
+    <li><strong>PostgreSQL</strong> — stores contacts, digest threads, and Gmail OAuth tokens</li>
+    <li><strong>SQLAlchemy (async)</strong> — ORM with asyncpg driver</li>
+    <li><strong>APScheduler</strong> — in-process scheduler for digest, scan, and reply polling</li>
+    <li><strong>Google Gmail API</strong> — OAuth2 for reading inbox, sending digest, threading</li>
+    <li><strong>Anthropic API (claude-sonnet-4-6)</strong> — vision and text extraction for contact parsing</li>
+    <li><strong>itsdangerous</strong> — signed cookie auth with a single shared password</li>
+    <li><strong>Railway</strong> — deployment with managed PostgreSQL</li>
+    <li><strong>Netlify DNS</strong> — CNAME routing for the subdomain</li>
+    <li><strong>Claude Code</strong> — AI pair programmer that built most of this</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">Honest reflection</h2>
+
+  <p style="max-width: 75ch;">
+    I couldn't have shipped this solo in a day. The architecture — async SQLAlchemy, APScheduler inside FastAPI's lifespan context, Gmail OAuth token refresh, Railway's internal networking model — each piece would have taken hours to figure out independently. With Claude Code, the hard parts became: describe what you want, review what it built, debug together.
+  </p>
+
+  <p style="max-width: 75ch;">
+    What that unlocked wasn't just speed. It was scope. I would never have started a project that touched Gmail OAuth, a background scheduler, a vision API, and a reply-parsing email bot all at once. The AI-assisted workflow made the whole thing feel tractable from the first message.
+  </p>
+
+  <p style="max-width: 75ch;">
+    The thing I keep coming back to: the best use of AI tools isn't automating the interesting parts — it's removing the activation energy for building at all. Once something exists, iterating on it is easy. Getting to "it exists" used to be the hard part.
+  </p>
+
+</SiteLayout>
