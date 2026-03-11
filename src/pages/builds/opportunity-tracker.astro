@@ -4,7 +4,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 export const title = "Building an Opportunity Tracker";
 export const date = "2026-03-04";
 export const excerpt =
-  "A full-stack personal CRM for tracking professional opportunities: Kanban board, Gmail scanning, AI-powered lead extraction from screenshots and pasted text, morning digest, and reply-to-update commands. Deployed at jobs.saachigupta.net.";
+  "A full-stack personal CRM for tracking professional opportunities: Kanban board, Gmail scanning, AI-powered lead extraction from screenshots and pasted text, morning digest, and reply-to-update commands. Deployed on my website for access on any device.";
 export const tags = ["ai", "full-stack", "python", "personal-crm", "learning-by-doing"];
 export const link = "https://jobs.saachigupta.net";
 ---
@@ -88,7 +88,7 @@ APScheduler runs 3 background jobs inside the FastAPI process:
   </p>
 
   <p style="max-width: 75ch;">
-    <strong>Railway internal networking.</strong> Railway's PostgreSQL plugin provides a <code>.railway.internal</code> hostname that only resolves inside their network. Hardcoding it as a plain environment variable broke startup — Railway needs the variable set as a <em>reference</em> (<code>${{Postgres.DATABASE_URL}}</code>) to wire up the internal network dependency. Several healthcheck failures before this clicked.
+    <strong>Railway internal networking.</strong> Railway's PostgreSQL plugin provides a <code>.railway.internal</code> hostname that only resolves inside their network. Hardcoding it as a plain environment variable broke startup — Railway needs the variable set as a <em>reference</em> (<code>$&#123;&#123;Postgres.DATABASE_URL&#125;&#125;</code>) to wire up the internal network dependency. Several healthcheck failures before this clicked.
   </p>
 
   <p style="max-width: 75ch;">
