@@ -1,29 +1,15 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 
-export const title = "SheJumps x Ikon Pass: Coming Back to the Mountain";
+export const title = "SheJumps x Ikon Pass: Back to Skiing!";
 export const date = "2026-04-01";
 export const excerpt =
-  "After injuries, financial barriers, and a year in rehab, a scholarship program gave me more than ski access — it gave me belonging.";
+  "After several years away from skiing due to injuries, moving states after grad school, and lots and lots of PT, SheJumps' Ikon Pass Scholarship program got me back into it — with rentals, a lesson, a pass, and a community of women getting into snow sports alongside me.";
 export const tags = ["skiing", "shejumps", "community", "outdoor access"];
-export const coverImage = "";
 ---
 
 <SiteLayout title={`${title} — Saachi K Gupta`}>
   <style>
-    .hero {
-      display: block;
-      width: 100%;
-      height: 460px;
-      object-fit: cover;
-      border-radius: 14px;
-      margin-bottom: 28px;
-    }
-
-    @media (max-width: 640px) {
-      .hero { height: 240px; }
-    }
-
     .strava-link {
       display: inline-flex;
       align-items: center;
@@ -72,25 +58,57 @@ export const coverImage = "";
       margin-top: 16px !important;
       margin-bottom: 0 !important;
     }
-  </style>
 
-  {coverImage && <img class="hero" src={coverImage} alt={title} />}
+    .cta-block {
+      margin-top: 32px;
+      padding: 24px;
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 14px;
+      max-width: 75ch;
+    }
+
+    .cta-block p {
+      margin: 0 0 16px 0;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 10px 22px;
+      background: black;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      transition: opacity 0.15s ease;
+    }
+
+    .cta-button:hover {
+      opacity: 0.75;
+    }
+  </style>
 
   <h1>{title}</h1>
   <p style="opacity:0.7;">{date}</p>
 
   <p style="max-width: 75ch;">
-    I was skiing a blue run when it hit me: I wasn't bracing for impact. I was just skiing. Grounded, present, my body doing something I'd spent years convincing myself it couldn't do anymore. It was one of those moments that's small and enormous at the same time.
+    Leapfrogging my pals while skiing a blue run at Mt. Bachelor in Bend is the kind of joy, belonging, and fun I aspired to when applying for this program. I wasn't afraid of falling, or tense with anxiety at the steep and icy parts — just enjoying the gorgeous view and getting to spend time with people.
+  </p>
+
+  <p style="max-width: 75ch;">
+    SheJumps' scholarship included season rentals (through <a href="https://www.christysports.com/store-locations/ski-mart-bellevue.html">Ski Mart Bellevue</a>), a half-day lesson (I chose <a href="https://www.crystalmountainresort.com/plan-your-trip/ski-and-snowboard-lessons/adult-group-lessons">Crystal Mountain</a>), and an Ikon Pass. It also — crucially — gave me a community of women who were getting into snow sports, making me feel included in an activity that I am very much a neophyte at.
   </p>
 
   <h2 style="margin-top: 28px;">How skiing got away from me</h2>
 
   <p style="max-width: 75ch;">
-    I first learned to ski in 2019, shortly after moving to Denver. I was a beginner, enthusiastic but inconsistent — the kind of skier who got better each time and then didn't go again for months. Life kept interrupting: relocations, schedules, the sheer cost of the sport.
+    I first learned to ski in 2019, shortly after moving to Denver. I was a beginner, enthusiastic, and consistent for the three months of ski season I was there for. I got better — more confident, more technical — each time. Then life got in the way: I moved to Seattle, then Arizona, then back to Seattle, and we had a global pandemic. I found it hard to justify a pass when I was far from mountains and didn't feel like I was "good enough" to justify the investment.
   </p>
 
   <p style="max-width: 75ch;">
-    Then in 2024, a cycling accident put me out for an entire winter. I spent months in rehab, rebuilding strength and relearning how to trust my body. By the time I was physically ready to ski again, the financial and psychological barriers had compounded. I didn't own gear. Lift tickets alone could run $200 a day. And I had no community of people at my level — mostly I'd been trying to keep up with skiers far ahead of me, which is its own kind of discouraging.
+    In 2024 I moved back to WA and was excited to finally get into skiing consistently. At the end of the summer, a cycling accident put me out for an entire winter. I spent months in PT, rebuilding strength and relearning how to trust my body. By the time I was physically ready to ski again, the psychological barriers had compounded. I didn't own gear. Lift tickets alone could run $200 a day. And I had no community of people at my level — my friends, who I loved doing other activities with, were much better skiers, and I feared feeling pressured to go on terrain beyond my comfort or slowing them down.
   </p>
 
   <!-- TODO: add image -->
@@ -98,11 +116,27 @@ export const coverImage = "";
   <h2 style="margin-top: 28px;">Why SheJumps</h2>
 
   <p style="max-width: 75ch;">
-    Growing up, my immigrant family explored museums, not trails. The outdoors — and especially skiing — felt like a world that wasn't built for people like me. I've spent years actively working against that feeling, earning my way into outdoor spaces one trip at a time. But access isn't just about will. It's also about cost, community, and representation.
+    Growing up, my immigrant family explored museums, not trails. The outdoors — and especially skiing — felt like a different world. I've spent years actively working against that feeling, earning my way into outdoor spaces one trip at a time.
   </p>
 
   <p style="max-width: 75ch;">
-    The SheJumps x Ikon Pass Mountain Access Program removed the financial barrier entirely. But more than that, it offered something I'd experienced once before and found transformative: an all-women environment. During a NOLS course in Alaska, I discovered how differently I showed up when I wasn't self-editing for a mixed group. I led on loose gravel. I voiced disagreements. I asked for what I needed. The SheJumps program offered that same container — a space where I could be a beginner without apology.
+    That started to shift in the summer of 2018, when I moved to Denver for a work rotation. I went camping — with the intention of actually enjoying it — and I did. I got into hiking. Something clicked: outdoor spaces could be mine too, if I kept showing up.
+  </p>
+
+  <p style="max-width: 75ch;">
+    SheJumps has been a big part of deepening that relationship. The summer before Baker, I joined 13 other adult women for a week off-grid in the Chugach Mountains of Alaska through a <a href="https://www.nols.edu/">NOLS</a> course. Even during the least "fun" moments — rain, cold, a scary loose-gravel mountain pass — I felt energized by the support of my peers. I didn't track elevation or mileage; I just got to be present, moving toward each day's destination, singing Taylor Swift while bushwhacking up a mountain. It was a needed reminder that doing hard things can be exhilarating, terrifying, and fun all at once.
+  </p>
+
+  <p style="max-width: 75ch;">
+    Around that same time, I got <a href="https://www.shejumps.org/wfa">Wilderness First Aid certified with SheJumps and the Appalachian Mountain Club</a>, alongside other BIPOC women — a beautiful fall weekend in New England learning how to recreate more responsibly. I'm most proud of the times I've led people's first camping, backpacking, hiking, and snowshoe experiences, and WFA gave me more confidence to do that well.
+  </p>
+
+  <p style="max-width: 75ch;">
+    Then in July 2024, I climbed Mt. Baker (Koma Kulshan) as part of a <a href="https://www.shejumps.org/fundraising-climbs">SheJumps fundraising climb</a> — eight women, six months of training, my first ever mountaineering experience, and over $20K raised collectively. I'd never really considered myself "athletic," and declaring a goal like that publicly was uncomfortable. But working toward something hard in the company of other women, with their honesty and encouragement, was transformative. The guides from Alpine Ascents International set us up beautifully. The summit was everything.
+  </p>
+
+  <p style="max-width: 75ch;">
+    All of that is the container SheJumps builds. The Ikon Pass scholarship was one more expression of it — a space where I could be a beginner on skis without apology. Access isn't just about cost. It's also about community and representation.
   </p>
 
   <!-- TODO: add image -->
@@ -115,18 +149,6 @@ export const coverImage = "";
 
   <p style="max-width: 75ch;">
     I also got the chance to meet Guy Lawrence, the GM of The Summit at Snoqualmie — a conversation that opened up a whole other lens on the sport, from water rights and snowmaking to the operational complexity of running a seasonal business. It was the outdoors meeting the intellectual curiosity I usually reserve for work, and I loved it.
-  </p>
-
-  <!-- TODO: add image -->
-
-  <h2 style="margin-top: 28px;">That blue run moment</h2>
-
-  <p style="max-width: 75ch;">
-    The standout moment was simpler than I expected. I was skiing a blue run — not my first, but the first one where I wasn't managing fear in the background. I wasn't thinking about my knee or my crash or what would happen if I fell. I was just there, on the mountain, doing the thing. My body knew what to do.
-  </p>
-
-  <p style="max-width: 75ch;">
-    It reminded me that trust isn't something you decide to have. It's something you rebuild, slowly, in exactly the right conditions. SheJumps created those conditions.
   </p>
 
   <!-- TODO: add image -->
@@ -246,4 +268,9 @@ export const coverImage = "";
   <p style="max-width: 75ch;">
     More than the access, SheJumps gave me momentum and belonging — two things that turn a one-season experiment into a lifelong pursuit.
   </p>
+
+  <div class="cta-block">
+    <p>SheJumps creates access to the outdoors for women and girls through free and low-cost programming — 200+ events a year, over half of them free or donation-based. If this resonated with you, consider supporting their work.</p>
+    <a class="cta-button" href="https://www.shejumps.org/" target="_blank" rel="noopener">Support SheJumps →</a>
+  </div>
 </SiteLayout>
