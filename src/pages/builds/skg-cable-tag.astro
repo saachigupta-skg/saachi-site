@@ -1,0 +1,109 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "SKG Cable Tag — My First 3D Print";
+export const date = "2026-03-21";
+export const excerpt =
+  "I wanted a little signet-ring-style tag for my charger cables with my initials. I'd never used a 3D printer or CAD software before. Here's how it went.";
+export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`}>
+  <h1>{title}</h1>
+  <p style="opacity:0.6; font-size: 13px;">{date}</p>
+
+  <p style="max-width: 75ch;">
+    I saw a product online — a little 3D-printed name tag clipped onto a charging cable — and thought: I could make that myself. The Capitol Hill Tool Library has a Bambu Lab X1 Carbon. I'd never touched CAD software or a 3D printer. How hard could it be?
+  </p>
+
+  <h2 style="margin-top: 28px;">The Idea</h2>
+  <p style="max-width: 75ch;">
+    I wanted something with my initials, SKG, that would clip onto my iPhone and Garmin charger cables so I can tell them apart. Simple enough in theory. The first design question: how does it actually attach?
+  </p>
+
+  <h2 style="margin-top: 28px;">Snap or tube?</h2>
+  <p style="max-width: 75ch;">
+    My first instinct was a snap-clip — something that presses onto the cable from the side. But cables have connectors on both ends (a USB plug on one side, a Lightning or USB-C on the other), so you can't thread a tag on from the end. The opening would need to be wide enough to slide over the connector head.
+  </p>
+  <p style="max-width: 75ch; margin-top: 12px;">
+    That led to the better idea: a <strong>ring with a tunnel through it</strong> — like a chunky signet ring. The cable threads through the middle. No snapping, no worrying about grip. The cable just lives inside it.
+  </p>
+  <p style="max-width: 75ch; margin-top: 12px;">
+    Lightning connector heads are about 7.5mm × 5mm, so I sized the tunnel to 5mm diameter — wide enough for the cable body (~3.5mm) to slide freely, narrow enough to stay put once positioned.
+  </p>
+
+  <h2 style="margin-top: 28px;">Building it in Tinkercad</h2>
+  <p style="max-width: 75ch;">
+    I used Tinkercad — free, browser-based, no install. The whole design is just three shapes: a box, a cylinder hole, and text.
+  </p>
+
+  <h3 style="margin-top: 20px;">Step 1 — The main block</h3>
+  <p style="max-width: 75ch;">
+    A box: 20mm long, 12mm tall, 8mm deep. That's the body of the tag.
+  </p>
+  <img
+    src="/images/skg-step1-box.png"
+    alt="Orange box in Tinkercad with dimensions 20x8x12"
+    style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
+  />
+
+  <h3 style="margin-top: 24px;">Step 2 — The hole</h3>
+  <p style="max-width: 75ch;">
+    A second box set to "Hole" — Tinkercad's way of making a shape subtract from another instead of adding. Position it inside the main block, group them, and you get a cutout. I started with a square hole, then switched to a cylinder for a cleaner round tunnel that matches the cable's circular cross-section.
+  </p>
+  <img
+    src="/images/skg-step2-hole.png"
+    alt="Hole box positioned inside the main orange block"
+    style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
+  />
+
+  <h3 style="margin-top: 24px;">Step 3 — Getting the cylinder right</h3>
+  <p style="max-width: 75ch;">
+    This took the most iterations. A cylinder has an orientation — it needs to run front-to-back through the block so the cable can thread through. Getting it rotated correctly and centered inside the block took a few tries. The RIGHT view in Tinkercad was the most useful angle for checking it.
+  </p>
+  <img
+    src="/images/skg-step3-cylinder.png"
+    alt="View from the right showing cylinder tunnel through the block"
+    style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
+  />
+
+  <h3 style="margin-top: 24px;">Step 4 — The initials</h3>
+  <p style="max-width: 75ch;">
+    Tinkercad has a built-in Text shape. I typed SKG, set the height to 3mm so it's chunky enough to feel raised, and pushed it slightly into the front face of the block so it's anchored rather than floating. Solid (not Hole), so the letters stick out.
+  </p>
+  <img
+    src="/images/skg-step4-front.png"
+    alt="Front view of the block with SKG initials raised on the face"
+    style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
+  />
+
+  <h3 style="margin-top: 24px;">The final design</h3>
+  <p style="max-width: 75ch;">
+    Group everything, export as STL. The tunnel runs through the short depth of the block. SKG sits raised on the wide front face. It looks exactly like a little signet ring for a cable.
+  </p>
+  <img
+    src="/images/skg-step5-final.png"
+    alt="Final design from the right angle showing tunnel and SKG initials"
+    style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
+  />
+
+  <h2 style="margin-top: 28px;">What I learned</h2>
+  <ul style="max-width: 75ch;">
+    <li><strong>Think about assembly before you design.</strong> The connector-end problem — not being able to slide a tag on from the end — completely changed the design. Always think about how the thing will actually go on and come off in real life.</li>
+    <li><strong>Orientation matters in 3D.</strong> A cylinder pointing the wrong direction is useless. Switching between TOP, FRONT, and RIGHT views in Tinkercad was the key to understanding where things actually were.</li>
+    <li><strong>Holes are shapes too.</strong> Tinkercad's Hole/Solid toggle is elegant — any shape can be a subtraction. Once that clicked, the whole design process made sense.</li>
+    <li><strong>Start simpler than you think.</strong> I tried to do too many things at once early on and got lost. Breaking it into one shape at a time, confirming each step, was the right pace.</li>
+  </ul>
+
+  <h2 style="margin-top: 28px;">Next step</h2>
+  <p style="max-width: 75ch;">
+    Bring the STL to the Capitol Hill Tool Library and print it on the Bambu Lab X1 Carbon. I'll update this once it's in my hands.
+  </p>
+
+  <h2 style="margin-top: 28px;">Tools used</h2>
+  <ul>
+    <li><strong>Design:</strong> Tinkercad (browser-based, free)</li>
+    <li><strong>Slicer:</strong> Bambu Studio</li>
+    <li><strong>Printer:</strong> Bambu Lab X1 Carbon (Capitol Hill Tool Library)</li>
+  </ul>
+</SiteLayout>

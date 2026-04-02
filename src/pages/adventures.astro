@@ -1,8 +1,229 @@
 ---
 import SiteLayout from "../layouts/SiteLayout.astro";
+
+const modules = import.meta.glob("./adventures/*.astro", { eager: true });
+const rawModules = import.meta.glob("./adventures/*.astro", { as: 'raw', eager: true });
+
+function estimateReadTime(raw: string): string {
+  const body = raw
+    .replace(/^---[\s\S]*?---\n?/, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\{[^}]*\}/g, ' ');
+  const words = body.trim().split(/\s+/).filter((w: string) => w.length > 1).length;
+  return `${Math.max(1, Math.ceil(words / 200))} min read`;
+}
+
+const adventures = Object.entries(modules)
+  .filter(([path]) => !path.includes("/index."))
+  .map(([path, mod]: [string, any]) => {
+    const slug = path.replace("./adventures/", "").replace(".astro", "");
+    const url = `/adventures/${slug}`;
+    const readTime = estimateReadTime(rawModules[path] ?? "");
+    return {
+      url,
+      title: mod.title ?? slug.replaceAll("-", " "),
+      date: mod.date ?? "",
+      excerpt: mod.excerpt ?? "",
+      tags: Array.isArray(mod.tags) ? mod.tags : [],
+      location: mod.location ?? "",
+      activityType: mod.activityType ?? "",
+      distance: mod.distance ?? "",
+      elevation: mod.elevation ?? "",
+      coverImage: mod.coverImage ?? "",
+      readTime,
+    };
+  })
+  .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+
+function formatDate(iso: string) {
+  if (!iso) return "";
+  const d = new Date(iso + "T00:00:00");
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", year: "numeric" });
+}
 ---
 
 <SiteLayout title="Adventures — Saachi K Gupta">
+  <style>
+    .grid {
+      margin-top: 32px;
+      display: grid;
+      gap: 24px;
+      max-width: 900px;
+    }
+
+    .card {
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 14px;
+      overflow: hidden;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(0,0,0,0.08);
+      border-color: rgba(0,0,0,0.16);
+    }
+
+    .card-image {
+      display: block;
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 18px 20px 20px;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .card a {
+      color: black;
+      text-decoration: none;
+    }
+
+    .card a:hover {
+      text-decoration: underline;
+    }
+
+    .meta {
+      margin-top: 6px;
+      font-size: 13px;
+      color: rgba(0,0,0,0.55);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .sep { opacity: 0.4; }
+
+    .stats {
+      margin-top: 10px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .activity-tag {
+      font-size: 11px;
+      padding: 3px 9px;
+      background: rgba(0,0,0,0.08);
+      border-radius: 999px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .stat-numbers {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(0,0,0,0.7);
+    }
+
+    .tags {
+      margin-top: 8px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 9px;
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 999px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .excerpt {
+      margin: 10px 0 0 0;
+      font-size: 15px;
+      line-height: 1.55;
+      max-width: 75ch;
+      color: rgba(0,0,0,0.8);
+    }
+
+    .actions {
+      margin-top: 14px;
+      font-size: 14px;
+    }
+
+    .empty {
+      margin-top: 40px;
+      color: rgba(0,0,0,0.45);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .card-image { height: 200px; }
+      .card h2 { font-size: 18px; }
+      .excerpt { font-size: 14px; }
+    }
+  </style>
+
   <h1>Adventures</h1>
-  <p>Trip notes, routes, and small musings from the outdoors.</p>
+  <p style="max-width: 70ch;">
+    Trip notes, routes, and small musings from the outdoors. PNW mostly — trails, mountains, water.
+  </p>
+
+  {adventures.length === 0 ? (
+    <p class="empty">Trip reports coming soon.</p>
+  ) : (
+    <div class="grid">
+      {adventures.map((a) => (
+        <article class="card">
+          {a.coverImage && (
+            <a href={a.url}>
+              <img class="card-image" src={a.coverImage} alt={a.title} loading="lazy" />
+            </a>
+          )}
+
+          <div class="card-body">
+            <h2><a href={a.url}>{a.title}</a></h2>
+
+            <div class="meta">
+              {a.date && <span>{formatDate(a.date)}</span>}
+              {a.date && a.location && <span class="sep">·</span>}
+              {a.location && <span>{a.location}</span>}
+              {(a.date || a.location) && a.readTime && <span class="sep">·</span>}
+              {a.readTime && <span>{a.readTime}</span>}
+            </div>
+
+            {(a.activityType || a.distance || a.elevation) && (
+              <div class="stats">
+                {a.activityType && <span class="activity-tag">{a.activityType}</span>}
+                {(a.distance || a.elevation) && (
+                  <span class="stat-numbers">
+                    {[a.distance, a.elevation].filter(Boolean).join(" · ")}
+                  </span>
+                )}
+              </div>
+            )}
+
+            {a.tags?.length > 0 && (
+              <div class="tags">
+                {a.tags.map((t: string) => <span class="tag">{t}</span>)}
+              </div>
+            )}
+
+            {a.excerpt && <p class="excerpt">{a.excerpt}</p>}
+
+            <div class="actions">
+              <a href={a.url}>Read →</a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  )}
 </SiteLayout>

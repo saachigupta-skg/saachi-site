@@ -1,0 +1,159 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "Adventure Title Here";
+export const date = "2025-08-01";
+export const excerpt = "A short description of this trip — where you went, what made it worth doing, the vibe.";
+export const tags = ["hiking", "pnw"];
+export const location = "Location, WA";
+export const activityType = "hiking";
+export const distance = "14.2 mi";
+export const elevation = "+3,800 ft";
+export const coverImage = "https://picsum.photos/seed/pnw-cover/900/450";
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`}>
+  <style>
+    .hero {
+      display: block;
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 28px;
+    }
+
+    .post-meta {
+      font-size: 13px;
+      color: rgba(0,0,0,0.55);
+      margin: 6px 0 20px;
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .sep { opacity: 0.4; }
+
+    .stats-panel {
+      display: flex;
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 0 0 24px;
+      max-width: 480px;
+    }
+
+    .stat-item {
+      flex: 1;
+      padding: 14px 18px;
+      border-right: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .stat-item:last-child {
+      border-right: none;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.4);
+      margin-bottom: 4px;
+    }
+
+    .stat-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 9px;
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-radius: 999px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    @media (max-width: 640px) {
+      .hero { height: 240px; }
+      .stats-panel { max-width: 100%; }
+      .stat-item { padding: 12px 14px; }
+      .stat-value { font-size: 14px; }
+    }
+  </style>
+
+  <img class="hero" src="https://picsum.photos/seed/pnw-hero/1200/700" alt={title} />
+
+  <h1>{title}</h1>
+
+  <div class="post-meta">
+    <span>August 2025</span>
+    <span class="sep">·</span>
+    <span>{location}</span>
+  </div>
+
+  <div class="stats-panel">
+    <div class="stat-item">
+      <div class="stat-label">Distance</div>
+      <div class="stat-value">{distance}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Elevation</div>
+      <div class="stat-value">{elevation}</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">Activity</div>
+      <div class="stat-value">{activityType}</div>
+    </div>
+  </div>
+
+  <div class="tags">
+    {tags.map(t => <span class="tag">{t}</span>)}
+  </div>
+
+  <p style="max-width: 75ch;">
+    Write your opening here — the approach, the context, why this trip, what you were looking for.
+    What pulled you toward this particular place at this particular time?
+  </p>
+
+  <figure>
+    <img src="https://picsum.photos/seed/pnw-trail1/900/600" alt="Trail" />
+    <figcaption>Your caption here — describe what's in the photo or what you were thinking.</figcaption>
+  </figure>
+
+  <p style="max-width: 75ch;">
+    Middle section — the meat of the trip. What happened on the approach? Any nav challenges, gear wins or fails,
+    weather shifts, unexpected moments? What did the terrain actually feel like underfoot?
+  </p>
+
+  <p style="max-width: 75ch;">
+    Keep going. What did you see? What conversation or observation stuck with you? These are the details
+    that make a trip report worth reading instead of just a Strava entry.
+  </p>
+
+  <figure>
+    <img src="https://picsum.photos/seed/pnw-summit/900/600" alt="Summit or highlight" />
+    <figcaption>Your caption here.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="https://picsum.photos/seed/pnw-camp/900/600" alt="Camp or descent" />
+    <figcaption>Your caption here.</figcaption>
+  </figure>
+
+  <p style="max-width: 75ch;">
+    Closing thoughts — would you go back? What would you do differently? Any beta worth sharing for
+    someone planning the same route?
+  </p>
+</SiteLayout>
