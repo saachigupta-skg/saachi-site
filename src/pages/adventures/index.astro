@@ -1,8 +1,8 @@
 ---
-import SiteLayout from "../layouts/SiteLayout.astro";
+import SiteLayout from "../../layouts/SiteLayout.astro";
 
-const modules = import.meta.glob("./adventures/*.astro", { eager: true });
-const rawModules = import.meta.glob("./adventures/*.astro", { as: 'raw', eager: true });
+const modules = import.meta.glob("./*.astro", { eager: true });
+const rawModules = import.meta.glob("./*.astro", { as: 'raw', eager: true });
 
 function estimateReadTime(raw: string): string {
   const body = raw
@@ -14,9 +14,9 @@ function estimateReadTime(raw: string): string {
 }
 
 const adventures = Object.entries(modules)
-  .filter(([path]) => !path.includes("/index."))
+  .filter(([path]) => !path.endsWith("/index.astro") && !path.endsWith("/placeholder.astro"))
   .map(([path, mod]: [string, any]) => {
-    const slug = path.replace("./adventures/", "").replace(".astro", "");
+    const slug = path.replace("./", "").replace(".astro", "");
     const url = `/adventures/${slug}`;
     const readTime = estimateReadTime(rawModules[path] ?? "");
     return {
@@ -38,7 +38,7 @@ const adventures = Object.entries(modules)
 function formatDate(iso: string) {
   if (!iso) return "";
   const d = new Date(iso + "T00:00:00");
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", year: "numeric" });
+  return d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
 }
 ---
 

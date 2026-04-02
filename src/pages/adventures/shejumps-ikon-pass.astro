@@ -6,10 +6,24 @@ export const date = "2026-04-01";
 export const excerpt =
   "After injuries, financial barriers, and a year in rehab, a scholarship program gave me more than ski access — it gave me belonging.";
 export const tags = ["skiing", "shejumps", "community", "outdoor access"];
+export const coverImage = "";
 ---
 
 <SiteLayout title={`${title} — Saachi K Gupta`}>
   <style>
+    .hero {
+      display: block;
+      width: 100%;
+      height: 460px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 28px;
+    }
+
+    @media (max-width: 640px) {
+      .hero { height: 240px; }
+    }
+
     .strava-link {
       display: inline-flex;
       align-items: center;
@@ -59,6 +73,8 @@ export const tags = ["skiing", "shejumps", "community", "outdoor access"];
       margin-bottom: 0 !important;
     }
   </style>
+
+  {coverImage && <img class="hero" src={coverImage} alt={title} />}
 
   <h1>{title}</h1>
   <p style="opacity:0.7;">{date}</p>
@@ -188,6 +204,9 @@ export const tags = ["skiing", "shejumps", "community", "outdoor access"];
       <a class="strava-link" href="https://www.strava.com/activities/17737203288" target="_blank" rel="noopener">Run 1 on Strava →</a>
       <a class="strava-link" href="https://www.strava.com/activities/17737186444" target="_blank" rel="noopener">Run 2 on Strava →</a>
     </div>
+    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@s_k_g_8/video/7618825820856995102" data-video-id="7618825820856995102" style="max-width: 605px; min-width: 325px;">
+      <section></section>
+    </blockquote>
   </div>
 
   <!-- Session 6 -->
