@@ -4,7 +4,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 export const title = "SKG Cable Tag — My First [Independent] 3D Print";
 export const date = "2026-03-21";
 export const excerpt =
-  "I wanted a little signet-ring-style tag for my charger cables with my initials. I had not independently used a 3D printer or CAD software before. Here's how it went.";
+  "I wanted a signet-ring-style tag for my charger cables with my initials. It didn't quite fit the cable — but it looks great on my keychain. First independent 3D print, lessons learned.";
 export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
 ---
 
@@ -13,8 +13,8 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
   <p style="opacity:0.6; font-size: 13px;">{date}</p>
 
   <p style="max-width: 75ch;">
-    3D printing is so magical to me. While at Penn, I went to a Venture Lab workshop on 3D printing and was able to participate in a name-plate workshop. I loved the experience, and was inspired to try to make soemthing myself. I was STOKED to learn that the Capitol Hill Tool Library - a mere 3 blocks from my apartment - has a 3D printer that is free to use. Newly armed with the ability to learn anything with AI (!!) I set out to find something that would be fun to print and have Claude walk me through making it.
-    I saw a product online — a little 3D-printed name tag clipped onto a charging cable — and thought it seemed like a great initial project - personalized, a compound of basic shapes, and small. The Capitol Hill Tool Library has a Bambu Lab X1 Carbon, and I went in to learn about the print requirements. 
+    3D printing is so magical to me. While at Penn, I went to a Venture Lab workshop on 3D printing and was able to participate in a name-plate workshop. I loved the experience, and was inspired to try to make something myself. I was STOKED to learn that the <a href="https://sustainablecapitolhill.org/tool-library/" target="_blank" rel="noopener noreferrer">Capitol Hill Tool Library</a> - a mere 3 blocks from my apartment - has a 3D printer that is free to use. Newly armed with the ability to learn anything with AI (!!) I set out to find something that would be fun to print and have Claude walk me through making it.
+    I saw <a href="https://www.etsy.com/listing/741827296/6ft-personalized-iphone-android-cable" target="_blank" rel="noopener noreferrer">a product on Etsy</a> — a little 3D-printed name tag clipped onto a charging cable — and thought it seemed like a great initial project - personalized, a compound of basic shapes, and small. The <a href="https://sustainablecapitolhill.org/tool-library/" target="_blank" rel="noopener noreferrer">Capitol Hill Tool Library</a> has a Bambu Lab X1 Carbon, and I went in to learn about the print requirements. 
   </p>
 
   <h2 style="margin-top: 28px;">The Idea</h2>
@@ -30,12 +30,12 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
     That led to the better idea: a <strong>ring with a tunnel through it</strong> — like a chunky signet ring. The cable threads through the middle. No snapping, no worrying about grip. The cable just lives inside it.
   </p>
   <p style="max-width: 75ch; margin-top: 12px;">
-    Lightning connector heads are about 7.5mm × 5mm, so I sized the tunnel to 5mm diameter — wide enough for the cable body (~3.5mm) to slide freely, narrow enough to stay put once positioned.
+    Lightning connector heads are about 7.5mm × 5mm, so I sized the tunnel to 5mm diameter — wide enough for the cable body (~3.5mm) to slide freely, narrow enough to stay put once positioned. Spoiler: this was too small.
   </p>
 
   <h2 style="margin-top: 28px;">Building it in Tinkercad</h2>
   <p style="max-width: 75ch;">
-    I used Tinkercad — free, browser-based, no install. The whole design is just three shapes: a box, a cylinder hole, and text.
+    I used <a href="https://www.tinkercad.com/dashboard" target="_blank" rel="noopener noreferrer">Tinkercad</a> — free, browser-based, no install. The whole design is just three shapes: a box, a cylinder hole, and text.
   </p>
 
   <h3 style="margin-top: 20px;">Step 1 — The main block</h3>
@@ -43,7 +43,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
     A box: 20mm long, 12mm tall, 8mm deep. That's the body of the tag.
   </p>
   <img
-    src="/images/skg-step1-box.png"
+    src="/images/cable-tag/step1-box.png"
     alt="Orange box in Tinkercad with dimensions 20x8x12"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
   />
@@ -53,7 +53,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
     A second box set to "Hole" — Tinkercad's way of making a shape subtract from another instead of adding. Position it inside the main block, group them, and you get a cutout. I started with a square hole, then switched to a cylinder for a cleaner round tunnel that matches the cable's circular cross-section.
   </p>
   <img
-    src="/images/skg-step2-hole.png"
+    src="/images/cable-tag/step2-hole.png"
     alt="Hole box positioned inside the main orange block"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
   />
@@ -63,7 +63,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
     This took the most iterations. A cylinder has an orientation — it needs to run front-to-back through the block so the cable can thread through. Getting it rotated correctly and centered inside the block took a few tries. The RIGHT view in Tinkercad was the most useful angle for checking it.
   </p>
   <img
-    src="/images/skg-step3-cylinder.png"
+    src="/images/cable-tag/step3-cylinder.png"
     alt="View from the right showing cylinder tunnel through the block"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
   />
@@ -73,7 +73,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
     Tinkercad has a built-in Text shape. I typed SKG, set the height to 3mm so it's chunky enough to feel raised, and pushed it slightly into the front face of the block so it's anchored rather than floating. Solid (not Hole), so the letters stick out.
   </p>
   <img
-    src="/images/skg-step4-front.png"
+    src="/images/cable-tag/step4-front.png"
     alt="Front view of the block with SKG initials raised on the face"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
   />
@@ -83,7 +83,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
     Group everything, export as STL. The tunnel runs through the short depth of the block. SKG sits raised on the wide front face. It looks exactly like a little signet ring for a cable.
   </p>
   <img
-    src="/images/skg-step5-final.png"
+    src="/images/cable-tag/step5-final.png"
     alt="Final design from the right angle showing tunnel and SKG initials"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
   />
@@ -94,17 +94,54 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
     <li><strong>Orientation matters in 3D.</strong> A cylinder pointing the wrong direction is useless. Switching between TOP, FRONT, and RIGHT views in Tinkercad was the key to understanding where things actually were.</li>
     <li><strong>Holes are shapes too.</strong> Tinkercad's Hole/Solid toggle is elegant — any shape can be a subtraction. Once that clicked, the whole design process made sense.</li>
     <li><strong>Start simpler than you think.</strong> I tried to do too many things at once early on and got lost. Breaking it into one shape at a time, confirming each step, was the right pace.</li>
+    <li><strong>Measure twice, print once.</strong> I sized the tunnel to 5mm thinking it would clear the connector head — it didn't. The tunnel needs to be sized to the widest part of the connector, not the cable body. Proportions are unforgiving.</li>
   </ul>
 
-  <h2 style="margin-top: 28px;">Next step</h2>
+  <h2 style="margin-top: 28px;">The print</h2>
   <p style="max-width: 75ch;">
-    Bring the STL to the Capitol Hill Tool Library and print it on the Bambu Lab X1 Carbon. I'll update this once it's in my hands.
+    Brought the STL to the <a href="https://sustainablecapitolhill.org/tool-library/" target="_blank" rel="noopener noreferrer">Capitol Hill Tool Library</a> and loaded it into Bambu Studio. The Bambu Lab X1 Carbon ran it in about 20 minutes. I watched the whole thing — it's still a little magical every time.
+  </p>
+  <video
+    src="/images/cable-tag/tool-library-sign.mp4"
+    controls
+    muted
+    playsinline
+    style="margin-top: 14px; width: 100%; max-width: 75ch; aspect-ratio: 3/4; object-fit: cover; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10); display: block;"
+  ></video>
+  <img
+    src="/images/cable-tag/tool-library-printer.jpg"
+    alt="Bambu Lab X1 Carbon printer at the Capitol Hill Tool Library"
+    style="margin-top: 14px; width: 100%; max-width: 75ch; aspect-ratio: 3/4; object-fit: cover; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10); display: block;"
+  />
+
+  <h2 style="margin-top: 28px;">Sort of worked.</h2>
+  <p style="max-width: 75ch;">
+    Gold filament, SKG raised on the front — it looked exactly right. But the tunnel was too small. The connector head couldn't fit through, so it never made it onto a charging cable. It did, however, fit perfectly on a keyring. So now it lives on my keychain, which honestly might be better.
+  </p>
+  <img
+    src="/images/cable-tag/finished-keychain.jpg"
+    alt="Finished SKG cable tag on a keychain"
+    style="margin-top: 14px; width: 100%; max-width: 75ch; aspect-ratio: 3/4; object-fit: cover; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10); display: block;"
+  />
+  <video
+    src="/images/cable-tag/finished-twirl.mp4"
+    controls
+    muted
+    playsinline
+    style="margin-top: 14px; width: 100%; max-width: 75ch; aspect-ratio: 3/4; object-fit: cover; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10); display: block;"
+  ></video>
+
+  <h2 style="margin-top: 28px;">What's next</h2>
+  <p style="max-width: 75ch;">
+    Proportions are hard. I learned that the gap between "I think this will fit" and "this will fit" is exactly the kind of thing 3D printing will humble you on fast. v2 will be the same design with properly measured dimensions.
+
+    But more than the outcome — this was genuinely fun. I've tried 3D printing before, but always in structured workshops where someone was walking me through every step. Doing it alone — picking my own project, figuring out the design, troubleshooting on my own — built a kind of confidence those guided sessions never quite did. Getting to use the <a href="https://sustainablecapitolhill.org/tool-library/" target="_blank" rel="noopener noreferrer">Capitol Hill Tool Library</a> made it feel even better — it's a free community resource three blocks from my apartment, and I hadn't taken advantage of it until now. Knowing that this kind of making is accessible to me, in my neighborhood, is exciting. I want to keep experimenting and work my way up to something more complex. Next on my list: machine embroidery.
   </p>
 
   <h2 style="margin-top: 28px;">Tools used</h2>
   <ul>
-    <li><strong>Design:</strong> Tinkercad (browser-based, free)</li>
+    <li><strong>Design:</strong> <a href="https://www.tinkercad.com/dashboard" target="_blank" rel="noopener noreferrer">Tinkercad</a> (browser-based, free)</li>
     <li><strong>Slicer:</strong> Bambu Studio</li>
-    <li><strong>Printer:</strong> Bambu Lab X1 Carbon (Capitol Hill Tool Library)</li>
+    <li><strong>Printer:</strong> Bambu Lab X1 Carbon (<a href="https://sustainablecapitolhill.org/tool-library/" target="_blank" rel="noopener noreferrer">Capitol Hill Tool Library</a>)</li>
   </ul>
 </SiteLayout>
