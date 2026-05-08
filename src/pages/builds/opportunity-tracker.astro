@@ -14,17 +14,21 @@ export const link = "https://jobs.saachigupta.net";
   <p style="opacity:0.7; font-size: 14px;">March 2026</p>
 
   <p style="max-width: 75ch;">
-    Staying on top of a high-volume professional pipeline is genuinely hard. Information lives across Gmail threads, LinkedIn messages, and mental notes. Follow-ups get missed. Conversations go stale. The overhead of tracking everything starts to compete with the actual work of moving things forward.
+    In March, I was managing 20+ active conversations — recruiters, founders, referrals — across Gmail, LinkedIn, and my own head. I was missing follow-ups. Threads were going stale. The overhead of tracking was competing with actually moving things forward. So I built a tool.
   </p>
 
   <p style="max-width: 75ch;">
-    So I built a tool to manage it. In one afternoon with Claude Code, I shipped a full-stack opportunity tracker — a password-protected Kanban board with Gmail integration, AI-powered contact extraction from screenshots and pasted text, a morning email digest, and reply-to-update command parsing. It lives at <a href="https://jobs.saachigupta.net" target="_blank" rel="noopener noreferrer">jobs.saachigupta.net</a>.
+    In one afternoon with Claude Code, I shipped a full-stack opportunity tracker — a password-protected Kanban board with Gmail integration, AI-powered contact extraction from screenshots and pasted text, a morning email digest, and reply-to-update command parsing. It runs a live PostgreSQL database on Railway — not a local file, not a mock. Real data, persisted, accessible from any device. It lives at <a href="https://jobs.saachigupta.net" target="_blank" rel="noopener noreferrer">jobs.saachigupta.net</a>.
   </p>
 
   <h2 style="margin-top: 28px;">What it does</h2>
 
   <p style="max-width: 75ch;">
-    The dashboard has four columns: <strong>Active</strong>, <strong>Waiting on Them</strong>, <strong>Follow Up on Me</strong>, and <strong>Closed</strong>. Each contact card shows name, organization, role, days since last contact, and a stale flag when a thread has gone quiet past a configurable threshold.
+    The dashboard has four columns: <strong>Active</strong>, <strong>Waiting on Them</strong>, <strong>Follow Up on Me</strong>, and <strong>Closed</strong>. Four columns, not more. Most CRMs collapse under their own taxonomy. For a solo search, the only question is: whose court is the ball in?
+  </p>
+
+  <p style="max-width: 75ch;">
+    Each contact card shows name, organization, role, days since last contact, and a stale flag when a thread has gone quiet past a configurable threshold.
   </p>
 
   <p style="max-width: 75ch;">
@@ -37,6 +41,10 @@ export const link = "https://jobs.saachigupta.net";
     <li><strong>Morning digest:</strong> Every day at 8am PT, a digest arrives listing all active contacts grouped by status, with stale flags and next actions. No dashboard login required.</li>
     <li><strong>Reply-to-update:</strong> Reply to the digest email with commands like <code>close 3</code>, <code>waiting 2</code>, or <code>note 4 great call, following up Friday</code> — the app polls every 20 minutes and applies updates automatically.</li>
   </ul>
+
+  <p style="max-width: 75ch;">
+    The feature I use most isn't on the dashboard — it's the digest email. I don't have to remember to log in. Every morning it lands in my inbox, I reply with <code>waiting 3</code> or <code>note 2 great call</code>, and the updates apply automatically. The lowest-friction interface for a daily habit is the one you're already inside.
+  </p>
 
   <h2 style="margin-top: 28px;">Architecture</h2>
 
@@ -95,10 +103,10 @@ APScheduler runs 3 background jobs inside the FastAPI process:
     <strong>PostgreSQL sequence collision.</strong> The seed script inserted rows with explicit IDs but didn't update the Postgres autoincrement sequence. The first new insert tried ID 1, which already existed, and crashed. Fix: <code>SELECT setval('contacts_id_seq', (SELECT MAX(id) FROM contacts))</code> at the end of the seed script.
   </p>
 
-  <h2 style="margin-top: 28px;">What I'd do differently</h2>
+  <h2 style="margin-top: 28px;">Design choices I'd make earlier</h2>
 
   <p style="max-width: 75ch;">
-    Start with the review step. The temptation with AI-powered automation is to skip confirmation entirely — but for anything that writes to a real database, a human-in-the-loop step is almost always worth the extra click. Approving a proposed change takes two seconds. Debugging a wrongly closed contact takes much longer.
+    <strong>Human-in-the-loop for writes.</strong> The instinct with AI automation is to skip confirmation — but for anything that touches a real record, a review step is almost always worth the extra click. Two seconds of friction in exchange for trust that the data is right. I'd build the review modal first, not as a fix after something broke.
   </p>
 
   <p style="max-width: 75ch;">
@@ -127,11 +135,11 @@ APScheduler runs 3 background jobs inside the FastAPI process:
   </p>
 
   <p style="max-width: 75ch;">
-    What that unlocked wasn't just speed. It was scope. I would never have started a project that touched Gmail OAuth, a background scheduler, a vision API, and a reply-parsing email bot all at once. The AI-assisted workflow made the whole thing feel tractable from the first message.
+    The best use of Claude Code wasn't writing the Gmail OAuth handler or the APScheduler setup — it was making a full-stack app with a background scheduler, a vision API, and an email bot feel like a one-afternoon project. Once it existed, the real work was using it, finding what was wrong, and fixing it. That iteration loop — build, use, break, fix — is what actually makes something yours.
   </p>
 
   <p style="max-width: 75ch;">
-    The thing I keep coming back to: the best use of AI tools isn't automating the interesting parts — it's removing the activation energy for building at all. Once something exists, iterating on it is easy. Getting to "it exists" used to be the hard part.
+    A few months later, I mentioned this tool in a cold email to a founder. She replied in 24 minutes. Her take-home exercise for the role asked me to design a candidate tracking system — essentially the same product, from the other side.
   </p>
 
 </SiteLayout>
