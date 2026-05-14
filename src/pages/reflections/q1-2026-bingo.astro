@@ -73,7 +73,22 @@ export const tags = ["seattle", "intentional-living", "q1-2026"];
       font-family: inherit;
     }
     button.bingo-cell { cursor: pointer; }
-    .bingo-cell.linked { background: rgba(34, 197, 94, 0.10); }
+
+    /* Category tints — "done but no story yet" cells */
+    .cat-ski   { background: rgba(186, 230, 253, 0.30); }
+    .cat-snow  { background: rgba(219, 234, 254, 0.30); }
+    .cat-swim  { background: rgba(103, 232, 249, 0.22); }
+    .cat-bike  { background: rgba(134, 239, 172, 0.22); }
+    .cat-walk  { background: rgba(187, 247, 208, 0.22); }
+    .cat-art   { background: rgba(216, 180, 254, 0.22); }
+    .cat-fitness { background: rgba(253, 230, 138, 0.22); }
+    .cat-parks { background: rgba(167, 243, 208, 0.18); }
+    .cat-island { background: rgba(165, 180, 252, 0.22); }
+    .cat-creative { background: rgba(254, 215, 170, 0.22); }
+    .cat-misc  { background: rgba(243, 244, 246, 0.50); }
+
+    /* Linked (done) cells — green tint */
+    .bingo-cell.linked { background: rgba(34, 197, 94, 0.12); }
     .bingo-cell.linked:hover {
       background: rgba(34, 197, 94, 0.22);
       transform: translateY(-1px);
@@ -83,6 +98,27 @@ export const tags = ["seattle", "intentional-living", "q1-2026"];
       background: rgba(34, 197, 94, 0.30);
       outline: 2px solid rgba(34, 197, 94, 0.5);
     }
+
+    /* Photo-backed linked cells */
+    .bingo-cell.linked.has-photo {
+      background:
+        linear-gradient(rgba(220, 252, 231, 0.82), rgba(220, 252, 231, 0.82)),
+        var(--photo-url) center/cover no-repeat;
+    }
+    .bingo-cell.linked.has-photo:hover {
+      background:
+        linear-gradient(rgba(187, 247, 208, 0.76), rgba(187, 247, 208, 0.76)),
+        var(--photo-url) center/cover no-repeat;
+      transform: translateY(-1px);
+      transition: all 0.15s ease;
+    }
+    .bingo-cell.linked.has-photo.active {
+      background:
+        linear-gradient(rgba(134, 239, 172, 0.72), rgba(134, 239, 172, 0.72)),
+        var(--photo-url) center/cover no-repeat;
+      outline: 2px solid rgba(34, 197, 94, 0.5);
+    }
+
     #blurb-panel {
       display: none;
       margin-top: 12px;
@@ -114,77 +150,85 @@ export const tags = ["seattle", "intentional-living", "q1-2026"];
   </style>
 
   <div class="bingo-grid">
-    <button class="bingo-cell linked" data-blurb="snoqualmie-ski">Snoqualmie Ski</button>
-    <div class="bingo-cell">Snowshoe Artists Point</div>
-    <button class="bingo-cell linked" data-blurb="seattle-art-museum">Seattle Art Museum</button>
-    <div class="bingo-cell">Walk 1M</div>
-    <div class="bingo-cell">Swim 3K</div>
-    <div class="bingo-cell">Pure Barre</div>
-    <div class="bingo-cell">Ski a Weekday</div>
-    <div class="bingo-cell">Bike 5M</div>
+    <!-- Row 1 -->
+    <button class="bingo-cell linked has-photo" data-blurb="snoqualmie-ski" style="--photo-url: url('/images/catamount.JPEG')">🎿 Snoqualmie Ski</button>
+    <div class="bingo-cell">❄️ Snowshoe Artists Point</div>
+    <button class="bingo-cell linked cat-art" data-blurb="seattle-art-museum">🎨 Seattle Art Museum</button>
+    <div class="bingo-cell cat-walk">🚶 Walk 1M</div>
+    <div class="bingo-cell">🏊 Swim 3K</div>
+    <div class="bingo-cell">🏋️ Pure Barre</div>
+    <div class="bingo-cell cat-ski">🎿 Ski a Weekday</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 5M</div>
 
-    <button class="bingo-cell linked" data-blurb="snoqualmie-ski">Snoqualmie Ski</button>
-    <div class="bingo-cell">Tuli Lodge</div>
-    <div class="bingo-cell">Walk 4M</div>
-    <button class="bingo-cell linked" data-blurb="snoqualmie-ski">Snoqualmie Ski</button>
-    <div class="bingo-cell">Green Lake</div>
-    <div class="bingo-cell">Gasworks Park</div>
-    <button class="bingo-cell linked" data-blurb="ski-whistler">Ski Whistler</button>
-    <div class="bingo-cell">MOOV Seattle</div>
+    <!-- Row 2 -->
+    <button class="bingo-cell linked has-photo" data-blurb="snoqualmie-ski" style="--photo-url: url('/images/catamount.JPEG')">🎿 Snoqualmie Ski</button>
+    <div class="bingo-cell cat-parks">🌿 Tuli Lodge</div>
+    <div class="bingo-cell cat-walk">🚶 Walk 4M</div>
+    <button class="bingo-cell linked has-photo" data-blurb="snoqualmie-ski" style="--photo-url: url('/images/catamount.JPEG')">🎿 Snoqualmie Ski</button>
+    <div class="bingo-cell cat-parks">🌊 Green Lake</div>
+    <div class="bingo-cell">🌿 Gasworks Park</div>
+    <button class="bingo-cell linked has-photo" data-blurb="ski-whistler" style="--photo-url: url('/images/whistler-season-closer.jpeg')">🎿 Ski Whistler</button>
+    <div class="bingo-cell">💪 MOOV Seattle</div>
 
-    <div class="bingo-cell">Seattle Bouldering Project</div>
-    <div class="bingo-cell">XC Ski</div>
-    <div class="bingo-cell">Swim 2K</div>
-    <div class="bingo-cell">Tacoma Art Museum</div>
-    <div class="bingo-cell">Bike 10M</div>
-    <div class="bingo-cell">Bike 20M</div>
-    <div class="bingo-cell">Local Legend</div>
-    <div class="bingo-cell">Go on a date</div>
+    <!-- Row 3 -->
+    <div class="bingo-cell">🧗 Seattle Bouldering Project</div>
+    <div class="bingo-cell cat-snow">⛷️ XC Ski</div>
+    <div class="bingo-cell cat-swim">🏊 Swim 2K</div>
+    <div class="bingo-cell">🎨 Tacoma Art Museum</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 10M</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 20M</div>
+    <div class="bingo-cell">⭐ Local Legend</div>
+    <div class="bingo-cell cat-misc">💕 Go on a date</div>
 
-    <div class="bingo-cell">Walk 5M</div>
-    <div class="bingo-cell">Kerry Park</div>
-    <div class="bingo-cell">Tuli Lodge</div>
-    <button class="bingo-cell linked" data-blurb="swim-1k">Swim 1K</button>
-    <div class="bingo-cell">Snoqualmie Day</div>
-    <div class="bingo-cell">Walk Ice</div>
-    <div class="bingo-cell">Honest Hours</div>
-    <div class="bingo-cell">$0 Day</div>
+    <!-- Row 4 -->
+    <div class="bingo-cell cat-walk">🚶 Walk 5M</div>
+    <div class="bingo-cell">🌉 Kerry Park</div>
+    <div class="bingo-cell cat-parks">🌿 Tuli Lodge</div>
+    <button class="bingo-cell linked has-photo" data-blurb="swim-1k" style="--photo-url: url('/images/triathlon/lake-washington-swim.jpg')">🏊 Swim 1K</button>
+    <div class="bingo-cell cat-ski">🎿 Snoqualmie Day</div>
+    <div class="bingo-cell cat-snow">🧊 Walk Ice</div>
+    <div class="bingo-cell cat-misc">✍️ Honest Hours</div>
+    <div class="bingo-cell cat-misc">💸 $0 Day</div>
 
-    <div class="bingo-cell">Drip Yoga</div>
-    <div class="bingo-cell">Bike 50K</div>
-    <div class="bingo-cell">Club Pilates</div>
-    <div class="bingo-cell">Olympic Sculpture Park</div>
-    <div class="bingo-cell">Orange Theory</div>
-    <div class="bingo-cell">Liftonic</div>
-    <button class="bingo-cell linked" data-blurb="walk-2m">Walk 2M</button>
-    <div class="bingo-cell">Swim 2M</div>
+    <!-- Row 5 -->
+    <div class="bingo-cell">🧘 Drip Yoga</div>
+    <button class="bingo-cell linked has-photo" data-blurb="bike-50k" style="--photo-url: url('/images/lopez/ride.jpg')">🚴 Bike 50K</button>
+    <div class="bingo-cell">🧘 Club Pilates</div>
+    <div class="bingo-cell cat-art">🗿 Olympic Sculpture Park</div>
+    <div class="bingo-cell">🔥 Orange Theory</div>
+    <div class="bingo-cell cat-fitness">💪 Liftonic</div>
+    <button class="bingo-cell linked cat-walk" data-blurb="walk-2m">🚶 Walk 2M</button>
+    <div class="bingo-cell">🏊 Swim 2M</div>
 
-    <div class="bingo-cell">Tuli Lodge</div>
-    <button class="bingo-cell linked" data-blurb="tulips">Tulips</button>
-    <button class="bingo-cell linked" data-blurb="bainbridge">Bainbridge Island</button>
-    <div class="bingo-cell">Crystal Mtn Ski</div>
-    <div class="bingo-cell">Bike 15M</div>
-    <div class="bingo-cell">Carkeek Park</div>
-    <div class="bingo-cell">Snoqualmie Day</div>
-    <div class="bingo-cell">San Juan Island</div>
+    <!-- Row 6 -->
+    <div class="bingo-cell cat-parks">🌿 Tuli Lodge</div>
+    <button class="bingo-cell linked has-photo" data-blurb="tulips" style="--photo-url: url('/images/tulips/2026-fields.jpg')">🌷 Tulips</button>
+    <button class="bingo-cell linked cat-island" data-blurb="bainbridge">⛴️ Bainbridge Island</button>
+    <div class="bingo-cell cat-ski">🎿 Crystal Mtn Ski</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 15M</div>
+    <div class="bingo-cell cat-parks">🌿 Central Park</div>
+    <div class="bingo-cell cat-ski">🎿 Snoqualmie Day</div>
+    <button class="bingo-cell linked cat-island" data-blurb="san-juan-island">⛴️ San Juan Island</button>
 
-    <div class="bingo-cell">Snowshoe Paradise</div>
-    <div class="bingo-cell">Tacoma Glass Museum</div>
-    <div class="bingo-cell">Ballard Hearn Club Trail</div>
-    <div class="bingo-cell">Walk 3M</div>
-    <div class="bingo-cell">Tuli Lodge</div>
-    <button class="bingo-cell linked" data-blurb="discovery-park">Discovery Park</button>
-    <div class="bingo-cell">Embroidery Project</div>
-    <button class="bingo-cell linked" data-blurb="seattle-art-museum">Seattle Art Museum</button>
+    <!-- Row 7 -->
+    <div class="bingo-cell">❄️ Snowshoe Paradise</div>
+    <div class="bingo-cell">🪟 Tacoma Glass Museum</div>
+    <div class="bingo-cell cat-fitness">💪 Ballard Health Club</div>
+    <div class="bingo-cell cat-walk">🚶 Walk 3M</div>
+    <div class="bingo-cell cat-parks">🌿 Tuli Lodge</div>
+    <button class="bingo-cell linked cat-parks" data-blurb="discovery-park">🌿 Discovery Park</button>
+    <div class="bingo-cell">🧵 Embroidery Project</div>
+    <button class="bingo-cell linked cat-art" data-blurb="seattle-art-museum">🎨 Seattle Art Museum</button>
 
-    <div class="bingo-cell">Magnuson Park</div>
-    <div class="bingo-cell">Snoqualmie Day</div>
-    <div class="bingo-cell">Bike 25M</div>
-    <div class="bingo-cell">Seward Park</div>
-    <div class="bingo-cell">Swim 1M</div>
-    <div class="bingo-cell">Frye Art Museum</div>
-    <div class="bingo-cell">Carkeek Park</div>
-    <button class="bingo-cell linked" data-blurb="ski-bend">Ski Bend</button>
+    <!-- Row 8 -->
+    <div class="bingo-cell">🌿 Magnuson Park</div>
+    <div class="bingo-cell cat-ski">🎿 Snoqualmie Day</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 25M</div>
+    <div class="bingo-cell">🌊 Seward Park</div>
+    <div class="bingo-cell cat-swim">🏊 Swim 1M</div>
+    <div class="bingo-cell">🎨 Frye Art Museum</div>
+    <div class="bingo-cell">🌿 Carkeek Park</div>
+    <button class="bingo-cell linked has-photo" data-blurb="ski-bend" style="--photo-url: url('/images/catamount.JPEG')">🎿 Ski Bend</button>
   </div>
 
   <div id="blurb-panel">
@@ -242,6 +286,16 @@ export const tags = ["seattle", "intentional-living", "q1-2026"];
         title: 'Discovery Park',
         text: 'Bluffs, beach, forest, lighthouse — all in one park. Worth the trek every time.',
         tiktok: 'https://www.tiktok.com/@s_k_g_8/video/7613253855433870622'
+      },
+      'bike-50k': {
+        title: 'Bike 50K — Tour de Lopez',
+        text: '30 miles around Lopez Island in the San Juans with 9 people, one campsite on the beach, and a ferry that made an unscheduled stop for someone who almost didn\'t make it.',
+        link: { href: '/adventures/tour-de-lopez', label: 'Read the Tour de Lopez post →' }
+      },
+      'san-juan-island': {
+        title: 'San Juan Islands — Lopez Island',
+        text: 'Tour de Lopez 2026. Ferry to Lopez, 30 miles on the bike, campsite on the beach, tulip fields on the way back.',
+        link: { href: '/adventures/tour-de-lopez', label: 'Read the Tour de Lopez post →' }
       }
     };
 
