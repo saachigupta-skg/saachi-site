@@ -1,0 +1,70 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "Mot Juste — A Vocabulary Quiz for People Who Care About the Exact Right Word";
+export const date = "2026-05-30";
+export const excerpt =
+  "A daily vocabulary quiz built around adages, idioms, epigrams, and loanwords — for people who find precision in language a little bit thrilling.";
+export const tags = ["astro", "react", "supabase", "personal project"];
+export const link = "https://mot-juste.saachigupta.net";
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`} description={excerpt}>
+  <h1>{title}</h1>
+  <p style="opacity:0.6; font-size: 13px;">{date}</p>
+
+  <p style="max-width: 75ch;">
+    English wasn't my literate language as a young kid — I came to it consciously, as a school
+    language, later than most of my peers. But I loved to read, and somewhere along the way I started
+    keeping a word book: a notebook where I'd catalog new words I found in books, along with the
+    sentence or passage where I'd found them. Not definitions copied from a dictionary, but instances.
+    The word <em>in use</em>, doing something.
+  </p>
+
+  <p style="max-width: 75ch;">
+    That habit made me the kind of person who notices words rather than absorbing them, which turned
+    out to be a strange gift — I ended up with a perfect SAT and ACT English score, and more
+    relevantly, a lasting sense that the right word is a small discovery worth making. The
+    <em>mot juste</em> — French for "the exact right word" — is the name for that feeling: there's
+    always a word that fits better than any other, if you care enough to find it. An adage is not a
+    proverb is not an aphorism. These distinctions feel like a secret language. This quiz is for
+    people who want in.
+  </p>
+
+  <h2 style="margin-top: 28px;">What it is</h2>
+  <p style="max-width: 75ch;">
+    <a href="https://mot-juste.saachigupta.net" target="_blank" rel="noopener noreferrer">Mot Juste</a>
+    is a daily vocabulary quiz built around nine categories: adage, proverb, aphorism, idiom, mot juste,
+    maxim, loanword, epigram, and euphemism. Each session gives you ten questions — a short story where
+    a word is missing, and four choices for what it should be. The story is the context that earns the
+    word its meaning.
+  </p>
+
+  <p style="max-width: 75ch;">
+    Correct answers fill in a bingo-style grid on the home screen. Each category has its own color.
+    When you unlock one for the first time, the square pops. Progress syncs across devices if you sign
+    in with a magic link — no password, no friction.
+  </p>
+
+  <h2 style="margin-top: 28px;">What I built it with</h2>
+  <p style="max-width: 75ch;">
+    Astro with React components, Tailwind, and EB Garamond because the aesthetic needed to feel like
+    a very good reference book. Supabase handles auth (magic link email) and stores progress — earned
+    categories, streak, last played date — so the bingo board follows you between browsers. Deployed
+    on Netlify, connected to a custom subdomain on this site.
+  </p>
+
+  <p style="max-width: 75ch;">
+    The quiz cards themselves are a hand-curated JSON file. Each word has a short story, a correct
+    answer, and three distractors chosen to be genuinely tricky — close enough in meaning that you
+    have to know the distinction, not just recognize the word.
+  </p>
+
+  <h2 style="margin-top: 28px;">Why a quiz and not a glossary</h2>
+  <p style="max-width: 75ch;">
+    A glossary is something you reference. A quiz is something that makes you retrieve, and retrieval
+    is what actually builds memory. I wanted to <em>know</em> these words — not know of them — and the
+    only way to do that is to be wrong about them a few times first. The story format forces you to
+    feel the distinction in context, not just read a definition.
+  </p>
+</SiteLayout>
