@@ -1,0 +1,1660 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>What's On Saachi's Desktop?</title>
+    <style>
+      :root {
+        --paper: #fff8ea;
+        --cream: #f6ead5;
+        --ink: #241c18;
+        --muted: rgba(36, 28, 24, 0.66);
+        --line: rgba(36, 28, 24, 0.16);
+        --green: #50684f;
+        --pink: #e88aa8;
+        --blue: #7aa5c6;
+        --yellow: #fff2a2;
+        --card: rgba(255, 253, 246, 0.76);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          linear-gradient(180deg, rgba(255, 248, 234, 0.92), rgba(246, 234, 213, 0.78)),
+          var(--cream);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: min(1180px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 26px 0 64px;
+      }
+
+      .series-bar {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        border-bottom: 1px solid var(--line);
+        padding: 0 0 18px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .series-bar strong {
+        color: var(--ink);
+      }
+
+      .hero {
+        display: grid;
+        gap: 28px;
+        padding: 42px 0 28px;
+      }
+
+      .breadcrumb {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 850;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .hero-copy {
+        display: grid;
+        gap: 16px;
+        max-width: none;
+      }
+
+      .kicker {
+        margin: 0 0 12px;
+        color: var(--green);
+        font-size: 0.78rem;
+        font-weight: 850;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 500;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 100%;
+        font-size: clamp(3.2rem, 8.6vw, 7.4rem);
+        line-height: 0.9;
+      }
+
+      .dek {
+        max-width: 760px;
+        margin: 0;
+        color: var(--muted);
+        font-size: clamp(1.18rem, 2.3vw, 1.6rem);
+        line-height: 1.48;
+      }
+
+      .thesis-line {
+        display: inline-block;
+        width: fit-content;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 242, 162, 0.72);
+        padding: 9px 13px;
+        color: var(--ink);
+        font-size: 0.88rem;
+        font-weight: 900;
+      }
+
+      .hero-card {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: var(--card);
+        box-shadow: 0 18px 42px rgba(36, 28, 24, 0.13);
+      }
+
+      .hero-card img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+      }
+
+      .photo-note {
+        position: absolute;
+        right: 18px;
+        bottom: 18px;
+        max-width: 270px;
+        border: 1px solid rgba(36, 28, 24, 0.14);
+        border-radius: 8px;
+        background: rgba(255, 248, 234, 0.88);
+        padding: 12px;
+        font-size: 0.84rem;
+        line-height: 1.35;
+        box-shadow: 0 12px 28px rgba(36, 28, 24, 0.12);
+      }
+
+      .hotspot {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border: 1px solid rgba(255, 248, 234, 0.92);
+        border-radius: 999px;
+        background: rgba(36, 28, 24, 0.88);
+        color: var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.86rem;
+        font-weight: 950;
+        line-height: 1;
+        box-shadow: 0 8px 18px rgba(36, 28, 24, 0.24);
+      }
+
+      .hotspot.pink {
+        background: rgba(36, 28, 24, 0.88);
+      }
+
+      .hotspot.blue {
+        background: rgba(36, 28, 24, 0.88);
+      }
+
+      .hotspot.green {
+        background: rgba(36, 28, 24, 0.88);
+      }
+
+      .caption-key {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        border: 1px solid var(--line);
+        border-top: 0;
+        border-radius: 0 0 10px 10px;
+        background: rgba(255, 253, 246, 0.78);
+        padding: 14px;
+      }
+
+      .caption-key p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.35;
+      }
+
+      .caption-key strong {
+        color: var(--ink);
+      }
+
+      .photo-carousel {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(280px, 36%);
+        gap: 14px;
+        overflow-x: auto;
+        padding: 4px 0 18px;
+        scroll-snap-type: x mandatory;
+      }
+
+      .photo-slide {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 253, 246, 0.74);
+        scroll-snap-align: start;
+        box-shadow: 0 14px 30px rgba(36, 28, 24, 0.10);
+      }
+
+      .photo-slide img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+      }
+
+      .photo-slide.wide {
+        grid-column: auto;
+      }
+
+      .photo-slide.wide img {
+        aspect-ratio: 16 / 10;
+      }
+
+      .slide-caption {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 9px 11px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 850;
+        text-transform: uppercase;
+      }
+
+      .joined {
+        display: inline-block;
+        margin-bottom: 4px;
+        color: var(--green);
+        font-size: 0.68rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .photo-system-note {
+        margin: 10px 0 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+
+      .quick-stats {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 10px;
+        margin: 8px 0 34px;
+      }
+
+      .photo-story {
+        display: grid;
+        gap: 30px;
+        margin-top: 18px;
+      }
+
+      .photo-feature {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+        gap: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 253, 246, 0.74);
+        box-shadow: 0 16px 34px rgba(36, 28, 24, 0.12);
+      }
+
+      .photo-feature:nth-child(even) {
+        grid-template-columns: minmax(280px, 0.65fr) minmax(0, 1.35fr);
+      }
+
+      .photo-feature:nth-child(even) .feature-image {
+        order: 2;
+      }
+
+      .feature-image {
+        position: relative;
+        min-height: 520px;
+        background: rgba(36, 28, 24, 0.92);
+      }
+
+      .feature-image img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .feature-copy {
+        display: grid;
+        align-content: center;
+        gap: 14px;
+        padding: clamp(22px, 4vw, 42px);
+      }
+
+      .feature-copy h3 {
+        margin: 0;
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        line-height: 0.95;
+      }
+
+      .feature-copy p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.64;
+      }
+
+      .feature-list {
+        display: grid;
+        gap: 10px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .feature-list li {
+        display: grid;
+        grid-template-columns: 30px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+        color: var(--muted);
+        font-size: 0.98rem;
+        line-height: 1.45;
+      }
+
+      .feature-list b {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.82rem;
+        line-height: 1;
+      }
+
+      .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .detail-item {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 253, 246, 0.72);
+        padding: 14px;
+      }
+
+      .detail-item .num {
+        margin-bottom: 10px;
+      }
+
+      .detail-item h3 {
+        margin: 0 0 8px;
+        font-size: 1.16rem;
+        line-height: 1.1;
+      }
+
+      .detail-item p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.45;
+      }
+
+      .screen-map {
+        display: grid;
+        grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+        gap: 18px;
+        align-items: start;
+        margin-top: 20px;
+      }
+
+      .toolbar-note {
+        position: relative;
+        display: grid;
+        gap: 14px;
+        overflow: visible;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 253, 246, 0.72);
+        padding: 14px;
+      }
+
+      .toolbar-note img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 1913 / 188;
+        object-fit: contain;
+        object-position: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 248, 234, 0.66);
+      }
+
+      .tab-strip img {
+        aspect-ratio: 295 / 43;
+      }
+
+      .toolbar-timeline {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(7, minmax(0, 1fr));
+        gap: 12px;
+        padding-top: 18px;
+      }
+
+      .toolbar-timeline::before {
+        content: "";
+        position: absolute;
+        left: 4%;
+        right: 4%;
+        top: 30px;
+        height: 2px;
+        background: rgba(36, 28, 24, 0.74);
+      }
+
+      .timeline-event {
+        position: relative;
+        display: grid;
+        gap: 8px;
+        align-content: start;
+        min-height: 92px;
+        padding-top: 26px;
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.35;
+      }
+
+      .timeline-event::before {
+        content: "";
+        position: absolute;
+        top: 9px;
+        left: 0;
+        width: 17px;
+        height: 17px;
+        border: 2px solid var(--ink);
+        border-radius: 999px;
+        background: var(--yellow);
+        z-index: 1;
+      }
+
+      .timeline-event strong {
+        color: var(--ink);
+        font-size: 0.94rem;
+      }
+
+      .timeline-event span {
+        display: block;
+      }
+
+      .stat {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 253, 246, 0.66);
+        padding: 12px;
+      }
+
+      .stat span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .stat strong {
+        display: block;
+        margin-top: 5px;
+        font-size: 0.96rem;
+        line-height: 1.25;
+      }
+
+      .section {
+        margin-top: 46px;
+      }
+
+      .section h2 {
+        margin: 0 0 14px;
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        line-height: 1;
+      }
+
+      .section > p {
+        max-width: 75ch;
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.68;
+      }
+
+      .zoom-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-top: 18px;
+      }
+
+      .zoom-card {
+        display: grid;
+        grid-template-columns: minmax(260px, 0.88fr) minmax(0, 1fr);
+        gap: 0;
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #efe7d8;
+        box-shadow: 0 16px 34px rgba(36, 28, 24, 0.12);
+      }
+
+      .zoom-image {
+        position: relative;
+        min-height: 340px;
+        overflow: hidden;
+      }
+
+      .zoom-image img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .zoom-card.wall .zoom-image img {
+        object-position: 52% 10%;
+        transform: scale(1.72);
+      }
+
+      .zoom-card.monitor .zoom-image img {
+        object-position: 55% 42%;
+        transform: scale(1.64);
+      }
+
+      .zoom-card.laptop .zoom-image img {
+        object-position: 37% 78%;
+        transform: scale(1.68);
+      }
+
+      .zoom-card.analog .zoom-image img {
+        object-position: 82% 80%;
+        transform: scale(1.78);
+      }
+
+      .zoom-title {
+        position: absolute;
+        left: 14px;
+        top: 14px;
+        z-index: 2;
+        border: 2px solid rgba(36, 28, 24, 0.72);
+        border-radius: 999px;
+        background: rgba(255, 248, 234, 0.94);
+        padding: 8px 12px;
+        font-size: 0.78rem;
+        font-weight: 950;
+        box-shadow: 0 10px 22px rgba(36, 28, 24, 0.18);
+      }
+
+      .zoom-card .pin {
+        z-index: 2;
+      }
+
+      .detail-copy {
+        display: grid;
+        align-content: center;
+        gap: 12px;
+        padding: 24px;
+        background: rgba(255, 253, 246, 0.74);
+      }
+
+      .detail-copy .num {
+        display: grid;
+        place-items: center;
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--paper);
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 950;
+      }
+
+      .detail-copy h3 {
+        margin: 0;
+        font-size: clamp(1.6rem, 3vw, 2.4rem);
+        line-height: 1;
+      }
+
+      .detail-date {
+        color: var(--green);
+        font-size: 0.78rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .detail-copy p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.62;
+      }
+
+      .annotated {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #1f1c18;
+        box-shadow: 0 18px 42px rgba(36, 28, 24, 0.14);
+      }
+
+      .annotated img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+      }
+
+      .pin {
+        position: absolute;
+        max-width: 190px;
+        border: 2px solid rgba(36, 28, 24, 0.72);
+        border-radius: 22px 20px 24px 18px;
+        background: rgba(255, 248, 234, 0.92);
+        padding: 8px 12px;
+        color: var(--ink);
+        font-size: clamp(0.68rem, 1.5vw, 0.84rem);
+        font-weight: 850;
+        line-height: 1.15;
+        box-shadow: 0 10px 24px rgba(36, 28, 24, 0.18);
+        transform: rotate(-2deg);
+      }
+
+      .pin.yellow {
+        background: rgba(255, 242, 162, 0.94);
+        border-radius: 8px;
+      }
+
+      .pin.pink {
+        background: rgba(255, 221, 231, 0.94);
+        transform: rotate(2deg);
+      }
+
+      .pin.blue {
+        background: rgba(220, 239, 255, 0.94);
+        border-radius: 999px;
+        transform: rotate(-1deg);
+      }
+
+      .pin.star {
+        display: grid;
+        place-items: center;
+        width: 118px;
+        height: 118px;
+        padding: 18px;
+        clip-path: polygon(50% 0%, 60% 30%, 93% 18%, 74% 47%, 100% 65%, 66% 68%, 68% 100%, 50% 74%, 29% 100%, 34% 68%, 0 65%, 26% 47%, 7% 18%, 40% 30%);
+        border: 0;
+        border-radius: 0;
+        background: #fff2a2;
+        text-align: center;
+        box-shadow: 0 14px 26px rgba(36, 28, 24, 0.2);
+        transform: rotate(8deg);
+      }
+
+      .pin.bubble {
+        border-radius: 28px;
+      }
+
+      .pin.bubble::after {
+        content: "";
+        position: absolute;
+        right: 18px;
+        bottom: -9px;
+        width: 18px;
+        height: 18px;
+        background: inherit;
+        border-right: 2px solid rgba(36, 28, 24, 0.72);
+        border-bottom: 2px solid rgba(36, 28, 24, 0.72);
+        transform: rotate(45deg);
+      }
+
+      .doodle {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .arrow {
+        width: 86px;
+        height: 42px;
+        border-bottom: 4px solid var(--pink);
+        border-radius: 0 0 80px 0;
+        transform: rotate(-18deg);
+      }
+
+      .arrow::after {
+        content: "";
+        position: absolute;
+        right: -3px;
+        bottom: -8px;
+        width: 14px;
+        height: 14px;
+        border-right: 4px solid var(--pink);
+        border-bottom: 4px solid var(--pink);
+        transform: rotate(-24deg);
+      }
+
+      .sparkle {
+        width: 28px;
+        height: 28px;
+        background: var(--yellow);
+        clip-path: polygon(50% 0, 61% 36%, 100% 50%, 61% 64%, 50% 100%, 39% 64%, 0 50%, 39% 36%);
+        filter: drop-shadow(0 4px 8px rgba(36, 28, 24, 0.18));
+      }
+
+      .circle-note {
+        position: absolute;
+        display: grid;
+        place-items: center;
+        width: 76px;
+        height: 76px;
+        border: 2px solid rgba(36, 28, 24, 0.72);
+        border-radius: 999px;
+        background: rgba(232, 138, 168, 0.9);
+        font-size: 0.7rem;
+        font-weight: 900;
+        line-height: 1.05;
+        text-align: center;
+        box-shadow: 0 12px 22px rgba(36, 28, 24, 0.18);
+      }
+
+      .desktop-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+        align-items: start;
+      }
+
+      .module-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .module,
+      .receipt,
+      .prompt-card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--card);
+        padding: 16px;
+      }
+
+      .module h3,
+      .receipt h3,
+      .prompt-card h3 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+      }
+
+      .module p,
+      .receipt p,
+      .prompt-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      .top-eight {
+        display: grid;
+        gap: 10px;
+      }
+
+      .logo-strip {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .logo-pill {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 253, 246, 0.74);
+        padding: 7px 10px;
+        color: var(--ink);
+        font-size: 0.82rem;
+        font-weight: 850;
+      }
+
+      .tool {
+        display: grid;
+        grid-template-columns: 58px minmax(0, 1fr) auto;
+        gap: 12px;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 253, 246, 0.72);
+        padding: 10px;
+      }
+
+      .icon {
+        display: grid;
+        place-items: center;
+        width: 58px;
+        height: 42px;
+        border-radius: 10px;
+        background: var(--ink);
+        color: var(--paper);
+        font-size: 0.68rem;
+        font-weight: 900;
+        letter-spacing: 0;
+        text-align: center;
+      }
+
+      .icon.gpt {
+        background: #10a37f;
+      }
+
+      .icon.claude {
+        background: #d97745;
+        color: #fff8ea;
+      }
+
+      .icon.ppt {
+        background: #c43e1c;
+      }
+
+      .icon.perplexity {
+        background: #1f8f8b;
+      }
+
+      .icon.web {
+        background: linear-gradient(135deg, #24292f 0 34%, #00ad9f 34% 67%, #6f42c1 67%);
+      }
+
+      .icon.app {
+        background: linear-gradient(135deg, #4f46e5, #ec4899);
+      }
+
+      .icon.python {
+        background: linear-gradient(135deg, #3776ab 0 50%, #ffd43b 50%);
+        color: #241c18;
+      }
+
+      .icon.ops {
+        background: linear-gradient(135deg, #0a66c2 0 33%, #ea4335 33% 66%, #50684f 66%);
+      }
+
+      .tool strong {
+        display: block;
+      }
+
+      .tool span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .badge {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: var(--yellow);
+        padding: 5px 9px;
+        font-size: 0.72rem;
+        font-weight: 850;
+        white-space: nowrap;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .essay {
+        display: grid;
+        gap: 18px;
+        max-width: 860px;
+      }
+
+      .essay p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.04rem;
+        line-height: 1.72;
+      }
+
+      .essay strong {
+        color: var(--ink);
+      }
+
+      .receipt-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 20px;
+      }
+
+      .receipt-shot {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 253, 246, 0.74);
+        overflow: hidden;
+        box-shadow: 0 14px 30px rgba(36, 28, 24, 0.10);
+      }
+
+      .shot-placeholder {
+        display: grid;
+        align-content: center;
+        gap: 10px;
+        min-height: 210px;
+        padding: 22px;
+        background:
+          linear-gradient(135deg, rgba(255, 241, 157, 0.4), rgba(167, 212, 244, 0.4)),
+          rgba(255, 248, 234, 0.72);
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 750;
+        line-height: 1.35;
+      }
+
+      .shot-bar {
+        display: flex;
+        gap: 6px;
+      }
+
+      .shot-bar span {
+        width: 9px;
+        height: 9px;
+        border-radius: 999px;
+        background: rgba(36, 28, 24, 0.22);
+      }
+
+      .shot-title {
+        color: var(--ink);
+        font-size: 0.98rem;
+        font-weight: 950;
+      }
+
+      .shot-lines {
+        display: grid;
+        gap: 7px;
+      }
+
+      .shot-lines span {
+        display: block;
+        height: 9px;
+        border-radius: 999px;
+        background: rgba(36, 28, 24, 0.16);
+      }
+
+      .shot-lines span:nth-child(2) {
+        width: 78%;
+      }
+
+      .shot-lines span:nth-child(3) {
+        width: 58%;
+      }
+
+      .receipt-shot figcaption {
+        margin: 0;
+        border-top: 1px solid var(--line);
+        padding: 10px 12px;
+        color: var(--muted);
+        font-size: 0.86rem;
+        line-height: 1.4;
+      }
+
+      .pullquote {
+        max-width: 900px;
+        margin: 28px 0 0;
+        border-left: 4px solid var(--pink);
+        padding-left: 18px;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(1.6rem, 4vw, 3rem);
+        line-height: 1.05;
+      }
+
+      .timeline-section h2 {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .timeline {
+        position: relative;
+        padding-left: 2rem;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        left: 0.45rem;
+        top: 0.5rem;
+        bottom: 0.5rem;
+        width: 2px;
+        background: #c8b89a;
+      }
+
+      .timeline-item {
+        position: relative;
+        display: grid;
+        grid-template-columns: 7rem 1fr;
+        column-gap: 1.25rem;
+        margin-bottom: 2rem;
+        align-items: start;
+      }
+
+      .timeline-marker {
+        position: absolute;
+        left: -1.625rem;
+        top: 0.35rem;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #8b6f47;
+        border: 2px solid var(--paper);
+        z-index: 1;
+      }
+
+      .timeline-label {
+        color: #8b6f47;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        padding-top: 0.1rem;
+        text-align: right;
+        text-transform: uppercase;
+      }
+
+      .timeline-content {
+        color: #3d2e1e;
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+
+      .timeline-content code {
+        border-radius: 3px;
+        background: #ede0ce;
+        padding: 0.1em 0.35em;
+        font-size: 0.88em;
+      }
+
+      @media (max-width: 860px) {
+        .hero-copy,
+        .photo-feature,
+        .photo-feature:nth-child(even),
+        .screen-map,
+        .desktop-grid,
+        .two-col,
+        .zoom-grid,
+        .zoom-card,
+        .receipt-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .photo-feature:nth-child(even) .feature-image {
+          order: 0;
+        }
+
+        .quick-stats,
+        .module-grid,
+        .detail-grid,
+        .caption-key,
+        .toolbar-timeline {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 560px) {
+        .page {
+          width: min(100% - 22px, 1180px);
+        }
+
+        .series-bar {
+          flex-direction: column;
+        }
+
+        .quick-stats,
+        .module-grid,
+        .detail-grid,
+        .caption-key,
+        .toolbar-timeline {
+          grid-template-columns: 1fr;
+        }
+
+        .tool {
+          grid-template-columns: 58px minmax(0, 1fr);
+        }
+
+        .timeline-item {
+          grid-template-columns: 1fr;
+        }
+
+        .timeline-label {
+          text-align: left;
+        }
+
+        .badge {
+          grid-column: 2;
+          justify-self: start;
+        }
+
+        .feature-image {
+          min-height: 360px;
+        }
+
+        .annotated .pin,
+        .annotated .circle-note,
+        .annotated .doodle {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="series-bar">
+        <span><strong>What's On My Desktop</strong> / Saachi Gupta</span>
+        <span>saachigupta.net concept lab</span>
+      </header>
+
+      <section class="hero">
+        <p class="breadcrumb">What's On My Desktop / Saachi Gupta</p>
+        <div class="hero-copy">
+          <p class="kicker">Saachi profile 001</p>
+          <h1>Saachi's Desktop</h1>
+          <p class="dek">
+            Saachi's AI stack is less a neat list of tools than a personal operating loop for moving from idea to structure to artifact to system to story.
+          </p>
+          <span class="thesis-line">idea -> structure -> artifact -> system -> story</span>
+        </div>
+
+        <div>
+          <figure class="hero-card">
+          <img src="../assets/saachi/photos/desk-wide-crop.jpg" alt="Saachi's annotated desk setup with sixteen numbered objects" />
+            <span class="hotspot" style="left: 14.7%; top: 92%;">1</span>
+            <span class="hotspot" style="left: 5%; top: 76.4%;">2</span>
+            <span class="hotspot" style="left: 12.4%; top: 46.1%;">3</span>
+            <span class="hotspot" style="left: 21.4%; top: 54.7%;">4</span>
+            <span class="hotspot" style="left: 44.9%; top: 89.3%;">5</span>
+            <span class="hotspot" style="left: 43.2%; top: 72.6%;">6</span>
+            <span class="hotspot" style="left: 52.2%; top: 76.9%;">7</span>
+            <span class="hotspot" style="left: 56.7%; top: 73.3%;">8</span>
+            <span class="hotspot" style="left: 79.4%; top: 88.7%;">9</span>
+            <span class="hotspot" style="left: 53.4%; top: 15.9%;">10</span>
+            <span class="hotspot" style="left: 65.5%; top: 18.5%;">11</span>
+            <span class="hotspot" style="left: 79.2%; top: 14.7%;">12</span>
+            <span class="hotspot" style="left: 78.9%; top: 39.2%;">13</span>
+            <span class="hotspot" style="left: 35.9%; top: 45%;">14</span>
+            <span class="hotspot" style="left: 42.5%; top: 55.9%;">15</span>
+            <span class="hotspot" style="left: 73.9%; top: 50.7%;">16</span>
+          </figure>
+          <div class="caption-key" aria-label="Photo annotation key">
+            <p><span class="joined">analog</span><strong>1.</strong> Croftings by Ritu tray, made by women in Kutch.</p>
+            <p><span class="joined">memory</span><strong>2.</strong> Polaroids from business school.</p>
+            <p><span class="joined">wall</span><strong>3.</strong> Vision board.</p>
+            <p><span class="joined">wall</span><strong>4.</strong> Bingo.</p>
+            <p><span class="joined">making</span><strong>5.</strong> Creative pad for cutting things and writing on a clean surface.</p>
+            <p><span class="joined">ritual</span><strong>6.</strong> Handwritten to-do lists.</p>
+            <p><span class="joined">made</span><strong>7.</strong> 3D printed nameplate from the Venture Lab at Penn.</p>
+            <p><span class="joined">goals</span><strong>8.</strong> Snowflake with goals for the year.</p>
+            <p><span class="joined">paper</span><strong>9.</strong> Paper planner.</p>
+            <p><span class="joined">goals</span><strong>10.</strong> Goals for the year.</p>
+            <p><span class="joined">art</span><strong>11.</strong> Art from the King County Public Library benefit.</p>
+            <p><span class="joined">outdoors</span><strong>12.</strong> Gearhouse outdoor activity checklists.</p>
+            <p><span class="joined">friend</span><strong>13.</strong> Motivating note from Mara.</p>
+            <p><span class="joined">screen</span><strong>14.</strong> Baker climbing background: a reminder that hard things are doable.</p>
+            <p><span class="joined">web</span><strong>15.</strong> Personal website.</p>
+            <p><span class="joined">brain</span><strong>16.</strong> Claude Code Brain.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="quick-stats" aria-label="Quick stats">
+        <div class="stat"><span>Current Mood</span><strong>Tender command center</strong></div>
+        <div class="stat"><span>Daily Driver</span><strong>ChatGPT, Claude, PowerPoint</strong></div>
+        <div class="stat"><span>Always Open</span><strong>Gmail, LinkedIn, OneNote</strong></div>
+        <div class="stat"><span>Stack Thesis</span><strong>Idea -> structure -> artifact -> system -> story</strong></div>
+      </section>
+
+      <section class="section">
+        <h2>Read the desk</h2>
+        <p>
+          The room works like a stack trace. Each visible layer says something about how the work gets made, where the energy comes from, and what refuses to stay purely digital.
+        </p>
+
+        <div class="photo-story">
+          <article class="photo-feature" id="zoom-1">
+            <div class="feature-image">
+              <img src="../assets/saachi/photos/monitors-cards-crop.jpg" alt="Magic, Movement, Momentum cards above the monitors and Saachi's screen setup" />
+              <span class="pin pink bubble" style="left: 8%; top: 12%;">Magic</span>
+              <span class="pin yellow" style="left: 38%; top: 10%;">Movement</span>
+              <span class="pin pink" style="right: 8%; top: 14%;">Momentum</span>
+            </div>
+            <div class="feature-copy">
+              <span class="num">1</span>
+              <span class="detail-date">Joined the party: always</span>
+              <h3>Magic / Movement / Momentum</h3>
+              <p>Three handmade cards on floral wrapping paper. Each one has a sticky note inside with what it currently means. This is the analog operating system: not a productivity app, just three words that keep the screen from becoming the whole world.</p>
+            </div>
+          </article>
+
+          <article class="photo-feature" id="zoom-2">
+            <div class="feature-image">
+              <img src="../assets/saachi/photos/desk-close.jpg" alt="Close view of Saachi's screens and desk objects" />
+              <span class="pin blue" style="left: 8%; top: 38%;">saachigupta.net live</span>
+              <span class="pin yellow" style="right: 10%; top: 30%;">mountain wallpaper = outdoor brain</span>
+              <span class="pin pink bubble" style="left: 42%; bottom: 22%;">Saachi</span>
+            </div>
+            <div class="feature-copy">
+              <span class="num">2</span>
+              <span class="detail-date">Joined the party: Mar 2026</span>
+              <h3>The screens</h3>
+              <p>Left monitor: the website. Right monitor: a hiker on a ridge with a full pack, mountain wallpaper. The outdoor brain running in the background while the work brain deals with tabs, decks, and follow-ups.</p>
+            </div>
+          </article>
+
+          <article class="photo-feature" id="zoom-3">
+            <div class="feature-image">
+              <img src="../assets/saachi/photos/wall-left.jpg" alt="Left wall: 2026 adventure tracker, 30! countdown, Figuring Out AI Together bag, Instax memory frame" />
+              <span class="pin pink" style="left: 8%; top: 12%;">30! countdown</span>
+              <span class="pin yellow bubble" style="right: 8%; top: 18%;">adventure tracker 2026</span>
+              <span class="pin blue" style="left: 12%; bottom: 30%;">Instax memory wall</span>
+            </div>
+            <div class="feature-copy">
+              <span class="num">3</span>
+              <span class="detail-date">Joined the party: always</span>
+              <h3>The left wall</h3>
+              <p>A handwritten 2026 adventure tracker with activities crossed off. A "30!" countdown. The "Figuring Out AI Together / Microadventures Await" bag. A framed Instax strip of trips from Mont Blanc to NYC to Auvergne. Life context for the work happening in front of it.</p>
+            </div>
+          </article>
+
+          <article class="photo-feature" id="zoom-4">
+            <div class="feature-image">
+              <img src="../assets/saachi/photos/wall-right.jpg" alt="Right wall: AI-generated Top 5 outdoor lists with checkmarks, illustrated cards, you can do anything cloud note" />
+              <span class="pin yellow" style="left: 6%; top: 18%;">printed by Claude</span>
+              <span class="pin pink bubble" style="right: 8%; top: 24%;">checkmarks = actually done</span>
+              <span class="pin blue" style="left: 10%; bottom: 24%;">you can do anything</span>
+            </div>
+            <div class="feature-copy">
+              <span class="num">4</span>
+              <span class="detail-date">Joined the party: Mar 2026</span>
+              <h3>The AI receipts wall</h3>
+              <p>Top 5 lists for hikes, backpacking, camping, cycling, trail runs, nature walks, and paddling around Seattle — generated by Claude, printed, taped to the wall, and checked off as they happen. AI output that left the screen and became something you live against.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section desktop-grid">
+        <div>
+          <h2>The annotated desktop</h2>
+          <p>
+            A real setup photo plus a close annotated view makes the stack feel physical: a desktop screenshot, a wall collage, and a personal inventory all at once.
+          </p>
+          <p>
+            The AI stack is only one layer. The better story is the whole working surface: ChatGPT as chief of staff, Claude Code as builder identity, PowerPoint and HTML slides as artifact machines, Perplexity as research acceleration, Astro/Netlify/GitHub as owned surface area, scripts and APIs as tiny infrastructure, and analog reminders keeping the machine human.
+          </p>
+        </div>
+
+        <div class="annotated">
+          <img src="../assets/saachi/photos/desk-wide.jpg" alt="Full desk setup: dual monitors, Magic/Movement/Momentum cards, left wall calendar and Instax, right wall AI lists" />
+          <span class="pin yellow" style="left: 4%; top: 12%;">adventure tracker</span>
+          <span class="pin pink bubble" style="left: 34%; top: 8%;">Magic / Movement / Momentum</span>
+          <span class="pin star" style="right: 4%; top: 10%;">AI receipts wall</span>
+          <span class="pin blue" style="left: 26%; top: 40%;">saachigupta.net live</span>
+          <span class="pin yellow" style="right: 18%; top: 38%;">mountain wallpaper</span>
+          <span class="pin pink" style="left: 6%; bottom: 30%;">Instax memory wall</span>
+          <span class="pin blue bubble" style="right: 6%; bottom: 26%;">illustrated cards</span>
+          <span class="pin" style="left: 46%; bottom: 14%;">Saachi nameplate</span>
+          <span class="circle-note" style="left: 60%; top: 28%;">outdoor brain</span>
+          <span class="doodle arrow" style="left: 30%; top: 24%;"></span>
+          <span class="doodle arrow" style="right: 20%; bottom: 20%; transform: rotate(32deg);"></span>
+          <span class="doodle sparkle" style="left: 8%; bottom: 42%;"></span>
+          <span class="doodle sparkle" style="right: 12%; top: 32%; transform: rotate(18deg);"></span>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>The screen layer</h2>
+        <p>
+          The physical desk turns into the digital surface: Baker as the background, the personal website in front, and Claude Code Brain keeping the work loop visible.
+        </p>
+        <div class="screen-map">
+          <div class="annotated">
+            <img src="../assets/saachi/photos/desktop-tabs-website.png" alt="Desktop screenshot with Saachi's website open, Baker background, and brain window" />
+            <span class="pin yellow" style="left: 55%; top: 74%;">14. Baker background</span>
+            <span class="pin blue" style="left: 39%; top: 30%;">15. personal website</span>
+            <span class="pin pink bubble" style="right: 8%; top: 33%;">16. Claude Code Brain</span>
+          </div>
+          <div class="module">
+            <h3>Digital read</h3>
+            <ul class="feature-list">
+              <li><b>14</b><span>The desktop background is Baker, a reminder that hard things are doable.</span></li>
+              <li><b>15</b><span>The personal website is the owned surface: the place where the work becomes legible.</span></li>
+              <li><b>16</b><span>Claude Code Brain keeps projects, reminders, and open loops close to the work.</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>The toolbar</h2>
+        <p>
+          The horizontal toolbar is the practical layer: search, pinned tools, active AI/work apps, and the clock all in one strip.
+        </p>
+        <div class="toolbar-note">
+          <img src="../assets/saachi/photos/toolbar-horizontal.png" alt="Horizontal Windows toolbar with pinned work and AI tools" />
+          <div class="toolbar-timeline" aria-label="Toolbar timeline">
+            <div class="timeline-event">
+              <strong>Claude</strong>
+              <span>Orange logo. Still the tool I reach for most because Claude Code has been the main building surface.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Codex</strong>
+              <span>Blue/purple cloud. Still figuring out how to use it because I have been deeper in Claude Code.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Command line</strong>
+              <span>Black rectangle with the greater-than symbol. Super useful for multitasking.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>/brain</strong>
+              <span>White icon. My custom to-do checklist skill for keeping open loops visible.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Perplexity</strong>
+              <span>Black and turquoise. I still do not totally know what to do with it yet.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Granola</strong>
+              <span>Green spiral. Helpful for meetings and webinars.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Wispr Flow</strong>
+              <span>Black and white. I am obsessed with it.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>The website tab stack</h2>
+        <p>
+          The Chrome tabs are the working stack for the website: the live site, build tools, issue tracking, references, and AI helpers all open in one narrow row.
+        </p>
+        <div class="toolbar-note tab-strip">
+          <img src="../assets/saachi/photos/website-tabs-strip.png" alt="Chrome tab strip showing Saachi's website workflow" />
+          <div class="toolbar-timeline" aria-label="Website tab stack timeline">
+            <div class="timeline-event">
+              <strong>Site</strong>
+              <span>The live Saachi tab anchors the work: the public surface is always in view.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Build</strong>
+              <span>Home, Bolt AI, and adjacent build tabs hold the making layer.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Issues</strong>
+              <span>GitHub issues keep the site work concrete and trackable.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Railway</strong>
+              <span>The backend/deploy tab for anything that needs more than a static site.</span>
+            </div>
+            <div class="timeline-event">
+              <strong>Netlify</strong>
+              <span>The deploy and preview tab for turning the repo into the live site.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Top 8</h2>
+        <p>
+          The eight tools and rituals that show up most clearly: thinking, building, artifact-making, research, owned web presence, prototypes, automation, and human coordination.
+        </p>
+        <div class="logo-strip" aria-label="Tool index">
+          <span class="logo-pill">ChatGPT</span>
+          <span class="logo-pill">Claude</span>
+          <span class="logo-pill">PowerPoint</span>
+          <span class="logo-pill">Perplexity</span>
+          <span class="logo-pill">Astro / GitHub / Netlify</span>
+          <span class="logo-pill">Bolt / Lovable</span>
+          <span class="logo-pill">Python</span>
+          <span class="logo-pill">LinkedIn / Gmail / logs</span>
+        </div>
+
+        <div class="top-eight">
+          <div class="tool">
+            <div class="icon gpt">ChatGPT</div>
+            <div><strong>ChatGPT</strong><span>Thinking, writing, strategy, job-search language, emails, interview prep, and turning messy notes into structure.</span></div>
+            <div class="badge">chief of staff</div>
+          </div>
+          <div class="tool">
+            <div class="icon claude">Claude</div>
+            <div><strong>Claude / Claude Code</strong><span>Building, debugging, website work, workflow automation, and creative systems.</span></div>
+            <div class="badge">builder identity</div>
+          </div>
+          <div class="tool">
+            <div class="icon ppt">PPT</div>
+            <div><strong>PowerPoint / PPTX + HTML slides</strong><span>Final QA, exports, deck storytelling, mock QBRs, metrics pages, and customer-facing artifacts.</span></div>
+            <div class="badge">final-form machine</div>
+          </div>
+          <div class="tool">
+            <div class="icon perplexity">PPLX</div>
+            <div><strong>Perplexity / Deep Research / NotebookLM</strong><span>Company research, market mapping, strategic finance research, and fast orientation.</span></div>
+            <div class="badge">teach me fast</div>
+          </div>
+          <div class="tool">
+            <div class="icon web">Web</div>
+            <div><strong>Astro / GitHub / Netlify / VS Code</strong><span>Owned web presence, saachigupta.net, HTML/CSS layouts, and portfolio-worthy projects.</span></div>
+            <div class="badge">owned surface</div>
+          </div>
+          <div class="tool">
+            <div class="icon app">Build</div>
+            <div><strong>Bolt / Lovable / workshops / vibe coding</strong><span>HBS Bolt, Lovable Women's Day coding, one-hour builds, playful prototypes, and "AI lets me make things" energy.</span></div>
+            <div class="badge">make it real fast</div>
+          </div>
+          <div class="tool">
+            <div class="icon python">Py</div>
+            <div><strong>Python scripts / job dashboard / hooks / APIs</strong><span>Dashboard sync, job tracking, WA-log POSTs, maps/data ideas, and recurring automation.</span></div>
+            <div class="badge">tiny infrastructure</div>
+          </div>
+          <div class="tool">
+            <div class="icon ops">Ops</div>
+            <div><strong>brain.md / logs / CRMs / LinkedIn / WhatsApp</strong><span>Tasks, leads, runbooks, outreach, touchpoints, and human coordination.</span></div>
+            <div class="badge">operating ritual</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>The stack, actually</h2>
+        <div class="essay">
+          <p>
+            Saachi's desk is not trying to look minimal. It is trying to hold momentum. The same thing is happening in the tech stack.
+          </p>
+          <p>
+            On paper, it includes ChatGPT, Claude, PowerPoint, Perplexity, Astro, GitHub, Netlify, Python scripts, APIs, logs, and a growing set of personal files. In practice, it is not a conventional software stack. It is a way of moving through work.
+          </p>
+          <p>
+            Saachi uses AI to get from the messy beginning to the thing she can actually show someone. A thought becomes a prompt. A prompt becomes a structure. The structure becomes a deck, page, app, email, dashboard, event concept, or system.
+          </p>
+          <p>
+            The stack is not just "I use ChatGPT." It is <strong>idea -> structure -> artifact -> system -> story</strong>.
+          </p>
+        </div>
+        <div class="pullquote">The desktop is not a productivity setup. It is a self-portrait of someone learning how to turn thought into form.</div>
+      </section>
+
+      <section class="section">
+        <h2>The written profile</h2>
+        <div class="essay">
+          <p>
+            <strong>ChatGPT is the chief of staff</strong>: the place where messy notes become outlines, anxious emails become reasonable emails, interview stories get pressure-tested, and vague ideas become clear enough to act on.
+          </p>
+          <p>
+            <strong>Claude and Claude Code are the studio</strong>: where the identity shifts from prompting to building, and where website work, workflow automation, creative projects, job-search systems, code, files, and small tools become tangible.
+          </p>
+          <p>
+            <strong>PowerPoint is the final-form machine</strong>: AI can draft the structure, talk track, screenshots, charts, and story, but PowerPoint is where the artifact has to become presentable enough to send.
+          </p>
+          <p>
+            Around that core is the rest of the system: Perplexity and NotebookLM for research acceleration, Astro/GitHub/Netlify for owned web presence, Bolt and Lovable for fast prototypes, and Python scripts, hooks, APIs, logs, and loop files for tiny personal infrastructure.
+          </p>
+        </div>
+        <div class="receipt-grid">
+          <figure class="receipt-shot">
+            <div class="shot-placeholder">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-title">Messy notes -> usable structure</div>
+              <div class="shot-lines"><span></span><span></span><span></span></div>
+            </div>
+            <figcaption>ChatGPT as chief of staff: messy notes becoming structure.</figcaption>
+          </figure>
+          <figure class="receipt-shot">
+            <div class="shot-placeholder">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-title">Files, scaffolds, and working sessions</div>
+              <div class="shot-lines"><span></span><span></span><span></span></div>
+            </div>
+            <figcaption>Claude Code as builder identity: files, code, scaffolds, and working sessions.</figcaption>
+          </figure>
+          <figure class="receipt-shot">
+            <div class="shot-placeholder">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-title">Drafted idea -> presentable artifact</div>
+              <div class="shot-lines"><span></span><span></span><span></span></div>
+            </div>
+            <figcaption>PowerPoint as final-form machine: generated ideas turned into presentable artifacts.</figcaption>
+          </figure>
+          <figure class="receipt-shot">
+            <div class="shot-placeholder">
+              <div class="shot-bar"><span></span><span></span><span></span></div>
+              <div class="shot-title">Leads, follow-ups, statuses, review loops</div>
+              <div class="shot-lines"><span></span><span></span><span></span></div>
+            </div>
+            <figcaption>The custom job dashboard: emotionally messy work made visible and reviewable.</figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Stories behind the stack</h2>
+        <div class="module-grid">
+          <article class="module">
+            <h3>Adventure identifier</h3>
+            <p>Comes from the Gearhouse bucket list of outdoor activities: a fuzzy appetite for adventure turned into something searchable, sortable, and doable.</p>
+          </article>
+          <article class="module">
+            <h3>Job dashboard</h3>
+            <p>Came from needing an emotionally charged process to become visible: leads, follow-ups, recruiter threads, statuses, and avoidance turned into a surface.</p>
+          </article>
+          <article class="module">
+            <h3>/ss screenshot skill</h3>
+            <p>Exists because sometimes the fastest way to explain a problem is to show the screen. Less prompt theater, more evidence.</p>
+          </article>
+          <article class="module">
+            <h3>Slop cannon</h3>
+            <p>Accepts the real first draft: brain dumps, photo dumps, pasted notes, screenshots, and half-thoughts. Mess first, structure second.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section timeline-section">
+        <h2>Adoption timeline</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-label">Feb-Mar</div>
+            <div class="timeline-content">
+              <strong>Skill foundations.</strong> Interview coach matures, jobs dashboard launches, Gmail scan appears, and <code>/availability</code>, <code>/text-respond</code>, and <code>/swim</code> become the first custom skills.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-label">Apr 1-14</div>
+            <div class="timeline-content">
+              <strong>Dashboard matures.</strong> <code>/updates</code>, Interviews tab, Pipeline Gantt, dedup agent, coach sync agent, Bearer auth, mobile ingest, and <code>/brain</code> turn the dashboard into a living operating surface.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-label">Apr 17-30</div>
+            <div class="timeline-content">
+              <strong>Agentic work and accountability.</strong> Resolve QBR iterations, critique agent, compensation negotiation skill, accountability system, scheduled logging, and floating TODO widget.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-label">May 1-8</div>
+            <div class="timeline-content">
+              <strong>Systems layer forming.</strong> Email scraping, unemployment process docs, <code>/ss</code>, <code>/log-job-search</code>, and WA Log tab connect AI sessions to the external dashboard.
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-label">May 9</div>
+            <div class="timeline-content">
+              <strong>Level 5 moment.</strong> <code>sync-dashboard.py</code>, Stop hook, <code>/ai-log</code>, learning log, and memory system make the stack sync, remember, and track itself.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2>Who I learn from</h2>
+        <div class="module-grid">
+          <article class="module">
+            <h3>Hannah Zhang</h3>
+            <p>Context files, rules, skills, and the idea that better AI output comes from reusable personal context.</p>
+          </article>
+          <article class="module">
+            <h3>Career Hannah</h3>
+            <p>Formats that write themselves: repeatable hooks, reusable templates, specific audience, and career content with a strong frame.</p>
+          </article>
+          <article class="module">
+            <h3>Allie Miller</h3>
+            <p>AI fluency as a public operating style: show the workflow, explain the leverage, and make AI usage itself legible.</p>
+          </article>
+          <article class="module">
+            <h3>Lenny interview coach</h3>
+            <p>Interview prep as a repeatable system: map competencies, pressure-test stories, sharpen examples, and rehearse the arc.</p>
+          </article>
+          <article class="module">
+            <h3>Glossier Top Shelf</h3>
+            <p>Intimate inventory: what you reach for daily, what you swear by, what is embarrassing, what quietly works.</p>
+          </article>
+          <article class="module">
+            <h3>Toy Stories</h3>
+            <p>Person plus objects as self-portrait, translated into desktops, tabs, tools, prompts, and rituals.</p>
+          </article>
+          <article class="module">
+            <h3>Myspace Top 8</h3>
+            <p>Ranking as identity: current moods, badges, dependencies, and digital personality as interface.</p>
+          </article>
+          <article class="module">
+            <h3>Vibe coding builders</h3>
+            <p>Permission to make scrappy things fast, then polish after the idea has a body.</p>
+          </article>
+        </div>
+        <div class="pullquote">Copy the workflow, not the personality. Copy the structure, then make the surface area yours.</div>
+      </section>
+
+      <section class="section two-col">
+        <article class="prompt-card">
+          <h2>The prompt under the pillow</h2>
+          <p>
+            "Turn this brain dump into a structure I can keep building on." The repeated move is idea -> structure -> artifact -> system -> story, then manual polish until it feels like Saachi.
+          </p>
+        </article>
+
+        <article class="receipt">
+          <h2>Monthly allowance</h2>
+          <p>
+            The paid stack is not infinite, which changes the behavior. Because usage is metered or capped, Saachi is incentivized to optimize: use the right tool for the right job, keep context reusable, and turn expensive sessions into reusable systems.
+          </p>
+        </article>
+      </section>
+
+      <section class="section">
+        <h2>The human part</h2>
+        <p>
+          The visible desk says the human part is taste, momentum, and meaning-making: choosing what gets pinned to the wall, what stays handwritten, what becomes a system, and what remains a little messy because it is still alive.
+        </p>
+      </section>
+
+    </main>
+  </body>
+</html>

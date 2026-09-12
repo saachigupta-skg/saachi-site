@@ -1,0 +1,780 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>What's On My Desktop - Series Cover</title>
+    <style>
+      :root {
+        --paper: #fff8ea;
+        --cream: #f3e5d0;
+        --ink: #241c18;
+        --muted: rgba(36, 28, 24, 0.68);
+        --line: rgba(36, 28, 24, 0.16);
+        --pink: #e98aaa;
+        --yellow: #fff19d;
+        --blue: #a7d4f4;
+        --green: #4f684f;
+        --lavender: #cab8f5;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at 12% 14%, rgba(255, 241, 157, 0.72), transparent 22%),
+          radial-gradient(circle at 84% 18%, rgba(167, 212, 244, 0.55), transparent 24%),
+          linear-gradient(180deg, #fffaf0, var(--cream));
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .page {
+        width: min(1260px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 28px 0 70px;
+      }
+
+      .topline {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 18px;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+
+      .masthead {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 24px;
+        align-items: end;
+        border-bottom: 1px solid var(--line);
+        padding: 18px 0 22px;
+      }
+
+      .masthead-title {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(2.6rem, 8vw, 7.8rem);
+        line-height: 0.82;
+        letter-spacing: -0.02em;
+      }
+
+      .issue-meta {
+        display: grid;
+        gap: 6px;
+        min-width: 190px;
+        color: var(--muted);
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-align: right;
+        text-transform: uppercase;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.76fr) minmax(0, 1.24fr);
+        gap: 36px;
+        align-items: center;
+        min-height: 66vh;
+        padding: 34px 0 44px;
+      }
+
+      .kicker {
+        margin: 0 0 14px;
+        color: var(--green);
+        font-size: 0.78rem;
+        font-weight: 850;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 500;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 8ch;
+        font-size: clamp(4.6rem, 12vw, 11.5rem);
+        line-height: 0.82;
+      }
+
+      .dek {
+        max-width: 58ch;
+        margin: 22px 0 0;
+        color: var(--muted);
+        font-size: clamp(1.08rem, 2vw, 1.26rem);
+        line-height: 1.62;
+      }
+
+      .cover-lines {
+        display: grid;
+        gap: 8px;
+        margin-top: 24px;
+        border-top: 1px solid var(--line);
+        padding-top: 16px;
+        color: var(--muted);
+        font-size: 0.9rem;
+        line-height: 1.35;
+      }
+
+      .cover-lines strong {
+        color: var(--ink);
+      }
+
+      .desktop-board {
+        position: relative;
+        min-height: 560px;
+        overflow: hidden;
+        border: 2px solid rgba(36, 28, 24, 0.58);
+        border-radius: 18px;
+        background:
+          linear-gradient(135deg, rgba(255, 241, 157, 0.85), rgba(233, 138, 170, 0.58) 42%, rgba(167, 212, 244, 0.74)),
+          var(--paper);
+        box-shadow: 0 26px 70px rgba(36, 28, 24, 0.18);
+      }
+
+      .menu {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 10px 14px;
+        background: rgba(255, 248, 234, 0.66);
+        border-bottom: 1px solid rgba(36, 28, 24, 0.14);
+        font-size: 0.78rem;
+        font-weight: 850;
+      }
+
+      .folder,
+      .app,
+      .note,
+      .window,
+      .label,
+      .star,
+      .bubble {
+        position: absolute;
+      }
+
+      .folder {
+        width: 92px;
+        height: 68px;
+        border: 2px solid rgba(36, 28, 24, 0.62);
+        border-radius: 8px;
+        background: var(--yellow);
+        padding-top: 42px;
+        text-align: center;
+        font-size: 0.72rem;
+        font-weight: 900;
+        box-shadow: 0 12px 22px rgba(36, 28, 24, 0.14);
+      }
+
+      .folder::before {
+        content: "";
+        position: absolute;
+        top: -12px;
+        left: 9px;
+        width: 42px;
+        height: 18px;
+        border: 2px solid rgba(36, 28, 24, 0.62);
+        border-bottom: 0;
+        border-radius: 8px 8px 0 0;
+        background: var(--yellow);
+      }
+
+      .app {
+        display: grid;
+        place-items: center;
+        width: 64px;
+        height: 64px;
+        border: 2px solid rgba(36, 28, 24, 0.62);
+        border-radius: 17px;
+        background: rgba(255, 248, 234, 0.92);
+        font-size: 0.78rem;
+        font-weight: 950;
+        box-shadow: 0 14px 24px rgba(36, 28, 24, 0.16);
+      }
+
+      .note {
+        width: 150px;
+        min-height: 112px;
+        border: 2px solid rgba(36, 28, 24, 0.62);
+        border-radius: 8px;
+        background: rgba(255, 241, 157, 0.94);
+        padding: 14px;
+        font-size: 0.84rem;
+        font-weight: 850;
+        line-height: 1.18;
+        transform: rotate(-4deg);
+        box-shadow: 0 16px 26px rgba(36, 28, 24, 0.15);
+      }
+
+      .window {
+        width: min(340px, 56%);
+        border: 2px solid rgba(36, 28, 24, 0.62);
+        border-radius: 14px;
+        background: rgba(255, 248, 234, 0.92);
+        overflow: hidden;
+        box-shadow: 0 18px 34px rgba(36, 28, 24, 0.18);
+      }
+
+      .tabs {
+        display: flex;
+        gap: 6px;
+        padding: 10px;
+        background: rgba(36, 28, 24, 0.08);
+      }
+
+      .tabs span {
+        width: 58px;
+        height: 14px;
+        border-radius: 999px;
+        background: var(--blue);
+      }
+
+      .window-body {
+        padding: 16px;
+        color: var(--muted);
+        font-weight: 750;
+        line-height: 1.38;
+      }
+
+      .label {
+        border: 2px solid rgba(36, 28, 24, 0.62);
+        border-radius: 999px;
+        background: rgba(255, 248, 234, 0.92);
+        padding: 8px 12px;
+        font-size: 0.78rem;
+        font-weight: 950;
+        box-shadow: 0 12px 22px rgba(36, 28, 24, 0.14);
+        transform: rotate(2deg);
+      }
+
+      .star {
+        display: grid;
+        place-items: center;
+        width: 138px;
+        height: 138px;
+        padding: 24px;
+        clip-path: polygon(50% 0%, 61% 30%, 93% 18%, 74% 47%, 100% 65%, 66% 68%, 68% 100%, 50% 74%, 29% 100%, 34% 68%, 0 65%, 26% 47%, 7% 18%, 39% 30%);
+        background: var(--pink);
+        color: var(--ink);
+        text-align: center;
+        font-size: 0.82rem;
+        font-weight: 950;
+        line-height: 1.1;
+        filter: drop-shadow(0 18px 24px rgba(36, 28, 24, 0.17));
+        transform: rotate(8deg);
+      }
+
+      .bubble {
+        max-width: 190px;
+        border: 2px solid rgba(36, 28, 24, 0.62);
+        border-radius: 28px;
+        background: rgba(202, 184, 245, 0.92);
+        padding: 12px 14px;
+        font-size: 0.84rem;
+        font-weight: 900;
+        line-height: 1.18;
+        box-shadow: 0 14px 24px rgba(36, 28, 24, 0.15);
+      }
+
+      .bubble::after {
+        content: "";
+        position: absolute;
+        right: 26px;
+        bottom: -10px;
+        width: 18px;
+        height: 18px;
+        border-right: 2px solid rgba(36, 28, 24, 0.62);
+        border-bottom: 2px solid rgba(36, 28, 24, 0.62);
+        background: inherit;
+        transform: rotate(45deg);
+      }
+
+      .inspo {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+        margin-top: 24px;
+      }
+
+      .reference-grid {
+        display: grid;
+        grid-auto-flow: column;
+        grid-auto-columns: 100%;
+        gap: 0;
+        margin-top: 22px;
+        overflow-x: auto;
+        padding: 0 0 22px;
+        scroll-snap-type: x mandatory;
+        scrollbar-color: var(--ink) rgba(36, 28, 24, 0.12);
+        scroll-behavior: smooth;
+      }
+
+      .reference-card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 253, 246, 0.76);
+        box-shadow: 0 14px 30px rgba(36, 28, 24, 0.10);
+        scroll-snap-align: start;
+      }
+
+      .reference-card img {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+        filter: saturate(0.92);
+      }
+
+      .reference-card.wide {
+        grid-column: auto;
+      }
+
+      .reference-card.square {
+        grid-column: auto;
+      }
+
+      .reference-card.tall {
+        grid-column: auto;
+      }
+
+      .reference-card.wide img {
+        aspect-ratio: 16 / 10;
+      }
+
+      .reference-card.square img {
+        aspect-ratio: 1 / 1;
+      }
+
+      .reference-card .ref-body {
+        padding: 16px;
+      }
+
+      .reference-card h3 {
+        margin: 0 0 8px;
+        font-size: 1.26rem;
+      }
+
+      .reference-card p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.96rem;
+        line-height: 1.48;
+      }
+
+      .reference-card a {
+        color: var(--green);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      .carousel-note {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        margin-top: 12px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        font-weight: 750;
+      }
+
+      .carousel-shell {
+        position: relative;
+      }
+
+      .carousel-controls {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-top: 12px;
+      }
+
+      .carousel-button {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 253, 246, 0.9);
+        padding: 8px 12px;
+        color: var(--ink);
+        font-size: 0.84rem;
+        font-weight: 900;
+        cursor: pointer;
+      }
+
+      .carousel-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        flex: 1;
+      }
+
+      .carousel-dot {
+        width: 10px;
+        height: 10px;
+        border: 1px solid rgba(36, 28, 24, 0.44);
+        border-radius: 999px;
+        background: rgba(255, 253, 246, 0.9);
+        cursor: pointer;
+      }
+
+      .carousel-dot.is-active {
+        background: var(--ink);
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 253, 246, 0.72);
+        padding: 18px;
+      }
+
+      .card h3 {
+        margin: 0 0 10px;
+        font-size: 1.34rem;
+      }
+
+      .card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
+      }
+
+      .manifesto {
+        margin-top: 38px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 253, 246, 0.72);
+        padding: 24px;
+      }
+
+      .mag-spread {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 18px;
+        margin-top: 38px;
+        border-top: 2px solid var(--ink);
+        padding-top: 18px;
+      }
+
+      .section-label {
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: clamp(3rem, 8vw, 7rem);
+        line-height: 0.88;
+      }
+
+      .manifesto h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.3rem);
+        line-height: 1;
+      }
+
+      .manifesto p {
+        max-width: 78ch;
+        color: var(--muted);
+        font-size: 1.05rem;
+        line-height: 1.68;
+      }
+
+      .thesis-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 22px;
+        margin-top: 34px;
+        align-items: start;
+      }
+
+      .argument {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: rgba(255, 253, 246, 0.72);
+        padding: 22px;
+      }
+
+      .argument h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 3.3rem);
+        line-height: 1;
+      }
+
+      .argument p {
+        margin: 0 0 12px;
+        color: var(--muted);
+        line-height: 1.68;
+      }
+
+      .argument ol {
+        margin: 12px 0 0;
+        padding-left: 20px;
+        color: var(--muted);
+        line-height: 1.62;
+      }
+
+      .argument li + li {
+        margin-top: 8px;
+      }
+
+      @media (max-width: 840px) {
+        .masthead,
+        .hero,
+        .inspo,
+        .thesis-grid,
+        .mag-spread {
+          grid-template-columns: 1fr;
+        }
+
+        .issue-meta {
+          text-align: left;
+        }
+
+        .reference-grid {
+          grid-auto-columns: 100%;
+        }
+
+        .desktop-board {
+          min-height: 520px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .page {
+          width: min(100% - 22px, 1180px);
+        }
+
+        .topline {
+          flex-direction: column;
+        }
+
+        .desktop-board {
+          min-height: 590px;
+        }
+
+        .window {
+          width: 72%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="topline">
+        <span><strong>What's On My Desktop</strong> / private editorial concept</span>
+        <span>saachigupta.net</span>
+      </header>
+
+      <section class="masthead" aria-label="Magazine masthead">
+        <div class="masthead-title">Desktop Studies</div>
+        <div class="issue-meta">
+          <span>Issue 00</span>
+          <span>Pilot: Saachi</span>
+          <span>AI / Work / Taste</span>
+        </div>
+      </section>
+
+      <section class="hero">
+        <div>
+          <p class="kicker">An ode to internet inventories</p>
+          <h1>What's On My Desktop</h1>
+          <p class="dek">
+            A visual essay series about AI adoption as material culture: the tools people keep open, the workflows they repeat, the systems they build, and the objects that make their digital lives legible.
+          </p>
+          <div class="cover-lines">
+            <span><strong>Inside:</strong> Glossier bathroom cabinets, Toy Stories inventories, Myspace rankings, desk setup voyeurism.</span>
+            <span><strong>The question:</strong> what survives the hype once AI becomes part of real work?</span>
+            <span><strong>The method:</strong> photos, screenshots, timelines, receipts, and tiny origin stories.</span>
+          </div>
+        </div>
+
+        <div class="desktop-board" aria-label="Collage of desktop icons and series inspiration labels">
+          <div class="menu">
+            <span>Current Mood: tender command center</span>
+            <span>Top 8 open</span>
+          </div>
+          <div class="folder" style="left: 32px; top: 98px;">desk pics</div>
+          <div class="folder" style="left: 54px; bottom: 80px;">prompts</div>
+          <div class="app" style="right: 48px; top: 94px;">AI</div>
+          <div class="app" style="right: 142px; top: 170px;">PPT</div>
+          <div class="app" style="left: 150px; top: 202px;">TAB</div>
+          <div class="note" style="left: 36px; top: 236px;">Messy is better than polished.</div>
+          <div class="window" style="left: 188px; top: 86px;">
+            <div class="tabs"><span></span><span></span><span></span></div>
+            <div class="window-body">
+              The room where they work. The screen where they think. The tools they keep close.
+            </div>
+          </div>
+          <div class="label" style="right: 42px; top: 300px;">emotional support tab</div>
+          <div class="label" style="left: 184px; bottom: 122px;">daily driver</div>
+          <div class="star" style="right: 70px; bottom: 74px;">Top Shelf, but software</div>
+          <div class="bubble" style="left: 245px; bottom: 230px;">Toy Stories for tabs, tools, and tiny systems.</div>
+        </div>
+      </section>
+
+      <section class="mag-spread">
+        <div class="section-label">The Inspo Shelf</div>
+        <div>
+        <div class="carousel-shell">
+        <div class="reference-grid" id="inspo-carousel" aria-label="Visual reference carousel for the series">
+          <article class="reference-card wide">
+            <img src="https://images.ctfassets.net/g8qtv9gzg47d/6QvyJs9KeI2wWi0ESgKiQI/fa6032be68eeb912b70bf5d8bb406483/Sunny-Hostin.jpg?fl=progressive&fm=jpg&q=80" alt="Into The Gloss Top Shelf bathroom reference" />
+            <div class="ref-body">
+              <h3>Into The Gloss</h3>
+              <p><a href="https://intothegloss.com/2019/01/bec-wilson-tcs-beauty-interview">Bec Wilson's Top Shelf</a>: image carousel first, then a profile built from daily-use inventory.</p>
+            </div>
+          </article>
+
+          <article class="reference-card square">
+            <img src="https://gabrielegalimberti.com/wp-content/uploads/2025/09/Toy-Stories0001-2048x2048.jpg" alt="Gabriele Galimberti Toy Stories reference" />
+            <div class="ref-body">
+              <h3>Toy Stories</h3>
+              <p><a href="https://gabrielegalimberti.com/projects/toy-stories/">Gabriele Galimberti</a>: belongings as evidence of identity, environment, and aspiration.</p>
+            </div>
+          </article>
+
+          <article class="reference-card square">
+            <img src="https://gabrielegalimberti.com/wp-content/uploads/2025/09/In-Her-Kitchen0001-2048x2048.jpg" alt="Gabriele Galimberti In Her Kitchen reference" />
+            <div class="ref-body">
+              <h3>In Her Kitchen</h3>
+              <p><a href="https://gabrielegalimberti.com/projects/in-her-kitchen/">Grandmas and their food</a>: a person, a made thing, and the care/history behind it.</p>
+            </div>
+          </article>
+
+          <article class="reference-card square">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/88/Myspace_profile.jpg" alt="Myspace profile reference" />
+            <div class="ref-body">
+              <h3>Myspace</h3>
+              <p><a href="https://commons.wikimedia.org/wiki/File:Myspace_profile.jpg">Profile culture</a>: ranking and customization as public self-description.</p>
+            </div>
+          </article>
+
+          <article class="reference-card tall">
+            <img src="../assets/saachi/photos/desk-wide-crop.jpg" alt="Saachi desk setup reference" />
+            <div class="ref-body">
+              <h3>Desk Setup</h3>
+              <p>Your real desk: the contemporary site where tools, rituals, objects, and screenshots become a self-portrait.</p>
+            </div>
+          </article>
+        </div>
+        <div class="carousel-controls" aria-label="Inspiration carousel controls">
+          <button class="carousel-button" type="button" data-carousel-prev aria-label="Previous inspiration">Prev</button>
+          <div class="carousel-dots" aria-label="Choose inspiration">
+            <button class="carousel-dot is-active" type="button" data-carousel-dot="0" aria-label="Show Into The Gloss"></button>
+            <button class="carousel-dot" type="button" data-carousel-dot="1" aria-label="Show Toy Stories"></button>
+            <button class="carousel-dot" type="button" data-carousel-dot="2" aria-label="Show In Her Kitchen"></button>
+            <button class="carousel-dot" type="button" data-carousel-dot="3" aria-label="Show Myspace"></button>
+            <button class="carousel-dot" type="button" data-carousel-dot="4" aria-label="Show Desk Setup"></button>
+          </div>
+          <button class="carousel-button" type="button" data-carousel-next aria-label="Next inspiration">Next</button>
+        </div>
+        </div>
+        <div class="carousel-note">
+          <span>Click through the reference shelf</span>
+          <span>Borrow the grammar, not the brand</span>
+        </div>
+
+        <div class="inspo">
+          <article class="card">
+            <h3>Glossier Top Shelf</h3>
+            <p>
+              The franchise reference: a repeatable profile format where the daily-use inventory becomes the interview. Not "what should everyone buy?" but "what does this person actually reach for?"
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Gabriele Galimberti's Toy Stories</h3>
+            <p>
+              The inventory reference: a person centered in their environment, surrounded by objects that reveal class, fantasy, taste, desire, and control.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Myspace Top 8</h3>
+            <p>
+              The identity reference: ranking as self-expression, labels as personality, digital clutter as a social signal.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Desk Setup Tours</h3>
+            <p>
+              The physical reference: monitors, mugs, notebooks, wall art, cables, tabs, and the small choices that make work feel like a room.
+            </p>
+          </article>
+        </div>
+        </div>
+      </section>
+
+      <section class="thesis-grid">
+        <article class="argument">
+          <h2>The argument</h2>
+          <p>
+            AI adoption is usually described in abstract language: productivity, automation, leverage, agents. But people do not encounter AI abstractly. They encounter it as tabs, subscriptions, folders, prompts, screenshots, browser extensions, half-finished dashboards, and tools they keep returning to.
+          </p>
+          <p>
+            This series treats the desktop as a site of evidence. What remains open, what gets paid for, what gets copied, what gets abandoned, and what becomes infrastructure all reveal more than a clean list of tools.
+          </p>
+        </article>
+
+        <article class="argument">
+          <h2>What it studies</h2>
+          <ol>
+            <li><strong>Usefulness after novelty:</strong> what survives real work once the hype fades.</li>
+            <li><strong>Personal infrastructure:</strong> how people turn tools into systems, memory, and recurring rituals.</li>
+            <li><strong>Lineage:</strong> who people learn from, copy, cite, and remix.</li>
+            <li><strong>Taste:</strong> how the same tools produce different workflows depending on the person using them.</li>
+            <li><strong>Voyeurism:</strong> the consensual pleasure of seeing the actual setup, not the sanitized self-report.</li>
+          </ol>
+        </article>
+      </section>
+
+      <section class="manifesto">
+        <h2>The premise</h2>
+        <p>
+          A desktop is a self-portrait. The wallpaper, dock, tabs, tools, folders, notes, and desk objects show how someone thinks, avoids, decorates, optimizes, remembers, performs, and copes.
+        </p>
+        <p>
+          The series begins with Saachi's own setup, then maybe expands to other people, especially women whose digital systems are more interesting than a normal tech-stack interview can capture.
+        </p>
+      </section>
+    </main>
+    <script>
+      const carousel = document.querySelector("#inspo-carousel");
+      const slides = Array.from(document.querySelectorAll(".reference-card"));
+      const dots = Array.from(document.querySelectorAll("[data-carousel-dot]"));
+      const prev = document.querySelector("[data-carousel-prev]");
+      const next = document.querySelector("[data-carousel-next]");
+      let activeSlide = 0;
+
+      function setActiveSlide(index) {
+        activeSlide = (index + slides.length) % slides.length;
+        carousel.scrollTo({
+          left: slides[activeSlide].offsetLeft - carousel.offsetLeft,
+          behavior: "smooth",
+        });
+        dots.forEach((dot, dotIndex) => {
+          dot.classList.toggle("is-active", dotIndex === activeSlide);
+        });
+      }
+
+      prev.addEventListener("click", () => setActiveSlide(activeSlide - 1));
+      next.addEventListener("click", () => setActiveSlide(activeSlide + 1));
+      dots.forEach((dot) => {
+        dot.addEventListener("click", () => setActiveSlide(Number(dot.dataset.carouselDot)));
+      });
+    </script>
+  </body>
+</html>
