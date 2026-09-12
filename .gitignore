@@ -8,3 +8,5 @@ dist/
 # Draft posts not ready to publish
 src/pages/reflections/does-this-need-a-model.astro
 src/pages/reflections/the-word-and-the-thought.astro
+
+desktop-series/
