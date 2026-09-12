@@ -1,6 +1,10 @@
-node_modules/
+﻿node_modules/
 dist/
 .astro/
 .DS_Store
 .env
 .env.*
+
+# Unpublished draft posts
+src/pages/reflections/two-years.astro
+src/pages/drafts/
