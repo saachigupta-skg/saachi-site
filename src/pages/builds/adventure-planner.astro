@@ -36,7 +36,7 @@ export const link = "https://multi-sport-adventur-ku7k.bolt.host/";
 
   <h3 style="margin-top: 20px;">The API Learning Curve</h3>
   <p style="max-width: 75ch;">
-    This was my first time working with both the National Park Service API and OpenRouteService. The NPS API had surprisingly generous rate limits but required careful data transformation—their schema is optimized for parks, not trails, so I had to infer trail attributes from park activities and descriptions. OpenRouteService was more straightforward for geocoding but had stricter rate limits, which forced me to implement smart caching and fallback estimations.
+    This was my first time working with both the National Park Service API and OpenRouteService. The NPS API had surprisingly generous rate limits but required careful data transformation. Their schema is optimized for parks, not trails, so I had to infer trail attributes from park activities and descriptions. OpenRouteService was more straightforward for geocoding but had stricter rate limits, which forced me to implement smart caching and fallback estimations.
   </p>
 
   <h3 style="margin-top: 20px;">Key Architectural Decisions</h3>
@@ -48,7 +48,7 @@ export const link = "https://multi-sport-adventur-ku7k.bolt.host/";
 
   <h4 style="margin-top: 16px; font-weight: 600;">Database Schema: Unique Constraints Matter</h4>
   <p style="max-width: 75ch;">
-    Initially, my trails table didn't have a unique constraint on the <code>name</code> column, which caused my upsert logic to fail silently. Adding <code>UNIQUE(name)</code> made the sync idempotent—I can re-run it without creating duplicates. This was a lesson in thinking through data integrity upfront rather than patching later.
+    Initially, my trails table didn't have a unique constraint on the <code>name</code> column, which caused my upsert logic to fail silently. Adding <code>UNIQUE(name)</code> made the sync idempotent. I can re-run it without creating duplicates. This was a lesson in thinking through data integrity upfront rather than patching later.
   </p>
 
   <h4 style="margin-top: 16px; font-weight: 600;">Map Library: Why Leaflet Over Alternatives</h4>
@@ -106,7 +106,7 @@ export const link = "https://multi-sport-adventur-ku7k.bolt.host/";
   </ul>
 
   <p style="max-width: 75ch; margin-top: 16px;">
-    The core insight here: people don't just need to find trails—they need help with the entire pre-adventure workflow. Permits, routes, gear, conditions, and social coordination are all friction points that technology could smooth out. The question is which problems to solve first and how to keep the experience simple rather than overwhelming.
+    The core insight here: people don't just need to find trails. They need help with the entire pre-adventure workflow. Permits, routes, gear, conditions, and social coordination are all friction points that technology could smooth out. The question is which problems to solve first and how to keep the experience simple rather than overwhelming.
   </p>
 
   <h2 style="margin-top: 28px;">Tech Stack</h2>
