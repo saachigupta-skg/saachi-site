@@ -1,9 +1,8 @@
----
+﻿---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 
 export const title = "Q1 Goals Bingo: Staying Intentional Through a Seattle Winter";
 export const date = "2026-02-25";
-export const updated = "2026-08-28";
 export const excerpt =
   "Seattle winters can turn into inertia fast. So I made a bingo board — not productivity bingo, joy bingo — and started treating the winter as an invitation to try new things.";
 export const tags = ["seattle", "intentional-living", "q1-2026"];
@@ -11,54 +10,332 @@ export const tags = ["seattle", "intentional-living", "q1-2026"];
 
 <SiteLayout title={`${title} — Saachi K Gupta`}>
   <h1>{title}</h1>
-  <p style="opacity:0.7;">{date} &middot; Updated {updated}</p>
+  <p style="opacity:0.7;">{date}</p>
 
   <p style="max-width: 75ch;">
     I love living in Washington. I love that I can be on a ferry, skiing, swimming in the lake, or at a concert all within the same day.
   </p>
 
   <p style="max-width: 75ch;">
-    Washington winters are notoriously grey, which can be difficult. This year, ski season being...tepid....has the potential to exacerbate the gloomyness. What I DO love about WA Winters is the mild temperature - unlike where I'm from (NJ) and where I went to college (Chicago), it is _rare_ for it to be so cold outside that your face hurts (speaking from experience of chicago winters). I like that it's mild enough every day to be able to go for a walk - albeit with a jacket and sometimes a raincoat. 
+    Washington winters are notoriously grey, which can be difficult. This year, ski season being...tepid....has the potential to exacerbate the gloomyness. What I DO love about WA Winters is the mild temperature - unlike where I'm from (NJ) and where I went to college (Chicago), it is _rare_ for it to be so cold outside that your face hurts (speaking from experience of chicago winters). I like that it's mild enough every day to be able to go for a walk - albeit with a jacket and sometimes a raincoat.
   </p>
 
   <p style="max-width: 75ch;">
-    So instead of dreading winter, I made a bingo board to set a vision for Q1-2026. 
+    So instead of dreading winter, I made a bingo board to set a vision for Q1-2026.
   </p>
 
   <p style="max-width: 75ch;">
-    Unlike some past Bingos (looking @ u, corporate speak zoom bingo in 2020...) this is purely for joy. 
+    Unlike some past Bingos (looking @ u, corporate speak zoom bingo in 2020...) this is purely for joy.
   </p>
 
-  <figure>
-    <img src="/images/bingo.jpeg" alt="Handwritten 2026 bingo board with squares for skiing, swimming, biking, parks, and Seattle adventures" />
-    <figcaption>The 2026 board. Diagonal lines mean a bingo. Tally marks are for the squares I keep coming back to — tracking consistency, not just completion.</figcaption>
+  <figure style="margin: 0;">
+    <img
+      src="/images/bingo.jpeg"
+      alt="Handwritten 2026 bingo board with squares for skiing, swimming, biking, parks, and Seattle adventures"
+      onclick="document.getElementById('bingo-lightbox').showModal()"
+      style="width: 100%; max-width: 75ch; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10); display: block; cursor: zoom-in;"
+    />
+    <figcaption style="margin-top: 8px; font-size: 13px; color: rgba(0,0,0,0.55); max-width: 75ch;">The 2026 board. Diagonal lines mean a bingo. Tally marks are for the squares I keep coming back to — tracking consistency, not just completion.</figcaption>
   </figure>
 
-  <h2 style="margin-top: 28px;">The Q1 Bingo Board</h2>
+  <dialog id="bingo-lightbox" onclick="this.close()" style="padding: 0; border: none; border-radius: 12px; background: transparent; max-width: 90vw; max-height: 90vh;">
+    <img src="/images/bingo.jpeg" alt="Bingo board full size" style="display: block; max-width: 90vw; max-height: 90vh; border-radius: 12px;" />
+  </dialog>
 
-  <p style="max-width: 75ch;">Some squares are easy wins and things I already would do:</p>
-  <ul style="max-width: 75ch;">
-    <li>Walk a mile</li>
-    <li>Go to the Seattle Art Museum</li>
-    <li>Olympic Sculpture Park</li>
-  </ul>
+  <h2 style="margin-top: 28px;">The Full Board</h2>
+  <p style="max-width: 75ch; font-size: 13px; opacity: 0.7;">Click a green square to see what happened.</p>
 
-  <p style="max-width: 75ch;">Some are slightly more ambitious, and serve as a reminder of what I could be doing:</p>
-  <ul style="max-width: 75ch;">
-    <li>Ferry day trip to Bainbridge Island</li>
-    <li>Cold plunge and sauna</li>
-    <li>Going to a further away park</li>
-    <li>Trying a new workout class</li>
-  </ul>
+  <style>
+    #bingo-lightbox::backdrop { background: rgba(0,0,0,0.7); }
 
-  <p style="max-width: 75ch;">
-    The goal is to remember all of the low-key, fun, and micro-adventurous ways I could be spending my time. 
-  </p>
+    .bingo-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 3px;
+      margin-top: 14px;
+      max-width: 700px;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+    .bingo-cell {
+      padding: 6px 4px;
+      text-align: center;
+      border: 1px solid rgba(0,0,0,0.10);
+      border-radius: 4px;
+      background: white;
+      color: inherit;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      font-size: 11px;
+      font-family: inherit;
+    }
+    button.bingo-cell { cursor: pointer; }
+
+    /* Category tints — "done but no story yet" cells */
+    .cat-ski   { background: rgba(186, 230, 253, 0.30); }
+    .cat-snow  { background: rgba(219, 234, 254, 0.30); }
+    .cat-swim  { background: rgba(103, 232, 249, 0.22); }
+    .cat-bike  { background: rgba(134, 239, 172, 0.22); }
+    .cat-walk  { background: rgba(187, 247, 208, 0.22); }
+    .cat-art   { background: rgba(216, 180, 254, 0.22); }
+    .cat-fitness { background: rgba(253, 230, 138, 0.22); }
+    .cat-parks { background: rgba(167, 243, 208, 0.18); }
+    .cat-island { background: rgba(165, 180, 252, 0.22); }
+    .cat-creative { background: rgba(254, 215, 170, 0.22); }
+    .cat-misc  { background: rgba(243, 244, 246, 0.50); }
+
+    /* Linked (done) cells — green tint */
+    .bingo-cell.linked { background: rgba(34, 197, 94, 0.12); }
+    .bingo-cell.linked:hover {
+      background: rgba(34, 197, 94, 0.22);
+      transform: translateY(-1px);
+      transition: all 0.15s ease;
+    }
+    .bingo-cell.linked.active {
+      background: rgba(34, 197, 94, 0.30);
+      outline: 2px solid rgba(34, 197, 94, 0.5);
+    }
+
+    /* Photo-backed linked cells */
+    .bingo-cell.linked.has-photo {
+      background:
+        linear-gradient(rgba(220, 252, 231, 0.82), rgba(220, 252, 231, 0.82)),
+        var(--photo-url) center/cover no-repeat;
+    }
+    .bingo-cell.linked.has-photo:hover {
+      background:
+        linear-gradient(rgba(187, 247, 208, 0.76), rgba(187, 247, 208, 0.76)),
+        var(--photo-url) center/cover no-repeat;
+      transform: translateY(-1px);
+      transition: all 0.15s ease;
+    }
+    .bingo-cell.linked.has-photo.active {
+      background:
+        linear-gradient(rgba(134, 239, 172, 0.72), rgba(134, 239, 172, 0.72)),
+        var(--photo-url) center/cover no-repeat;
+      outline: 2px solid rgba(34, 197, 94, 0.5);
+    }
+
+    #blurb-panel {
+      display: none;
+      margin-top: 12px;
+      max-width: 700px;
+      padding: 18px 20px;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 10px;
+      background: rgba(34, 197, 94, 0.05);
+      position: relative;
+    }
+    #blurb-panel h3 { margin: 0 0 8px 0; font-size: 15px; }
+    #blurb-panel p { margin: 0 0 12px 0; font-size: 14px; line-height: 1.5; max-width: 60ch; }
+    #blurb-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .blurb-link { font-size: 13px; color: black; text-decoration: underline; text-underline-offset: 2px; }
+    .blurb-link:hover { opacity: 0.6; }
+    #blurb-close {
+      position: absolute;
+      top: 12px;
+      right: 14px;
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      opacity: 0.4;
+      line-height: 1;
+      font-family: inherit;
+    }
+    #blurb-close:hover { opacity: 0.8; }
+  </style>
+
+  <div class="bingo-grid">
+    <!-- Row 1 -->
+    <button class="bingo-cell linked has-photo" data-blurb="snoqualmie-ski" style="--photo-url: url('/images/catamount.JPEG')">🎿 Snoqualmie Ski</button>
+    <div class="bingo-cell">❄️ Snowshoe Artists Point</div>
+    <button class="bingo-cell linked cat-art" data-blurb="seattle-art-museum">🎨 Seattle Art Museum</button>
+    <div class="bingo-cell cat-walk">🚶 Walk 1M</div>
+    <div class="bingo-cell">🏊 Swim 3K</div>
+    <div class="bingo-cell">🏋️ Pure Barre</div>
+    <div class="bingo-cell cat-ski">🎿 Ski a Weekday</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 5M</div>
+
+    <!-- Row 2 -->
+    <button class="bingo-cell linked has-photo" data-blurb="snoqualmie-ski" style="--photo-url: url('/images/catamount.JPEG')">🎿 Snoqualmie Ski</button>
+    <div class="bingo-cell cat-parks">🌿 Tuli Lodge</div>
+    <div class="bingo-cell cat-walk">🚶 Walk 4M</div>
+    <button class="bingo-cell linked has-photo" data-blurb="snoqualmie-ski" style="--photo-url: url('/images/catamount.JPEG')">🎿 Snoqualmie Ski</button>
+    <div class="bingo-cell cat-parks">🌊 Green Lake</div>
+    <div class="bingo-cell">🌿 Gasworks Park</div>
+    <button class="bingo-cell linked has-photo" data-blurb="ski-whistler" style="--photo-url: url('/images/whistler-season-closer.jpeg')">🎿 Ski Whistler</button>
+    <div class="bingo-cell">💪 MOOV Seattle</div>
+
+    <!-- Row 3 -->
+    <div class="bingo-cell">🧗 Seattle Bouldering Project</div>
+    <div class="bingo-cell cat-snow">⛷️ XC Ski</div>
+    <div class="bingo-cell cat-swim">🏊 Swim 2K</div>
+    <div class="bingo-cell">🎨 Tacoma Art Museum</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 10M</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 20M</div>
+    <div class="bingo-cell">⭐ Local Legend</div>
+    <div class="bingo-cell cat-misc">💕 Go on a date</div>
+
+    <!-- Row 4 -->
+    <div class="bingo-cell cat-walk">🚶 Walk 5M</div>
+    <div class="bingo-cell">🌉 Kerry Park</div>
+    <div class="bingo-cell cat-parks">🌿 Tuli Lodge</div>
+    <button class="bingo-cell linked has-photo" data-blurb="swim-1k" style="--photo-url: url('/images/triathlon/lake-washington-swim.jpg')">🏊 Swim 1K</button>
+    <div class="bingo-cell cat-ski">🎿 Snoqualmie Day</div>
+    <div class="bingo-cell cat-snow">🧊 Walk Ice</div>
+    <div class="bingo-cell cat-misc">✍️ Honest Hours</div>
+    <div class="bingo-cell cat-misc">💸 $0 Day</div>
+
+    <!-- Row 5 -->
+    <div class="bingo-cell">🧘 Drip Yoga</div>
+    <button class="bingo-cell linked has-photo" data-blurb="bike-50k" style="--photo-url: url('/images/lopez/ride.jpg')">🚴 Bike 50K</button>
+    <div class="bingo-cell">🧘 Club Pilates</div>
+    <div class="bingo-cell cat-art">🗿 Olympic Sculpture Park</div>
+    <div class="bingo-cell">🔥 Orange Theory</div>
+    <div class="bingo-cell cat-fitness">💪 Liftonic</div>
+    <button class="bingo-cell linked cat-walk" data-blurb="walk-2m">🚶 Walk 2M</button>
+    <div class="bingo-cell">🏊 Swim 2M</div>
+
+    <!-- Row 6 -->
+    <div class="bingo-cell cat-parks">🌿 Tuli Lodge</div>
+    <button class="bingo-cell linked has-photo" data-blurb="tulips" style="--photo-url: url('/images/tulips/2026-fields.jpg')">🌷 Tulips</button>
+    <button class="bingo-cell linked cat-island" data-blurb="bainbridge">⛴️ Bainbridge Island</button>
+    <div class="bingo-cell cat-ski">🎿 Crystal Mtn Ski</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 15M</div>
+    <div class="bingo-cell cat-parks">🌿 Central Park</div>
+    <div class="bingo-cell cat-ski">🎿 Snoqualmie Day</div>
+    <button class="bingo-cell linked cat-island" data-blurb="san-juan-island">⛴️ San Juan Island</button>
+
+    <!-- Row 7 -->
+    <div class="bingo-cell">❄️ Snowshoe Paradise</div>
+    <div class="bingo-cell">🪟 Tacoma Glass Museum</div>
+    <div class="bingo-cell cat-fitness">💪 Ballard Health Club</div>
+    <div class="bingo-cell cat-walk">🚶 Walk 3M</div>
+    <div class="bingo-cell cat-parks">🌿 Tuli Lodge</div>
+    <button class="bingo-cell linked cat-parks" data-blurb="discovery-park">🌿 Discovery Park</button>
+    <div class="bingo-cell">🧵 Embroidery Project</div>
+    <button class="bingo-cell linked cat-art" data-blurb="seattle-art-museum">🎨 Seattle Art Museum</button>
+
+    <!-- Row 8 -->
+    <div class="bingo-cell">🌿 Magnuson Park</div>
+    <div class="bingo-cell cat-ski">🎿 Snoqualmie Day</div>
+    <div class="bingo-cell cat-bike">🚴 Bike 25M</div>
+    <div class="bingo-cell">🌊 Seward Park</div>
+    <div class="bingo-cell cat-swim">🏊 Swim 1M</div>
+    <div class="bingo-cell">🎨 Frye Art Museum</div>
+    <div class="bingo-cell">🌿 Carkeek Park</div>
+    <button class="bingo-cell linked has-photo" data-blurb="ski-bend" style="--photo-url: url('/images/catamount.JPEG')">🎿 Ski Bend</button>
+  </div>
+
+  <div id="blurb-panel">
+    <button id="blurb-close">×</button>
+    <h3 id="blurb-title"></h3>
+    <p id="blurb-text"></p>
+    <div id="blurb-links"></div>
+  </div>
+
+  <script is:inline>
+    const blurbs = {
+      'snoqualmie-ski': {
+        title: 'Snoqualmie Ski',
+        text: 'My home mountain this season — skied Snoqualmie multiple times as part of the SheJumps Ikon Pass scholarship. First turns, technique work, and getting comfortable again after years away.',
+        link: { href: '/adventures/shejumps-ikon-pass', label: 'Read the full ski season →' }
+      },
+      'ski-whistler': {
+        title: 'Ski Whistler',
+        text: 'Season closer at Whistler with friends. A new mountain to add to the list — more about the people than the turns.',
+        link: { href: '/adventures/shejumps-ikon-pass', label: 'Read the full ski season →' }
+      },
+      'ski-bend': {
+        title: 'Ski Bend — Mt. Bachelor',
+        text: 'Kept up with friends on blues and knew when I was done for the day. That was the whole goal going into the season.',
+        link: { href: '/adventures/shejumps-ikon-pass', label: 'Read the full ski season →' },
+        tiktok: 'https://www.tiktok.com/@s_k_g_8/video/7618825820856995102'
+      },
+      'tulips': {
+        title: 'Tulips — Skagit Valley',
+        text: 'Third year in a row at the tulip fields. This time we actually planned around it. Post Tour de Lopez, we stayed for it instead of treating it as a side trip.',
+        link: { href: '/reflections/wa-tulip-season', label: 'Read the tulip post →' }
+      },
+      'bainbridge': {
+        title: 'Bainbridge Island',
+        text: 'Ferry day trip with Hannah after her sabbatical — ferry ride, long walk, great Italian food at Via Rosa. One of the best low-key days of the quarter.',
+        link: { href: '/reflections/february-2026', label: 'Read February 2026 →' },
+        tiktok: 'https://www.tiktok.com/@s_k_g_8/video/7614416199681674527'
+      },
+      'seattle-art-museum': {
+        title: 'Seattle Art Museum',
+        text: 'Went with the Wharton Seattle community — a good excuse to actually go, and a nice way to reconnect with people.',
+        tiktok: 'https://www.tiktok.com/@s_k_g_8/video/7614003982008143135'
+      },
+      'walk-2m': {
+        title: 'Walk 2M',
+        text: 'A two-mile walk through the neighborhood. One of the tally-mark squares — came back to it a lot.',
+        tiktok: 'https://www.tiktok.com/@s_k_g_8/video/7616127832619617567'
+      },
+      'swim-1k': {
+        title: 'Swim 1K',
+        text: 'Back in the pool.',
+        tiktok: 'https://www.tiktok.com/@s_k_g_8/video/7624405647328578847'
+      },
+      'discovery-park': {
+        title: 'Discovery Park',
+        text: 'Bluffs, beach, forest, lighthouse — all in one park. Worth the trek every time.',
+        tiktok: 'https://www.tiktok.com/@s_k_g_8/video/7613253855433870622'
+      },
+      'bike-50k': {
+        title: 'Bike 50K — Tour de Lopez',
+        text: '30 miles around Lopez Island in the San Juans with 9 people, one campsite on the beach, and a ferry that made an unscheduled stop for someone who almost didn\'t make it.',
+        link: { href: '/adventures/tour-de-lopez', label: 'Read the Tour de Lopez post →' }
+      },
+      'san-juan-island': {
+        title: 'San Juan Islands — Lopez Island',
+        text: 'Tour de Lopez 2026. Ferry to Lopez, 30 miles on the bike, campsite on the beach, tulip fields on the way back.',
+        link: { href: '/adventures/tour-de-lopez', label: 'Read the Tour de Lopez post →' }
+      }
+    };
+
+    const panel = document.getElementById('blurb-panel');
+    const titleEl = document.getElementById('blurb-title');
+    const textEl = document.getElementById('blurb-text');
+    const linksEl = document.getElementById('blurb-links');
+
+    document.querySelectorAll('button.bingo-cell.linked').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const blurb = blurbs[btn.dataset.blurb];
+        if (!blurb) return;
+
+        titleEl.textContent = blurb.title;
+        textEl.textContent = blurb.text;
+        linksEl.innerHTML = '';
+        if (blurb.link) {
+          linksEl.innerHTML += `<a href="${blurb.link.href}" class="blurb-link">${blurb.link.label}</a>`;
+        }
+        if (blurb.tiktok) {
+          linksEl.innerHTML += `<a href="${blurb.tiktok}" target="_blank" rel="noopener" class="blurb-link">Watch on TikTok →</a>`;
+        }
+
+        panel.style.display = 'block';
+        document.querySelectorAll('button.bingo-cell.linked').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    document.getElementById('blurb-close').addEventListener('click', () => {
+      panel.style.display = 'none';
+      document.querySelectorAll('button.bingo-cell.linked').forEach(c => c.classList.remove('active'));
+    });
+  </script>
+
 
   <h2 style="margin-top: 28px;">How the Board Evolved</h2>
 
   <p style="max-width: 75ch;">
-    Three squares got swapped as the season progressed. <s>Snowshoe Artist's Point</s> got replaced with Sleep in a Fire Lookout — which I did, and it was one of the most memorable nights of the year (full post in Adventures). <s>Snowshoe Paradise</s> got replaced with Bike the Sunrise Road, which turned out to be genuinely iconic. And <s>Barry's</s> got replaced with Liftonic — completed. <s>Club Pilates</s> got replaced with LabX Pilates — also completed.
+    Four squares got swapped as the season progressed. <s>Snowshoe Artist's Point</s> got replaced with Sleep in a Fire Lookout — which I did, and it was one of the most memorable nights of the year (full post in Adventures). <s>Snowshoe Paradise</s> got replaced with Bike the Sunrise Road, which turned out to be genuinely iconic. <s>Barry's</s> got replaced with Liftonic — completed. <s>Club Pilates</s> got replaced with LabX Pilates — also completed.
   </p>
 
   <h2 style="margin-top: 28px;">What Got Crossed Off</h2>
@@ -69,7 +346,7 @@ export const tags = ["seattle", "intentional-living", "q1-2026"];
     <li>Howe St Stairs</li>
     <li>Gasworks Park</li>
     <li>Go on a date</li>
-    <li>$0 Day — a few of these</li>
+    <li></SiteLayout> Day — a few of these</li>
     <li>Liftonic (replaced Barry's)</li>
     <li>LabX Pilates (replaced Club Pilates)</li>
     <li>Sleep in a Fire Lookout (replaced Snowshoe Artist's Point)</li>

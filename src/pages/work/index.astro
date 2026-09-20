@@ -1,0 +1,81 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+
+<SiteLayout title="Work - Saachi K Gupta">
+  <style>
+    .intro {
+      max-width: 72ch;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 32px;
+    }
+
+    .pillar {
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    .pillar h2 {
+      margin-top: 0;
+      font-size: 1.45rem;
+    }
+
+    .pillar p {
+      color: var(--muted);
+    }
+
+    .proof {
+      margin-top: 40px;
+      max-width: 78ch;
+      border-left: 3px solid var(--accent);
+      padding-left: 20px;
+      color: var(--muted);
+    }
+
+    @media (max-width: 720px) {
+      .pillars {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <h1>Work</h1>
+  <p class="intro">
+    Strategy, finance, partnerships, and operations for complex bets that need both a model and a room-reading operator.
+  </p>
+
+  <section class="pillars" aria-label="Work focus areas">
+    <article class="pillar">
+      <h2>Strategy</h2>
+      <p>Framing ambiguous markets, sizing opportunities, and turning a vague commercial question into a decision path.</p>
+    </article>
+    <article class="pillar">
+      <h2>Finance</h2>
+      <p>Building operating plans, investment cases, and durable infrastructure for teams that need rigor without losing speed.</p>
+    </article>
+    <article class="pillar">
+      <h2>Partnerships</h2>
+      <p>Structuring enterprise relationships across technical, commercial, legal, and executive stakeholders.</p>
+    </article>
+    <article class="pillar">
+      <h2>Operations</h2>
+      <p>Translating strategy into repeatable execution across teams, launch plans, metrics, and feedback loops.</p>
+    </article>
+  </section>
+
+  <section class="proof">
+    <p>
+      At Amazon, I helped architect enterprise partnerships with Disney, Wynn, Northwell, and Greystar; built quarterly operating plan infrastructure for 25+ teams; and supported the deployment of 150K+ Alexa devices in hospitals and senior living communities during COVID.
+    </p>
+    <p>
+      I hold an MBA from Wharton in Operations and Finance and a BA in Economics and Political Science from the University of Chicago.
+    </p>
+  </section>
+</SiteLayout>

@@ -2,13 +2,23 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 
 const modules = import.meta.glob("./*.astro", { eager: true });
+const rawModules = import.meta.glob("./*.astro", { as: 'raw', eager: true });
+
+function estimateReadTime(raw: string): string {
+  const body = raw
+    .replace(/^---[\s\S]*?---\n?/, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\{[^}]*\}/g, ' ');
+  const words = body.trim().split(/\s+/).filter((w: string) => w.length > 1).length;
+  return `${Math.max(1, Math.ceil(words / 200))} min read`;
+}
 
 const posts = Object.entries(modules)
   .filter(([path]) => !path.endsWith("/index.astro"))
-  .map(([path, mod]) => {
+  .map(([path, mod]: [string, any]) => {
     const slug = path.replace("./", "").replace(".astro", "");
     const url = `/learnings/${slug}`;
-
+    const readTime = estimateReadTime(rawModules[path] ?? "");
     return {
       url,
       slug,
@@ -16,11 +26,12 @@ const posts = Object.entries(modules)
       date: mod.date ?? "",
       excerpt: mod.excerpt ?? "",
       tags: Array.isArray(mod.tags) ? mod.tags : [],
+      readTime,
     };
   })
   .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
 
-function formatDate(iso) {
+function formatDate(iso: string) {
   if (!iso) return "";
   const d = new Date(iso + "T00:00:00");
   return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
@@ -49,14 +60,6 @@ function formatDate(iso) {
       border-color: rgba(0,0,0,0.16);
     }
 
-    .titleRow {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
     .card h2 {
       margin: 0;
       font-size: 20px;
@@ -74,30 +77,38 @@ function formatDate(iso) {
 
     .meta {
       margin-top: 6px;
-      font-size: 14px;
-      opacity: 0.7;
+      font-size: 13px;
+      color: rgba(0,0,0,0.55);
       display: flex;
-      gap: 10px;
+      gap: 6px;
       align-items: center;
       flex-wrap: wrap;
     }
 
+    .sep {
+      opacity: 0.4;
+    }
+
     .tags {
+      margin-top: 8px;
       display: flex;
-      gap: 8px;
+      gap: 6px;
       flex-wrap: wrap;
     }
 
     .tag {
-      font-size: 12px;
-      padding: 4px 10px;
-      border: 1px solid rgba(0,0,0,0.14);
+      font-size: 11px;
+      padding: 3px 9px;
+      background: rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.12);
       border-radius: 999px;
-      opacity: 0.85;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
     }
 
     .excerpt {
-      margin: 12px 0 0 0;
+      margin: 10px 0 0 0;
       font-size: 15px;
       line-height: 1.55;
       max-width: 75ch;
@@ -106,7 +117,6 @@ function formatDate(iso) {
     .read {
       margin-top: 12px;
       font-size: 14px;
-      opacity: 0.85;
     }
 
     @media (max-width: 640px) {
@@ -120,31 +130,32 @@ function formatDate(iso) {
   </style>
 
   <h1>Learnings</h1>
- <p style="max-width: 70ch;">
-  In 2026, I'm learning by trying new tools to build and being guided by curiosity. Some of this is about AI, some of it is about the internet,
-  and a lot of it is about rediscovering things I didn’t know I still knew — like writing HTML thanks to a 2012 Tumblr obsession.
-</p>
-<p style="max-width: 70ch; margin-top: 12px;">
-  These are notes from trying things and reminding myself that action is the best antidote to anxiety.
-</p>
+  <p style="max-width: 70ch;">
+    In 2026, I'm learning by trying new tools to build and being guided by curiosity. Some of this is about AI, some of it is about the internet,
+    and a lot of it is about rediscovering things I didn't know I still knew — like writing HTML thanks to a 2012 Tumblr obsession.
+  </p>
+  <p style="max-width: 70ch; margin-top: 12px;">
+    These are notes from trying things and reminding myself that action is the best antidote to anxiety.
+  </p>
 
   <div class="grid">
     {posts.map((p) => (
       <article class="card">
-        <div class="titleRow">
-          <h2><a href={p.url}>{p.title}</a></h2>
-        </div>
+        <h2><a href={p.url}>{p.title}</a></h2>
 
         <div class="meta">
           {p.date && <span>{formatDate(p.date)}</span>}
-          {p.tags?.length > 0 && (
-            <div class="tags">
-              {p.tags.map((t) => (
-                <span class="tag">{t}</span>
-              ))}
-            </div>
-          )}
+          {p.date && p.readTime && <span class="sep">·</span>}
+          {p.readTime && <span>{p.readTime}</span>}
         </div>
+
+        {p.tags?.length > 0 && (
+          <div class="tags">
+            {p.tags.map((t: string) => (
+              <span class="tag">{t}</span>
+            ))}
+          </div>
+        )}
 
         {p.excerpt && <p class="excerpt">{p.excerpt}</p>}
 

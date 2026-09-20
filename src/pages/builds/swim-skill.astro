@@ -1,0 +1,41 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+export const title = "Building a Seattle Swim Finder for Claude Code";
+export const date = "2026-05-07";
+export const excerpt =
+  "Seattle public pools are great. Their schedules are chaos. I built a Claude Code skill that lets me ask 'where can I swim Thursday morning?' and get a clean answer.";
+export const tags = ["claude code", "python", "playwright", "skills", "seattle"];
+export const link = "https://github.com/saachigupta-skg/seattle-swim-skill";
+---
+
+<SiteLayout title={`${title} — Saachi K Gupta`} description={excerpt}>
+  <h1>{title}</h1>
+  <p style="opacity:0.6; font-size: 13px;">{date}</p>
+
+  <p style="max-width: 75ch;">
+    I like to swim at Seattle's public pools, which are genuinely great — affordable, well-kept, spread around the city — but the schedules are all over the place. Each pool runs different lap swim windows, they shift week to week, special events knock out sessions without much warning, and the city's online calendar is slow and confusing to navigate. I kept opening a bunch of tabs just to figure out where I could actually get in the water on a given morning, and I wanted something that would just tell me the answer when I asked.
+  </p>
+
+  <p style="max-width: 75ch;">
+    So I built a <a href="https://github.com/saachigupta-skg/seattle-swim-skill" target="_blank" rel="noopener noreferrer">Claude Code skill</a> for it — a small package of files that teaches Claude a new command. When I type <code>/swim Thursday between 10am and 1pm</code>, it returns a clean list of pools with sessions that fit that window, including nearby options if nothing lines up perfectly. The longer idea was to hook this into my calendar so it could cross-reference when I'm actually free, which is still in progress, but the core of it works and I use it regularly.
+  </p>
+
+  <h2 style="margin-top: 28px;">Not everything needs to be AI</h2>
+  <p style="max-width: 75ch;">
+    There's a saying about not using a sledgehammer to crack a nut, and building this was a good reminder of what that means in practice. The part where AI actually helps is the conversational layer — understanding what "next Thursday morning" means, filtering the schedule down to what fits, and formatting something readable. But pulling the pool schedule from the city's website is a completely deterministic problem where the answer is always the same regardless of how you ask for it, so running a language model on that part would just be adding complexity for no reason.
+  </p>
+
+  <p style="max-width: 75ch;">
+    Instead I split the work: a Python script scrapes the Seattle Parks calendar on a weekly schedule and saves the results to a local file, and Claude reads from that file when I ask a question. The only AI in this project is in the one place it was actually useful.
+  </p>
+
+  <h2 style="margin-top: 28px;">Why scraping was annoying</h2>
+  <p style="max-width: 75ch;">
+    The Seattle Parks calendar loads everything through JavaScript, which means a standard scrape just returns an empty page with none of the actual schedule data in it. I ended up using <strong>Playwright</strong>, which opens an invisible browser in the background and lets you interact with the page the same way a real user would — clicking buttons, waiting for things to load, and pulling out the rendered content once it's there. The script clicks into a print/list view of the calendar, intercepts the print dialog before it causes problems, and then parses the HTML output with BeautifulSoup. The whole thing runs in under a minute and is set to auto-refresh every Monday.
+  </p>
+
+  <p style="max-width: 75ch;">
+    The full skill is on <a href="https://github.com/saachigupta-skg/seattle-swim-skill" target="_blank" rel="noopener noreferrer">GitHub</a> with setup instructions, and it covers six pools: Ballard, Evans at Green Lake, Helene Madison, Meadowbrook, Rainier Beach, and Southwest.
+  </p>
+</SiteLayout>
