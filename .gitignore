@@ -5,6 +5,8 @@ dist/
 .env
 .env.*
 
-# Unpublished draft posts
-src/pages/reflections/two-years.astro
+# Draft / WiP posts (not ready to publish)
+src/pages/_drafts/
 src/pages/drafts/
+
+desktop-series/
