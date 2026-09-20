@@ -33,9 +33,9 @@ export const link = "https://jobs.saachigupta.net";
 
   <ul style="max-width: 75ch; line-height: 2;">
     <li><strong>Free-text paste:</strong> Copy any email, LinkedIn message, or raw notes into the Add Contact form, hit Parse, and Claude extracts name, organization, role, status, and next action. Review and save.</li>
-    <li><strong>Gmail scanning:</strong> Connects to Gmail via OAuth and scans for relevant emails. Matches by sender email or organization name in the subject — so automated emails from ATS platforms get matched to the right contact even when the sender address isn't the person you spoke with.</li>
+    <li><strong>Gmail scanning:</strong> Connects to Gmail via OAuth and scans for relevant emails. Matches by sender email or organization name in the subject, so automated emails from ATS platforms get matched to the right contact even when the sender address isn't the person you spoke with.</li>
     <li><strong>Morning digest:</strong> Every day at 8am PT, a digest arrives listing all active contacts grouped by status, with stale flags and next actions. No dashboard login required.</li>
-    <li><strong>Reply-to-update:</strong> Reply to the digest email with commands like <code>close 3</code>, <code>waiting 2</code>, or <code>note 4 great call, following up Friday</code> — the app polls every 20 minutes and applies updates automatically.</li>
+    <li><strong>Reply-to-update:</strong> Reply to the digest email with commands like <code>close 3</code>, <code>waiting 2</code>, or <code>note 4 great call, following up Friday</code>. The app polls every 20 minutes and applies updates automatically.</li>
   </ul>
 
   <h2 style="margin-top: 28px;">Architecture</h2>
@@ -84,11 +84,11 @@ APScheduler runs 3 background jobs inside the FastAPI process:
   </p>
 
   <p style="max-width: 75ch;">
-    <strong>Too much automation is a bug.</strong> The first version auto-applied everything: new contacts, status updates, closures — all without asking. It immediately closed a contact based on a false positive ("unfortunately" appeared in a confirmation email) and flooded the Active column with newsletter signups. The fix was a review modal — the scanner now returns proposed changes, I approve or dismiss each one, and only selected changes get applied.
+    <strong>Too much automation is a bug.</strong> The first version auto-applied everything: new contacts, status updates, closures — all without asking. It immediately closed a contact based on a false positive ("unfortunately" appeared in a confirmation email) and flooded the Active column with newsletter signups. The fix was a review modal. The scanner now returns proposed changes, I approve or dismiss each one, and only selected changes get applied.
   </p>
 
   <p style="max-width: 75ch;">
-    <strong>Railway internal networking.</strong> Railway's PostgreSQL plugin provides a <code>.railway.internal</code> hostname that only resolves inside their network. Hardcoding it as a plain environment variable broke startup — Railway needs the variable set as a <em>reference</em> (<code>$&#123;&#123;Postgres.DATABASE_URL&#125;&#125;</code>) to wire up the internal network dependency. Several healthcheck failures before this clicked.
+    <strong>Railway internal networking.</strong> Railway's PostgreSQL plugin provides a <code>.railway.internal</code> hostname that only resolves inside their network. Hardcoding it as a plain environment variable broke startup. Railway needs the variable set as a <em>reference</em> (<code>$&#123;&#123;Postgres.DATABASE_URL&#125;&#125;</code>) to wire up the internal network dependency. Several healthcheck failures before this clicked.
   </p>
 
   <p style="max-width: 75ch;">
@@ -98,11 +98,11 @@ APScheduler runs 3 background jobs inside the FastAPI process:
   <h2 style="margin-top: 28px;">What I'd do differently</h2>
 
   <p style="max-width: 75ch;">
-    Start with the review step. The temptation with AI-powered automation is to skip confirmation entirely — but for anything that writes to a real database, a human-in-the-loop step is almost always worth the extra click. Approving a proposed change takes two seconds. Debugging a wrongly closed contact takes much longer.
+    Start with the review step. The temptation with AI-powered automation is to skip confirmation entirely, but for anything that writes to a real database, a human-in-the-loop step is almost always worth the extra click. Approving a proposed change takes two seconds. Debugging a wrongly closed contact takes much longer.
   </p>
 
   <p style="max-width: 75ch;">
-    I'd also define the email matching rules more precisely upfront. "Relevant email" is fuzzier than it sounds — it includes platform confirmations, rejection emails from no-reply addresses, notification digests, and direct human outreach. A keyword filter catches all of them indiscriminately. A tighter definition from the start would have saved several iterations.
+    I'd also define the email matching rules more precisely upfront. "Relevant email" is fuzzier than it sounds. It includes platform confirmations, rejection emails from no-reply addresses, notification digests, and direct human outreach. A keyword filter catches all of them indiscriminately. A tighter definition from the start would have saved several iterations.
   </p>
 
   <h2 style="margin-top: 28px;">Tools used</h2>
@@ -131,7 +131,7 @@ APScheduler runs 3 background jobs inside the FastAPI process:
   </p>
 
   <p style="max-width: 75ch;">
-    The thing I keep coming back to: the best use of AI tools isn't automating the interesting parts — it's removing the activation energy for building at all. Once something exists, iterating on it is easy. Getting to "it exists" used to be the hard part.
+    The thing I keep coming back to: the best use of AI tools isn't automating the interesting parts. It's removing the activation energy for building at all. Once something exists, iterating on it is easy. Getting to "it exists" used to be the hard part.
   </p>
 
 </SiteLayout>
