@@ -7,7 +7,7 @@ export const excerpt = "Seattle's only triathlon, in Lake Washington at Seward P
 export const tags = ["triathlon", "seattle", "swimming", "cycling", "running", "seafair"];
 ---
 
-<SiteLayout title={`${title} — Saachi K Gupta`}>
+<SiteLayout title={`${title} — Saachi K Gupta`} description={excerpt}>
   <style>
     figure {
       max-width: 75ch;
@@ -55,7 +55,7 @@ export const tags = ["triathlon", "seattle", "swimming", "cycling", "running", "
   </p>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/triathlon/race-transition.jpg"
       alt="Saachi and a friend at the Seward Park transition zone, bikes racked behind, before the race"
           />
@@ -63,7 +63,7 @@ export const tags = ["triathlon", "seattle", "swimming", "cycling", "running", "
   </figure>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/triathlon/race-run.jpg"
       alt="Saachi mid-race selfie on the run course at Seward Park, race bib on, arm raised, big smile"
           />
@@ -71,7 +71,7 @@ export const tags = ["triathlon", "seattle", "swimming", "cycling", "running", "
   </figure>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/triathlon/lake-washington-swim.jpg"
       alt="Swimming in Lake Washington, shot from a paddleboard — open water, blue sky, tree-lined shore"
           />
@@ -79,14 +79,14 @@ export const tags = ["triathlon", "seattle", "swimming", "cycling", "running", "
   </figure>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/triathlon/sup-friends.jpg"
       alt="Saachi and a friend on paddleboards on Lake Union, South Lake Union buildings behind"
           />
   </figure>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/triathlon/race-finish.jpg"
       alt="Saachi post-finish with finisher medal, smiling, triathlon gear, transition area behind"
           />

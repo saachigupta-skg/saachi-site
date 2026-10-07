@@ -1,0 +1,295 @@
+---
+// Card grid for the auto-generated index pages. One component, three looks:
+//   "post"       builds and learnings
+//   "reflection" reflections (tags inline with the date, lighter chips)
+//   "adventure"  adventures (cover image, location, activity stats)
+import type { Entry } from "../lib/collection";
+
+interface Props {
+  entries: Entry[];
+  variant?: "post" | "reflection" | "adventure";
+  emptyText?: string;
+}
+
+const { entries, variant = "post", emptyText } = Astro.props;
+
+function formatDate(iso: string) {
+  if (!iso) return "";
+  const d = new Date(iso + "T00:00:00");
+  return variant === "adventure"
+    ? d.toLocaleDateString("en-US", { month: "long", year: "numeric" })
+    : d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+}
+---
+
+{entries.length === 0 && emptyText ? (
+  <p class="empty">{emptyText}</p>
+) : (
+  <div class:list={["grid", variant]}>
+    {entries.map((e) => (
+      <article class="card">
+        {variant === "adventure" && e.coverImage && (
+          <a href={e.url}>
+            <img class="card-image" src={e.coverImage} alt={e.title} loading="lazy" />
+          </a>
+        )}
+
+        <div class:list={[{ "card-body": variant === "adventure" }]}>
+          {variant === "reflection" ? (
+            <div class="titleRow">
+              <h2><a href={e.url}>{e.title}</a></h2>
+            </div>
+          ) : (
+            <h2><a href={e.url}>{e.title}</a></h2>
+          )}
+
+          {variant === "reflection" ? (
+            <div class="meta">
+              {e.date && <span>{formatDate(e.date)}</span>}
+              {e.tags.length > 0 && (
+                <div class="tags">
+                  {e.tags.map((t) => <span class="tag">{t}</span>)}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div class="meta">
+              {e.date && <span>{formatDate(e.date)}</span>}
+              {e.date && e.location && <span class="sep">·</span>}
+              {e.location && <span>{e.location}</span>}
+              {(e.date || e.location) && e.readTime && <span class="sep">·</span>}
+              {e.readTime && <span>{e.readTime}</span>}
+            </div>
+          )}
+
+          {variant === "adventure" && (e.activityType || e.distance || e.elevation) && (
+            <div class="stats">
+              {e.activityType && <span class="activity-tag">{e.activityType}</span>}
+              {(e.distance || e.elevation) && (
+                <span class="stat-numbers">
+                  {[e.distance, e.elevation].filter(Boolean).join(" · ")}
+                </span>
+              )}
+            </div>
+          )}
+
+          {variant !== "reflection" && e.tags.length > 0 && (
+            <div class="tags">
+              {e.tags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+          )}
+
+          {e.excerpt && <p class="excerpt">{e.excerpt}</p>}
+
+          <div class="actions">
+            <a href={e.url}>Read →</a>
+            {e.link && <a href={e.link} target="_blank" rel="noopener noreferrer">Live demo →</a>}
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+)}
+
+<style>
+  .grid {
+    margin-top: 28px;
+    display: grid;
+    gap: 18px;
+    max-width: 900px;
+  }
+
+  .card {
+    border: 1px solid rgba(0,0,0,0.10);
+    border-radius: 14px;
+    padding: 18px 18px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border-color: rgba(0,0,0,0.16);
+  }
+
+  .card h2 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  .card a {
+    color: black;
+    text-decoration: none;
+  }
+
+  .card a:hover {
+    text-decoration: underline;
+  }
+
+  .meta {
+    margin-top: 6px;
+    font-size: 13px;
+    color: rgba(0,0,0,0.55);
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .sep {
+    opacity: 0.4;
+  }
+
+  .tags {
+    margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    background: rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 999px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .excerpt {
+    margin: 10px 0 0 0;
+    font-size: 15px;
+    line-height: 1.55;
+    max-width: 75ch;
+  }
+
+  .actions {
+    margin-top: 12px;
+    font-size: 14px;
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .empty {
+    margin-top: 40px;
+    color: rgba(0,0,0,0.45);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Reflections */
+  .reflection .titleRow {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .reflection .meta {
+    font-size: 14px;
+    color: inherit;
+    opacity: 0.7;
+    gap: 10px;
+  }
+
+  .reflection .tags {
+    margin-top: 0;
+    gap: 8px;
+  }
+
+  .reflection .tag {
+    font-size: 12px;
+    padding: 4px 10px;
+    background: none;
+    border-color: rgba(0,0,0,0.14);
+    font-weight: normal;
+    letter-spacing: normal;
+    white-space: normal;
+    opacity: 0.85;
+  }
+
+  .reflection .excerpt {
+    margin-top: 12px;
+  }
+
+  .reflection .actions {
+    display: block;
+    opacity: 0.85;
+  }
+
+  /* Adventures */
+  .grid.adventure {
+    margin-top: 32px;
+    gap: 24px;
+  }
+
+  .adventure .card {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .adventure .card:hover {
+    box-shadow: 0 14px 36px rgba(0,0,0,0.08);
+  }
+
+  .card-image {
+    display: block;
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+  }
+
+  .card-body {
+    padding: 18px 20px 20px;
+  }
+
+  .stats {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .activity-tag {
+    font-size: 11px;
+    padding: 3px 9px;
+    background: rgba(0,0,0,0.08);
+    border-radius: 999px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .stat-numbers {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(0,0,0,0.7);
+  }
+
+  .adventure .excerpt {
+    color: rgba(0,0,0,0.8);
+  }
+
+  .adventure .actions {
+    display: block;
+    margin-top: 14px;
+  }
+
+  @media (max-width: 640px) {
+    .card h2 {
+      font-size: 18px;
+    }
+    .excerpt {
+      font-size: 14px;
+    }
+    .card-image {
+      height: 200px;
+    }
+  }
+</style>

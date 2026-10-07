@@ -8,7 +8,7 @@ export const excerpt =
 export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
 ---
 
-<SiteLayout title={`${title} — Saachi K Gupta`}>
+<SiteLayout title={`${title} — Saachi K Gupta`} description={excerpt} ogImage="/images/skg-step5-final.png">
   <h1>{title}</h1>
   <p style="opacity:0.6; font-size: 13px;">{date}</p>
 
@@ -53,7 +53,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
   <p style="max-width: 75ch;">
     A second box set to "Hole" — Tinkercad's way of making a shape subtract from another instead of adding. Position it inside the main block, group them, and you get a cutout. I started with a square hole, then switched to a cylinder for a cleaner round tunnel that matches the cable's circular cross-section.
   </p>
-  <img
+  <img loading="lazy"
     src="/images/skg-step2-hole.png"
     alt="Hole box positioned inside the main orange block"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
@@ -63,7 +63,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
   <p style="max-width: 75ch;">
     This took the most iterations. A cylinder has an orientation. It needs to run front-to-back through the block so the cable can thread through. Getting it rotated correctly and centered inside the block took a few tries. The RIGHT view in Tinkercad was the most useful angle for checking it.
   </p>
-  <img
+  <img loading="lazy"
     src="/images/skg-step3-cylinder.png"
     alt="View from the right showing cylinder tunnel through the block"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
@@ -73,7 +73,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
   <p style="max-width: 75ch;">
     Tinkercad has a built-in Text shape. I typed SKG, set the height to 3mm so it's chunky enough to feel raised, and pushed it slightly into the front face of the block so it's anchored rather than floating. Solid (not Hole), so the letters stick out.
   </p>
-  <img
+  <img loading="lazy"
     src="/images/skg-step4-front.png"
     alt="Front view of the block with SKG initials raised on the face"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
@@ -83,7 +83,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
   <p style="max-width: 75ch;">
     Group everything, export as STL. The tunnel runs through the short depth of the block. SKG sits raised on the wide front face. It looks exactly like a little signet ring for a cable.
   </p>
-  <img
+  <img loading="lazy"
     src="/images/skg-step5-final.png"
     alt="Final design from the right angle showing tunnel and SKG initials"
     style="margin-top: 14px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"
@@ -96,7 +96,7 @@ export const tags = ["3d printing", "tinkercad", "hardware", "first time"];
   <p style="max-width: 75ch; margin-top: 12px;">
     It made the learning loop really tight. Instead of reading docs to understand what I was seeing, I could just show it and get a targeted answer. The contact sheet below is what that process looked like — a lot of views, a lot of small adjustments.
   </p>
-  <img
+  <img loading="lazy"
     src="/images/cable-tag/wip-contact-sheet.png"
     alt="Contact sheet of TinkerCAD screenshots shared with Claude during the design iteration process"
     style="margin-top: 16px; max-width: 100%; border-radius: 10px; border: 1px solid rgba(0,0,0,0.10);"

@@ -1,137 +1,14 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
+import CollectionGrid from "../../components/CollectionGrid.astro";
+import { loadEntries } from "../../lib/collection";
 
 const modules = import.meta.glob("./*.astro", { eager: true });
-const rawModules = import.meta.glob("./*.astro", { as: 'raw', eager: true });
-
-function estimateReadTime(raw: string): string {
-  const body = raw
-    .replace(/^---[\s\S]*?---\n?/, '')
-    .replace(/<[^>]+>/g, ' ')
-    .replace(/\{[^}]*\}/g, ' ');
-  const words = body.trim().split(/\s+/).filter((w: string) => w.length > 1).length;
-  return `${Math.max(1, Math.ceil(words / 200))} min read`;
-}
-
-const builds = Object.entries(modules)
-  .filter(([path]) => !path.endsWith("/index.astro"))
-  .map(([path, mod]: [string, any]) => {
-    const slug = path.replace("./", "").replace(".astro", "");
-    const url = `/builds/${slug}`;
-    const readTime = estimateReadTime(rawModules[path] ?? "");
-    return {
-      url,
-      title: mod.title ?? slug.replaceAll("-", " "),
-      date: mod.date ?? "",
-      excerpt: mod.excerpt ?? "",
-      tags: Array.isArray(mod.tags) ? mod.tags : [],
-      link: mod.link ?? "",
-      readTime,
-    };
-  })
-  .sort((a, b) => (b.date || "").localeCompare(a.date || ""));
-
-function formatDate(iso: string) {
-  if (!iso) return "";
-  const d = new Date(iso + "T00:00:00");
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
-}
+const rawModules = import.meta.glob<string>("./*.astro", { query: "?raw", import: "default", eager: true });
+const entries = loadEntries("builds", modules, rawModules);
 ---
 
-<SiteLayout title="Builds — Saachi K Gupta">
-  <style>
-    .grid {
-      margin-top: 28px;
-      display: grid;
-      gap: 18px;
-      max-width: 900px;
-    }
-
-    .card {
-      border: 1px solid rgba(0,0,0,0.10);
-      border-radius: 14px;
-      padding: 18px 18px;
-      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-      border-color: rgba(0,0,0,0.16);
-    }
-
-    .card h2 {
-      margin: 0;
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    .card a {
-      color: black;
-      text-decoration: none;
-    }
-
-    .card a:hover {
-      text-decoration: underline;
-    }
-
-    .meta {
-      margin-top: 6px;
-      font-size: 13px;
-      color: rgba(0,0,0,0.55);
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .sep {
-      opacity: 0.4;
-    }
-
-    .tags {
-      margin-top: 8px;
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      font-size: 11px;
-      padding: 3px 9px;
-      background: rgba(0,0,0,0.05);
-      border: 1px solid rgba(0,0,0,0.12);
-      border-radius: 999px;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-    }
-
-    .excerpt {
-      margin: 10px 0 0 0;
-      font-size: 15px;
-      line-height: 1.55;
-      max-width: 75ch;
-    }
-
-    .actions {
-      margin-top: 12px;
-      font-size: 14px;
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    @media (max-width: 640px) {
-      .card h2 {
-        font-size: 18px;
-      }
-      .excerpt {
-        font-size: 14px;
-      }
-    }
-  </style>
-
+<SiteLayout title="Builds — Saachi K Gupta" description="Project writeups by Saachi K Gupta, with links to live demos.">
   <h1>Builds</h1>
 
   <p style="max-width: 70ch;">
@@ -141,32 +18,5 @@ function formatDate(iso: string) {
     These are the projects that made it out of my head and into the world. Some are rough drafts. All have taught me something new.
   </p>
 
-  <div class="grid">
-    {builds.map((b) => (
-      <article class="card">
-        <h2><a href={b.url}>{b.title}</a></h2>
-
-        <div class="meta">
-          {b.date && <span>{formatDate(b.date)}</span>}
-          {b.date && b.readTime && <span class="sep">·</span>}
-          {b.readTime && <span>{b.readTime}</span>}
-        </div>
-
-        {b.tags?.length > 0 && (
-          <div class="tags">
-            {b.tags.map((t: string) => (
-              <span class="tag">{t}</span>
-            ))}
-          </div>
-        )}
-
-        {b.excerpt && <p class="excerpt">{b.excerpt}</p>}
-
-        <div class="actions">
-          <a href={b.url}>Read →</a>
-          {b.link && <a href={b.link} target="_blank" rel="noopener noreferrer">Live demo →</a>}
-        </div>
-      </article>
-    ))}
-  </div>
+  <CollectionGrid entries={entries} />
 </SiteLayout>

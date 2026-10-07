@@ -6,9 +6,11 @@ export const date = "2026-02-25";
 export const excerpt =
   "Seattle winters can turn into inertia fast. So I made a bingo board — not productivity bingo, joy bingo — and started treating the winter as an invitation to try new things.";
 export const tags = ["seattle", "intentional-living", "q1-2026"];
+const description =
+  "Seattle winters can turn into inertia fast. So I made a bingo board (not productivity bingo, joy bingo) and started treating the winter as an invitation to try new things.";
 ---
 
-<SiteLayout title={`${title} — Saachi K Gupta`}>
+<SiteLayout title={`${title} — Saachi K Gupta`} description={description} ogImage="/images/bingo.jpeg">
   <h1>{title}</h1>
   <p style="opacity:0.7;">{date}</p>
 
@@ -39,7 +41,7 @@ export const tags = ["seattle", "intentional-living", "q1-2026"];
   </figure>
 
   <dialog id="bingo-lightbox" onclick="this.close()" style="padding: 0; border: none; border-radius: 12px; background: transparent; max-width: 90vw; max-height: 90vh;">
-    <img src="/images/bingo.jpeg" alt="Bingo board full size" style="display: block; max-width: 90vw; max-height: 90vh; border-radius: 12px;" />
+    <img loading="lazy" src="/images/bingo.jpeg" alt="Bingo board full size" style="display: block; max-width: 90vw; max-height: 90vh; border-radius: 12px;" />
   </dialog>
 
   <h2 style="margin-top: 28px;">The Full Board</h2>
@@ -71,6 +73,14 @@ export const tags = ["seattle", "intentional-living", "q1-2026"];
       min-height: 48px;
       font-size: 11px;
       font-family: inherit;
+    }
+    @media (max-width: 640px) {
+      /* Eight columns can't fit a phone screen; scroll the board sideways
+         instead of the whole page. */
+      .bingo-grid {
+        grid-template-columns: repeat(8, minmax(64px, 1fr));
+        overflow-x: auto;
+      }
     }
     button.bingo-cell { cursor: pointer; }
 
