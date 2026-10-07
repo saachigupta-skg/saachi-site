@@ -74,6 +74,14 @@ const description =
       font-size: 11px;
       font-family: inherit;
     }
+    @media (max-width: 640px) {
+      /* Eight columns can't fit a phone screen; scroll the board sideways
+         instead of the whole page. */
+      .bingo-grid {
+        grid-template-columns: repeat(8, minmax(64px, 1fr));
+        overflow-x: auto;
+      }
+    }
     button.bingo-cell { cursor: pointer; }
 
     /* Category tints — "done but no story yet" cells */
