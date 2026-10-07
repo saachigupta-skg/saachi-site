@@ -5,9 +5,11 @@ export const title = "Tour de Lopez 2026";
 export const date = "2026-04-25";
 export const excerpt = "An annual bike ride on Lopez Island — 30 miles, 9 people, one campsite on the beach, and a ferry that made an unscheduled stop for someone who almost didn't make it.";
 export const tags = ["cycling", "san-juan-islands", "camping", "washington"];
+const description =
+  "An annual bike ride on Lopez Island: 30 miles, 9 people, one campsite on the beach, and a ferry that made an unscheduled stop for someone who almost didn't make it.";
 ---
 
-<SiteLayout title={`${title} — Saachi K Gupta`}>
+<SiteLayout title={`${title} — Saachi K Gupta`} description={description} ogImage="/images/lopez/ride.jpg">
   <h1>{title}</h1>
   <p style="opacity:0.7; font-size: 13px;">{date}</p>
 

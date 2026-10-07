@@ -1,6 +1,8 @@
 ---
 const { title = "Saachi K Gupta", showHero = false, description = "", ogImage = "" } = Astro.props;
-const siteUrl = Astro.url.origin;
+const site = Astro.site ?? Astro.url.origin;
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const ogImageUrl = ogImage ? new URL(ogImage, site).href : "";
 ---
 
 <!DOCTYPE html>
@@ -9,14 +11,17 @@ const siteUrl = Astro.url.origin;
     <meta charset="UTF-8" />
     <title>{title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     {description && <meta name="description" content={description} />}
     <meta property="og:title" content={title} />
+    <meta property="og:url" content={canonicalUrl} />
     {description && <meta property="og:description" content={description} />}
-    {ogImage && <meta property="og:image" content={`${siteUrl}${ogImage}`} />}
+    {ogImage && <meta property="og:image" content={ogImageUrl} />}
     <meta name="twitter:card" content={ogImage ? "summary_large_image" : "summary"} />
     <meta name="twitter:title" content={title} />
     {description && <meta name="twitter:description" content={description} />}
-    {ogImage && <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />}
+    {ogImage && <meta name="twitter:image" content={ogImageUrl} />}
     <style>
       :root {
         --bg: #f7f2e8;
