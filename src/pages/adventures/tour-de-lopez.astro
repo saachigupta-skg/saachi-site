@@ -5,9 +5,11 @@ export const title = "Tour de Lopez 2026";
 export const date = "2026-04-25";
 export const excerpt = "An annual bike ride on Lopez Island — 30 miles, 9 people, one campsite on the beach, and a ferry that made an unscheduled stop for someone who almost didn't make it.";
 export const tags = ["cycling", "san-juan-islands", "camping", "washington"];
+const description =
+  "An annual bike ride on Lopez Island: 30 miles, 9 people, one campsite on the beach, and a ferry that made an unscheduled stop for someone who almost didn't make it.";
 ---
 
-<SiteLayout title={`${title} — Saachi K Gupta`}>
+<SiteLayout title={`${title} — Saachi K Gupta`} description={description} ogImage="/images/lopez/ride.jpg">
   <h1>{title}</h1>
   <p style="opacity:0.7; font-size: 13px;">{date}</p>
 
@@ -49,7 +51,7 @@ export const tags = ["cycling", "san-juan-islands", "camping", "washington"];
   </p>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/lopez/ride.jpg"
       alt="Two of us in bike helmets at a scenic water overlook, thumbs up, deep blue water behind"
       style="border-radius: 8px;"
@@ -64,7 +66,7 @@ export const tags = ["cycling", "san-juan-islands", "camping", "washington"];
   </p>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/lopez/campsite-dinner.jpg"
       alt="Four of us at a picnic table on the beach at golden hour, water and mountains behind"
       style="border-radius: 8px;"
@@ -72,7 +74,7 @@ export const tags = ["cycling", "san-juan-islands", "camping", "washington"];
   </figure>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/lopez/sunset.jpg"
       alt="Lopez Island sunset — deep purple and pink over the water, forest silhouette"
       style="border-radius: 8px;"
@@ -81,7 +83,7 @@ export const tags = ["cycling", "san-juan-islands", "camping", "washington"];
   </figure>
 
   <figure>
-    <img
+    <img loading="lazy"
       src="/images/lopez/campfire.jpg"
       alt="Two people at the campfire, roasting a hot dog on a stick"
       style="border-radius: 8px;"
