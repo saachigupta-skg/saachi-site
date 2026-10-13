@@ -45,7 +45,7 @@ export const link = "https://...";      // builds only, optional
 ---
 ```
 
-**Dynamic index pages** — `builds/index.astro` and `learnings/index.astro` use `import.meta.glob` to auto-discover sibling pages and render card grids. Adding a new page to either folder auto-adds it to the grid.
+**Dynamic index pages** — `builds/index.astro` and `learnings/index.astro` use `import.meta.glob` to auto-discover sibling pages and render card grids. Adding a new page to either folder auto-adds it to the grid. All four collection indexes (builds, learnings, reflections, adventures) load entries with `src/lib/collection.ts` and render them with `src/components/CollectionGrid.astro` (`variant` picks the card style). Files starting with `_` (e.g. `adventures/_placeholder.astro`) are skipped and not built.
 
 **SiteLayout.astro props:**
 - `title` — page `<title>` tag
