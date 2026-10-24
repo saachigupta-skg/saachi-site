@@ -1,0 +1,203 @@
+---
+// Horizontal photo carousel. Swipe or scroll on touch, arrow buttons and
+// keyboard arrows on desktop. Each photo keeps its own aspect ratio at a
+// shared height, so portrait and landscape shots can sit side by side.
+export interface Photo {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption?: string;
+}
+
+interface Props {
+  photos: Photo[];
+  label: string;
+  // Set true when the carousel is the first image on the page.
+  eager?: boolean;
+}
+
+const { photos, label, eager = false } = Astro.props;
+---
+
+<div class="carousel" role="region" aria-roledescription="carousel" aria-label={label}>
+  <div class="track" tabindex="0">
+    {photos.map((p, i) => (
+      <figure class="slide" style={`--ar: ${p.width / p.height}`}>
+        <img
+          src={p.src}
+          alt={p.alt}
+          width={p.width}
+          height={p.height}
+          loading={eager && i === 0 ? "eager" : "lazy"}
+          decoding="async"
+        />
+        {p.caption && <figcaption>{p.caption}</figcaption>}
+      </figure>
+    ))}
+  </div>
+
+  <div class="controls">
+    <button type="button" class="prev" aria-label="Previous photo">←</button>
+    <span class="count" aria-live="polite">1 / {photos.length}</span>
+    <button type="button" class="next" aria-label="Next photo">→</button>
+  </div>
+</div>
+
+<style>
+  .carousel {
+    margin: 20px 0;
+    max-width: 100%;
+  }
+
+  .track {
+    --max-h: 520px;
+    container-type: inline-size;
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .track:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+    border-radius: 12px;
+  }
+
+  .slide {
+    flex: 0 0 auto;
+    max-width: 100%;
+    margin: 0;
+    scroll-snap-align: start;
+  }
+
+  /* Height is known before the image loads (so scroll-snap lands on the
+     first slide), and a wide photo shrinks to fit the track instead of
+     being cropped. */
+  .slide img {
+    display: block;
+    width: auto;
+    max-width: none;
+    height: min(var(--max-h), calc(100cqw / var(--ar)));
+    border-radius: 12px;
+  }
+
+  /* width: 0 + min-width: 100% keeps a long caption from widening the slide. */
+  .slide figcaption {
+    width: 0;
+    min-width: 100%;
+    margin-top: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--muted);
+  }
+
+  .controls {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .controls[hidden] {
+    display: none;
+  }
+
+  .controls button {
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .controls button:hover:not(:disabled) {
+    border-color: var(--accent);
+    background: rgba(63, 95, 74, 0.08);
+  }
+
+  .controls button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .count {
+    font-variant-numeric: tabular-nums;
+    min-width: 5.5em;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .track {
+      --max-h: min(70vh, 460px);
+    }
+  }
+</style>
+
+<script>
+  for (const carousel of document.querySelectorAll<HTMLElement>(".carousel")) {
+    const track = carousel.querySelector<HTMLElement>(".track")!;
+    const slides = [...track.querySelectorAll<HTMLElement>(".slide")];
+    const controls = carousel.querySelector<HTMLElement>(".controls")!;
+    const prev = carousel.querySelector<HTMLButtonElement>(".prev")!;
+    const next = carousel.querySelector<HTMLButtonElement>(".next")!;
+    const count = carousel.querySelector<HTMLElement>(".count")!;
+
+    // First and last slide that are mostly on screen (slides are 0-indexed).
+    const visible = () => {
+      const left = track.scrollLeft;
+      const right = left + track.clientWidth;
+      const shown = slides
+        .map((s, i) => {
+          const overlap = Math.min(right, s.offsetLeft + s.offsetWidth) - Math.max(left, s.offsetLeft);
+          return overlap / s.offsetWidth > 0.6 ? i : -1;
+        })
+        .filter((i) => i >= 0);
+      return shown.length ? [shown[0], shown[shown.length - 1]] : [0, 0];
+    };
+
+    const update = () => {
+      const [first, last] = visible();
+      count.textContent = first === last
+        ? `${first + 1} / ${slides.length}`
+        : `${first + 1}–${last + 1} / ${slides.length}`;
+      prev.disabled = track.scrollLeft <= 2;
+      next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+      // Everything fits: no need for controls.
+      controls.hidden = prev.disabled && next.disabled;
+    };
+
+    const go = (i: number) => {
+      const s = slides[Math.max(0, Math.min(slides.length - 1, i))];
+      track.scrollTo({ left: s.offsetLeft });
+    };
+
+    prev.addEventListener("click", () => go(visible()[0] - 1));
+    next.addEventListener("click", () => go(visible()[0] + 1));
+    track.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(visible()[0] - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); go(visible()[0] + 1); }
+    });
+    track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    // Lazy images change slide widths as they load.
+    track.querySelectorAll("img").forEach((img) => img.addEventListener("load", update));
+    update();
+  }
+</script>
