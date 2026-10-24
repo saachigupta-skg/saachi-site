@@ -1,11 +1,22 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
+import PhotoCarousel from "../../components/PhotoCarousel.astro";
 
 export const title = "Three Years of Tulips in the Skagit Valley";
 export const date = "2026-05-14";
 export const excerpt =
   "Visiting the Skagit Valley to see the tulips has become an accidental tradition for me. Three years in a row now, I've experienced the magic of spring up close.";
 export const tags = ["washington", "spring", "skagit-valley", "tulips"];
+
+const photos2024 = [
+  { src: "/images/tulips/2024-sign.jpg", alt: "Standing under the Tulip Town sign in a sea of pink tulips, mountains and blue sky behind", width: 2000, height: 1500 },
+  { src: "/images/tulips/2024-with-dad.jpg", alt: "Selfie with my dad in front of a massive field of red tulips", width: 1500, height: 2000, caption: "My dad and me in the red field. One of my favorite photos from his visit." },
+];
+
+const photos2026 = [
+  { src: "/images/tulips/2026-fields.jpg", alt: "Wide view of multicolored tulip rows with snow-capped mountains in the background", width: 2000, height: 1500 },
+  { src: "/images/tulips/2026-with-friends.jpg", alt: "Two of us leaning on a fence with yellow tulips in the foreground and a windmill behind", width: 2000, height: 1500 },
+];
 ---
 
 <SiteLayout title={`${title} — Saachi K Gupta`} description={excerpt} ogImage="/images/tulips/2026-fields.jpg">
@@ -22,13 +33,7 @@ export const tags = ["washington", "spring", "skagit-valley", "tulips"];
     My dad came to visit and I wanted to show him something that felt specifically Pacific Northwest. The tulip fields in Mount Vernon were an obvious answer. We drove up on a bright March day, walked through rows of pink and red and yellow, and took a lot of photos. It was one of those trips that isn't elaborate but lands exactly right.
   </p>
 
-  <figure style="margin-top: 16px; max-width: 75ch;">
-    <img
-      src="/images/tulips/2024-sign.jpg"
-      alt="Standing under the Tulip Town sign in a sea of pink tulips, mountains and blue sky behind"
-      style="width: 100%; border-radius: 10px;"
-    />
-  </figure>
+  <PhotoCarousel label="Tulips in 2024" eager photos={photos2024} />
 
   <figure style="margin-top: 16px; max-width: 75ch;">
     <img loading="lazy"
@@ -38,6 +43,20 @@ export const tags = ["washington", "spring", "skagit-valley", "tulips"];
     />
     <figcaption style="font-size: 13px; opacity: 0.6; margin-top: 8px;">My dad and me in the red field. One of my favorite photos from his visit.</figcaption>
   </figure>
+
+  <h2 style="margin-top: 28px;">2025 — on the way back from Tour de Lopez</h2>
+
+  <p style="max-width: 75ch;">
+    Tour de Lopez is an annual bike ride on Lopez Island that I've been doing with friends. The ferry back from the San Juans passes through Anacortes, which puts you twenty minutes from the tulip fields. In 2025 we stopped on the way home — tired from two days of cycling, still in bike clothes — and wandered through the rows for an hour. It felt like a bonus.
+  </p>
+
+  <h2 style="margin-top: 28px;">2026 — we actually stayed for it</h2>
+
+  <p style="max-width: 75ch;">
+    This year we planned around it. After Tour de Lopez, instead of rushing back to Seattle, a few of us went to the fields on purpose, treating it as the point rather than a quick detour. We spent a real afternoon there. The mountains were out. The rows were every color. I stopped trying to see everything and just stood in one spot for a while.
+  </p>
+
+  <PhotoCarousel label="Tulips in 2026" photos={photos2026} />
 
   <h2 style="margin-top: 28px;">2025 — on the way back from Tour de Lopez</h2>
 
